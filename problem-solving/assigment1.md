@@ -51,7 +51,7 @@ Algorithm Example
 4. Else
    a. Print "Negative or Zero"
 5. End
-
+```
 ```text
 ALGORITHM Search
 1. START
@@ -63,3 +63,20 @@ ALGORITHM Search
 4. END FOR
 5. OUTPUT "Key not found"
 6. END
+```
+
+```pseudo
+FOR each <span class="variable">item</span> in <span class="variable">target</span>
+  SET <span class="variable">full_path</span> = <span class="variable">target</span> + <span class="variable">item</span>
+  IF <span class="variable">full_path</span> is directory
+    SET <span class="variable">size</span> = number of children in <span class="variable">full_path</span>
+    IF <span class="variable">size</span> = 0
+      APPEND <span class="variable">full_list</span> with "<span class="variable">item</span> contains no items."
+    ELSE IF <span class="variable">size</span> = 1
+      APPEND <span class="variable">full_list</span> with "<span class="variable">item</span>: <span class="variable">size</span> item."
+    ELSE
+      APPEND <span class="variable">full_list</span> with "<span class="variable">item</span>: <span class="variable">size</span> items."
+    ENDIF
+  ENDIF
+ENDFOR
+```
