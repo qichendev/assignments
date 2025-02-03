@@ -39,10 +39,51 @@ nav li {
 }
 nav li a {
   display: block;
-  font: #f6eee4;
+  color: #f6eee4;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   padding-left: 2em;
   padding-right: 2em;
+  text-decoration: none;
+}
+main {
+  padding: 2%;
+  font-family: "Verdana", "Arial", "sans-serif";
+}
+main p {
+  font-size: 1.25em;
+}
+main h3 {
+  padding-top: 2%;
+}
+main ul {
+  list-style-type: square;
+}
+.link {
+  color: #4d3319;
+  text-decoration: none;
+  font-weight: bold;
+  font-style: italic;
+}
+.action {
+  font-size: 1.75em;
+  font-weight: bold;
+  text-align: center;
+}
+#contact {
+  text-align: center;
+}
+footer {
+  text-align: center;
+  font-size: 0.85em;
+  background-color: #2a1f14;
+  color: #f6eee4;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-right: 0%;
+  padding-left: 0%;
+}
+footer a {
+  color: #f3e6d8;
   text-decoration: none;
 }
