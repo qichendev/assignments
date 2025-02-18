@@ -1,7 +1,7 @@
-# FIRSTNAME LASTNAME  
+# Qi Chen  
 123 Oak Street, Springfield, ST 12345  
-(555) 123-4567 • [firstname.lastname@example.com](mailto:firstname.lastname@example.com)  
-[LinkedIn Profile](http://www.linkedin.com/in/firstname-lastname)
+(+1) 4168325904 • [frankfromcn@gmail.com](mailto:firstname.lastname@example.com)  
+[LinkedIn Profile](http://www.linkedin.com/in/chenqi234)
 
 ---
 
@@ -11,7 +11,7 @@ Enthusiastic and detail-oriented marketing professional with 3 years of experien
 ---
 
 ## EDUCATION
-**Bachelor of Science in Marketing, XYZ University** (May 2022)  
+**Bachelor of Science in Marketing, XBMU University** (May 2022)  
 *GPA: 3.6*  
 - Relevant Coursework: Digital Marketing, Consumer Behavior, Market Research, Social Media Analytics  
 - Honors & Activities: Dean’s List (4 semesters), Marketing Club Vice President  
@@ -71,6 +71,5 @@ Enthusiastic and detail-oriented marketing professional with 3 years of experien
 ---
 
 ## REFERENCE
-References available upon request.  
-
-_Add New Section/Subsection if needed._
+- Li Zheng (ex-supervior) Title: Leader Software Engineer Cell: (+86) 15010202368 Email: lizheng146@huawei.com
+- Liu Xu yang (supervisor) Title: Leader Software Engineer Cell: (+86) 18610811310 Email: xuyang.liu@hirain.com
