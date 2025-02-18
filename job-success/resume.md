@@ -1,7 +1,7 @@
-# Qi Chen  
-142 Madison D'Andrea Ave, Sarnia, ON, N7S6L9, Canada
-(+1) 4168325904 • frankfromcn@gmail.com
-LinkedIn Profile: http://www.linkedin.com/in/chenqi234
+# Qi Chen
+- 142 Madison D'Andrea Ave, Sarnia, ON, N7S6L9, Canada
+- (+1) 4168325904 • frankfromcn@gmail.com
+- LinkedIn Profile: http://www.linkedin.com/in/chenqi234
 
 ---
 
