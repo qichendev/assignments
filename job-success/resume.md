@@ -1,7 +1,7 @@
 # Qi Chen  
 123 Oak Street, Springfield, ST 12345  
-(+1) 4168325904 • [frankfromcn@gmail.com](mailto:firstname.lastname@example.com)  
-[LinkedIn Profile](http://www.linkedin.com/in/chenqi234)
+(+1) 4168325904 • frankfromcn@gmail.com
+LinkedIn Profile: http://www.linkedin.com/in/chenqi234
 
 ---
 
