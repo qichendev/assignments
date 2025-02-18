@@ -1,5 +1,5 @@
 # Qi Chen  
-123 Oak Street, Springfield, ST 12345  
+142 Madison D'Andrea Ave, Sarnia, ON, N7S6L9, Canada
 (+1) 4168325904 • frankfromcn@gmail.com
 LinkedIn Profile: http://www.linkedin.com/in/chenqi234
 
