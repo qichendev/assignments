@@ -354,7 +354,54 @@ Viewport */
     margin: 0 auto;
   }
 }
+table {
+  border: 1px solid #000;
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 100%;
+}
 
+#form {
+  margin-top: 2%;
+  background-color: #f2f2f2;
+  padding: 2%;
+}
+
+#form h2 {
+  text-align: center;
+}
+
+fieldset,
+input,
+select,
+textarea {
+  margin-bottom: 2%;
+}
+
+fieldset legend {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+label {
+  display: block;
+  padding-top: 3%;
+}
+
+form #submit {
+  margin: 0 auto;
+  border: none;
+  display: block;
+  padding: 2%;
+  background-color: #b3b3b3;
+  font-size: 1em;
+  border-radius: 10px;
+}
+
+form {
+  width: 70%;
+  margin: 0 auto;
+}
 @media screen and (min-width: 1015px), print {
   header {
     width: 25%;
