@@ -1,0 +1,74 @@
+/*
+Author: Qi Chen
+Date: 16-03-2025
+File Name:  apply08.css 
+*/
+
+/* CSS Reset */
+body,
+main,
+footer,
+table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Style rule for body */
+body {
+  background-color: #f4f9e1;
+  font-family: Arial, sans-serif;
+}
+
+/* Style rule for the container */
+#container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Style for the footer element */
+footer {
+  font-size: 0.7em;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Style for the table element */
+table {
+  width: 80%;
+  margin: 0 auto;
+  border: 3px solid #71881b;
+  border-collapse: collapse;
+}
+
+/* Collapse borders and add padding */
+table,
+tr,
+th,
+td {
+  border-collapse: collapse;
+  padding: 2%;
+}
+
+/* Style for the caption element */
+caption {
+  font-size: 2em;
+  padding: 2%;
+  margin-top: 2%;
+}
+
+/* Style for table headers and cells */
+th,
+td {
+  border: 1px solid #7188bb;
+}
+
+/* Center-align text in table cells */
+td {
+  text-align: center;
+}
+
+/* Style for odd rows */
+tr:nth-child(odd) {
+  background-color: #d3e788;
+}
