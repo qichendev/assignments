@@ -1,0 +1,162 @@
+﻿/* 
+   Revisions Bookstore and Cafe style sheet 
+   Filename: styles.css
+
+   Author:   
+   Date:     
+   HTML5 and CSS3 Illustrated Unit H, Visual Workshop
+ */
+
+/* reset styles */
+html {
+   font-size: 17px;
+}
+a, article, body, div, footer, header, h1, h2, 
+h3, img, nav, p {
+   border: 0;
+   padding: 0;
+   margin: 0;
+}
+img {
+   max-width: 100%;
+   height: auto;
+   width: auto;
+}
+
+/* body and page container */
+body {
+   font-family: Verdana, Geneva, sans-serif;
+   background-color: rgb(253,245,230);
+}
+.container {
+   max-width: 800px;
+   margin: 0 auto;
+   background-color: white;
+   position: relative;
+}
+
+/* skip navigation link */
+p.skipnavigation a {
+   position: absolute;
+   left: -10000px;
+}
+p.skipnavigation a:focus {
+   left: 0.4em;
+   top: 0.4em;
+   background-color: white;
+   color: black;
+}
+
+/* header section */
+header {
+   padding: 0 1%;
+   text-align: center;
+   background-color: #bdccd4;
+   font-family: "Playfair Display", Georgia, "Times New Roman", Times, serif;
+   font-weight: 900;
+   overflow: auto;
+}
+header h1 {
+   width: 74%;
+   margin-top: 4%;
+   font-size: 2.3em;
+   float: right;
+}
+header div {
+   width: 24%;
+   float: left;
+}
+header img {
+   margin: 0 auto;
+   display: block;
+}
+
+/* site navigation */
+nav.sitenavigation {
+   background-color: black;
+   overflow: auto;   
+}
+nav.sitenavigation div {
+   width: 74%;
+   float: right;
+   text-align: center;
+}
+nav.sitenavigation p {
+   margin: 0.2em 0.6em;
+   display: inline-block;
+}
+nav.sitenavigation a:link {
+   text-decoration: none;
+   color: white;
+}
+nav.sitenavigation a:visited {
+   color: #bdccd4;
+}
+nav.sitenavigation a:hover, nav.sitenavigation a:focus {
+   color: black;
+   background-color: white;
+}
+nav.sitenavigation a:active {
+   position: relative;
+   top: 1px;
+   left: 1px;
+}
+
+/* main content */
+article {
+   width: 62%;
+   padding: 3%;
+   float: left;
+   background: #c69c6d;
+}
+article div.container {
+   padding: 2%;
+   background-color: white;
+   overflow: auto;
+   box-shadow: 0 0 8px #333;
+}
+article h2 {
+   margin-bottom: 0.4em;
+   font-family: "Playfair Display", Georgia, "Times New Roman", Times, serif;
+   font-weight: 900;
+   font-size: 2em;
+}
+.title {
+   font-style: italic;
+}
+
+/* sidebar */
+aside {
+   width: 28%;
+   padding: 2%;
+   float: right;
+}
+aside p {
+   padding: 0.4em;
+   margin-bottom: 0.6em;
+   font-size: 1.1em;
+}
+
+/* footer section */
+footer {
+   padding: 0.5em;
+   clear: both;
+   text-align: right;
+   background-color: #bdccd4;
+}
+
+/* print styles */
+@media print {
+   body, h1, article, footer {
+      background-color: rgb(255,255,255);
+   }
+   body {
+      max-width: 100%;
+   }
+   nav {
+      display: none;
+   }
+}
+@page {
+   margin: 0.75in;
+}
