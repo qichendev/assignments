@@ -159,7 +159,7 @@ footer p a {
 #weights,
 #cardio,
 #training {
-  margin: 0, 2%;
+  margin: 0 2%;
 }
 
 .pic-text {
@@ -220,6 +220,11 @@ th {
 tr:nth-child(odd) {
   background-color: #ccc;
 }
+/* 
+form {
+  width: 70%;
+  margin: 0 auto;
+} */
 /* Media
 Query for Tablet
 Viewport */
@@ -306,47 +311,48 @@ Viewport */
     margin: 0 auto;
     width: 100%;
   }
-}
-#form {
-  margin-top: 2%;
-  background-color: #f2f2f2;
-  padding: 2%;
-}
 
-#form h2 {
-  text-align: center;
-}
+  #form {
+    margin-top: 2%;
+    background-color: #f2f2f2;
+    padding: 2%;
+  }
 
-fieldset,
-input,
-select,
-textarea {
-  margin-bottom: 2%;
-}
+  #form h2 {
+    text-align: center;
+  }
 
-fieldset legend {
-  font-weight: bold;
-  font-size: 1.25em;
-}
+  fieldset,
+  input,
+  select,
+  textarea {
+    margin-bottom: 2%;
+  }
 
-label {
-  display: block;
-  padding-top: 3%;
-}
+  fieldset legend {
+    font-weight: bold;
+    font-size: 1.25em;
+  }
 
-form #submit {
-  margin: 0 auto;
-  border: none;
-  display: block;
-  padding: 2%;
-  background-color: #b3b3b3;
-  font-size: 1em;
-  border-radius: 10px;
-}
+  label {
+    display: block;
+    padding-top: 3%;
+  }
 
-form {
-  width: 70%;
-  margin: 0 auto;
+  form #submit {
+    margin: 0 auto;
+    border: none;
+    display: block;
+    padding: 2%;
+    background-color: #b3b3b3;
+    font-size: 1em;
+    border-radius: 10px;
+  }
+
+  form {
+    width: 70%;
+    margin: 0 auto;
+  }
 }
 
 @media screen and (min-width: 1015px), print {
@@ -396,7 +402,19 @@ form {
   #exercises {
     clear: left;
   }
+  form {
+    width: auto;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+  }
+  .btn {
+    grid-column: 1 / span 3;
+  }
 }
+/* 
 @media screen and (min-width: 1921px) {
   #container {
     width: 1920px;
@@ -406,7 +424,20 @@ form {
   table {
     width: 80%;
   }
-}
+  form {
+    width: auto;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+  }
+
+  .btn {
+    grid-column: 1 / span 3;
+  }
+} */
 @media print {
   body {
     background-color: #fff;
