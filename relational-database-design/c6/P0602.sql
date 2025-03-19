@@ -21,15 +21,15 @@ CREATE TABLE RP_CUSTOMERS (
     REP_ID NUMBER
 );
 
-CREATE TABLE RP_SALES (
-    SALES_ID NUMBER,
+CREATE TABLE RP_REPS (
+    REP_ID NUMBER,
     LAST_NAME VARCHAR2(100),
     FIRST_NAME VARCHAR2(100),
     STREET VARCHAR2(100),
     REP_CITY VARCHAR2(50),
     REP_STATE VARCHAR2(50),
     ZIP VARCHAR2(10),
-    COMMISION NUMBER,
+    COMMISSION NUMBER,
     RATE NUMBER
 );
 
@@ -54,4 +54,122 @@ CREATE TABLE RP_PRODUCTS (
 );
 
 INSERT INTO
-    RP_REPS ()
+    RP_REPS (
+        REP_ID,
+        LAST_NAME,
+        FIRST_NAME,
+        STREET,
+        REP_CITY,
+        REP_STATE,
+        ZIP,
+        COMMISSION,
+        RATE
+    )
+VALUES
+    (
+        20,
+        'Culp',
+        'Betty',
+        '1275 Main St',
+        'Detroit',
+        'MI',
+        '48288',
+        20542.50,
+        0.05
+    );
+
+INSERT INTO
+    RP_REPS (
+        REP_ID,
+        LAST_NAME,
+        FIRST_NAME,
+        STREET,
+        REP_CITY,
+        REP_STATE,
+        ZIP,
+        COMMISSION,
+        RATE
+    )
+VALUES
+    (
+        35,
+        'Manis',
+        'Richard',
+        '532 Jackson',
+        'Toronto',
+        'ON',
+        'M5V2K1',
+        '39216.00',
+        '0.05'
+    );
+
+INSERT INTO
+    RP_REPS (
+        REP_ID,
+        LAST_NAME,
+        FIRST_NAME,
+        STREET,
+        REP_CITY,
+        REP_STATE,
+        ZIP,
+        COMMISSION,
+        RATE
+    )
+VALUES
+    (
+        65,
+        'Large',
+        'Tom',
+        '1626 Taylor',
+        'Chicago',
+        'IL',
+        '60099',
+        '23487.00',
+        '0.05'
+    );
+
+INSERT INTO
+    RP_WAREHOUSE (WAREHOUSE_ID, WHSE_CITY)
+VALUES
+    (100, 'Chicago');
+
+INSERT INTO
+    RP_WAREHOUSE (WAREHOUSE_ID, WHSE_CITY)
+VALUES
+    (200, 'Detroit');
+
+INSERT INTO
+    RP_WAREHOUSE (WAREHOUSE_ID, WHSE_CITY)
+VALUES
+    (300, 'Toronto');
+
+UPDATE
+    RP_CUSTOMERS
+SET
+    BALANCE = 4285.25
+WHERE
+    CUSTOMER_ID = 408;
+
+UPDATE
+    RP_CUSTOMERS
+SET
+    BALANCE = 6221
+WHERE
+    CUSTOMER_ID = 842;
+
+UPDATE
+    RP_PRODUCTS
+SET
+    COST_PRICE = COST_PRICE + COST_PRICE * 0.085;
+
+DELETE FROM
+    RP_PRODUCTS
+WHERE
+    PRODUCT_DESCRIPTION = 'Cordless Drill';
+
+UPDATE
+    RP_CUSTOMERS
+SET
+    CREDIT_LIMIT = 14500
+WHERE
+    CUSTOMER_NAME = 'Brookings Direct';
