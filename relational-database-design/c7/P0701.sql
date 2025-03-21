@@ -5,31 +5,26 @@ DROP TABLE BC_EMPLOYEES CASCADE CONSTRAINTS;
 DROP TABLE BC_JOBS CASCADE CONSTRAINTS;
 -- Create tables
 CREATE TABLE BC_JOBS (
-    job_id NUMBER(3, 0) PRIMARY KEY,
-    job_title VARCHAR2(50) UNIQUE NOT NULL,
-    charge_hour NUMBER(7, 2) NOT NULL
+    job_id NUMBER(3, 0),
+    job_title VARCHAR2(50),
+    charge_hour NUMBER(7, 2)
 );
 CREATE TABLE BC_EMPLOYEES (
-    employee_id NUMBER(5, 0) PRIMARY KEY,
-    first_name VARCHAR2(40) NOT NULL,
-    last_name VARCHAR2(40) NOT NULL,
-    job_id NUMBER(3, 0) NOT NULL,
-    CONSTRAINT fk_job_id FOREIGN KEY (job_id) REFERENCES BC_JOBS(job_id)
+    employee_id NUMBER(5, 0),
+    first_name VARCHAR2(40),
+    last_name VARCHAR2(40),
+    job_id NUMBER(3, 0)
 );
 CREATE TABLE BC_PROJECTS (
-    project_id NUMBER(5, 0) PRIMARY KEY,
-    project_name VARCHAR2(40) UNIQUE NOT NULL,
-    project_leader_id NUMBER(5, 0),
-    CONSTRAINT fk_project_leader_id FOREIGN KEY (project_leader_id) REFERENCES BC_EMPLOYEES(employee_id)
+    project_id NUMBER(5, 0),
+    project_name VARCHAR2(40),
+    project_leader_id NUMBER(5, 0)
 );
 CREATE TABLE BC_BILLINGS (
-    project_id NUMBER(5, 0) NOT NULL,
-    employee_id NUMBER(5, 0) NOT NULL,
-    hours_billed NUMBER(5, 1),
+    project_id NUMBER(5, 0),
+    employee_id NUMBER(5, 0),
+    hours_billed NUMBER(5, 1)
     -- Increased from 3,1 to 5,1
-    CONSTRAINT pk_project_employee PRIMARY KEY(project_id, employee_id),
-    CONSTRAINT fk_project_id FOREIGN KEY (project_id) REFERENCES BC_PROJECTS(project_id),
-    CONSTRAINT fk_employee_id FOREIGN KEY (employee_id) REFERENCES BC_EMPLOYEES(employee_id)
 );
 -- Insert data into BC_PROJECTS
 INSERT INTO BC_PROJECTS(project_id, project_name)
@@ -134,11 +129,11 @@ MODIFY job_id NUMBER(3, 0) NOT NULL;
 ALTER TABLE BC_PROJECTS
 MODIFY project_name VARCHAR2(40) UNIQUE NOT NULL;
 ALTER TABLE BC_BILLINGS
-MODIFY project_id NUMBER(5, 0) NOT NULL
+MODIFY project_id NUMBER(5, 0) NOT NULL;
 ALTER TABLE BC_BILLINGS
 MODIFY employee_id NUMBER(5, 0) NOT NULL;
 ALTER TABLE BC_JOBS
-MODIFY charge_hour NUMBER(7, 2) NOT NULL DEFAULT 44.00;
+MODIFY charge_hour NUMBER(7, 2) DEFAULT 44.00;
 ALTER TABLE BC_JOBS
 MODIFY job_id NUMBER(3, 0) PRIMARY KEY;
 ALTER TABLE BC_JOBS
