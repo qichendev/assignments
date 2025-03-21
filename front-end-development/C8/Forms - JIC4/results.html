@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Eating Well in Season - Results</title>
+      <!-- 
+         Eating Well in Season Results page
+         Filename: results.html
+
+         Author:   
+         Date:     
+         HTML5 and CSS3 Illustrated Unit J, Independent Challenge 4
+      -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <script src="modernizr.custom.40753.js"></script>
+      <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="styles.css">
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="icon" sizes="192x192" href="images/android.png">
+   </head>
+   <body>
+      <div class="header-nav-container">
+         <p class="skipnavigation"><a href="contentstart">Skip navigation</a></p>
+         <header>
+            <h1>Eating Well in Season</h1>
+            <div>
+               <img src="images/logo.png" width="216" height="146" alt="">               
+            </div>
+         </header>
+         <nav class="sitenavigation">
+            <ul>
+               <li><a href="index.html">Home</a></li>
+               <li><a href="sources.html">Sources</a></li>
+               <li><a href="menus.html">Sample Menus</a></li>
+               <li><a href="pricing.html">Pricing</a></li>
+               <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+         </nav>
+      </div>
+      <div class="article-aside-outer-container">
+         <div class="article-aside-inner-container">
+            <article id="contentstart">
+               <h2>Your form has been submitted</h2>
+               <h3>You entered the following data:</h3>
+         
+               <script>
+                   var formData = location.search;
+                   formData = formData.substring(1, formData.length);
+                   while (formData.indexOf("+") !== -1) {
+                      formData = formData.replace("+", " ");
+                   }
+                   formData = decodeURIComponent(formData);
+                   var formArray = formData.split("&");
+                   for (var i = 0; i < formArray.length; i = i + 1) {
+                      document.write("<p>" + formArray[i] + "</p>");
+                   }
+               </script>
+            </article>
+            <aside>
+               <h2>What&rsquo;s In Season</h2>
+               <ul>
+                  <li>Baby Carrots</li>
+                  <li>Cardoons</li>
+                  <li>Chard</li>
+                  <li>Fiddleheads</li>
+                  <li>Mint</li>
+                  <li>Morels</li>
+                  <li>New Potatoes</li>
+                  <li>Ramps</li>
+               </ul>
+            </aside>
+         </div>
+      </div>
+      <footer>
+         <p>Eating Well in Season &bull; Glover, VT &bull; (802) 555-3947</p>
+      </footer>
+   </body>
+</html>
