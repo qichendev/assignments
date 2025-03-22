@@ -298,3 +298,19 @@ textarea {
   width: 100%;
   resize: vertical; /* 允许用户垂直调整大小 */
 }
+span {
+  color: red;
+}
+legend {
+  font-weight: bold;
+  font-family: Verdana, Geneva, sans-serif; /* 确保字体一致 */
+  font-size: 1.2em; /* 设置适当的字体大小 */
+}
+
+button {
+  padding: 0.5em 1em;
+  border: 4px solid black;
+  font-size: 1.2em; /* 放大字体 */
+  border-radius: 15px;
+  background-color: rgb(246, 224, 65);
+}

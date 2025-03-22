@@ -6,8 +6,8 @@
          Eating Well in Season Signup page
          Filename: signup.html
 
-         Author:   
-         Date:     
+         Author: [Your Name]
+         Date: [Today's Date]
          HTML5 and CSS3 Illustrated Unit J, Independent Challenge 4
       -->
     <meta charset="utf-8" />
@@ -46,12 +46,11 @@
       <div class="article-aside-inner-container">
         <article id="contentstart">
           <h2>Sign Up</h2>
-          <form>
+          <form action="results.html" method="post">
             <fieldset class="contact">
-              <legend>Contact information</legend>
-              <!-- Name -->
+              <legend><span>*</span>Contact information</legend>
               <div>
-                <label for="name">Name</label>
+                <label for="name"><span>*</span>Name</label>
                 <input
                   type="text"
                   id="name"
@@ -60,62 +59,61 @@
                   placeholder="First and last name"
                 />
               </div>
-              <!-- Email -->
               <div>
-                <label for="email">Email</label>
+                <label for="email"><span>*</span>Email</label>
                 <input type="email" id="email" name="email" required />
               </div>
-              <!-- Phone -->
               <div>
-                <label for="phone">Phone</label>
+                <label for="phone"><span>*</span>Phone</label>
                 <input type="tel" id="phone" name="phone" required />
               </div>
-              <!-- Address -->
               <div>
-                <label for="address">Address</label>
+                <label for="address"><span>*</span>Address</label>
                 <input type="text" id="address" name="address" required />
               </div>
-              <!-- City -->
               <div>
-                <label for="city">City</label>
+                <label for="city"><span>*</span>City</label>
                 <input type="text" id="city" name="city" required />
               </div>
-              <!-- State -->
               <div>
-                <label for="state">State</label>
+                <label for="state"><span>*</span>State</label>
                 <input type="text" id="state" name="state" required />
               </div>
-              <!-- Zip Code -->
               <div>
-                <label for="zip">Zip</label>
+                <label for="zip"><span>*</span>Zip</label>
                 <input type="text" id="zip" name="zip" required />
               </div>
             </fieldset>
             <fieldset class="meal">
-              <legend>Meal(s)</legend>
+              <legend><span>*</span>Meal(s)</legend>
               <div>
-                <input type="checkbox" id="lunch" name="lunch" />
+                <input type="checkbox" id="lunch" name="meal" value="lunch" />
                 <label for="lunch">Lunch</label>
               </div>
               <div>
-                <input type="checkbox" id="dinner" name="dinner" />
+                <input type="checkbox" id="dinner" name="meal" value="dinner" />
                 <label for="dinner">Dinner</label>
               </div>
             </fieldset>
             <fieldset class="delivery">
-              <legend>Delivery frequency</legend>
+              <legend><span>*</span>Delivery frequency</legend>
               <div>
-                <input type="radio" id="daily" name="delivery" />
+                <input type="radio" id="daily" name="delivery" value="daily" />
                 <label for="daily">Daily</label>
               </div>
               <div>
-                <input type="radio" id="weekly" name="delivery" />
+                <input
+                  type="radio"
+                  id="weekly"
+                  name="delivery"
+                  value="weekly"
+                  checked
+                />
                 <label for="weekly">Weekly</label>
               </div>
             </fieldset>
             <fieldset>
               <legend>Start date</legend>
-              <!-- Add input for start date -->
               <div>
                 <input type="date" id="startdate" name="startdate" required />
               </div>
@@ -140,24 +138,12 @@
             </fieldset>
             <fieldset>
               <legend></legend>
-              <!-- Add submit button -->
               <div>
                 <button type="submit">Sign Up</button>
               </div>
             </fieldset>
           </form>
         </article>
-        <aside>
-          <h2>What&rsquo;s In Season</h2>
-          <p>Baby Carrots</p>
-          <p>Cardoons</p>
-          <p>Chard</p>
-          <p>Fiddleheads</p>
-          <p>Mint</p>
-          <p>Morels</p>
-          <p>New Potatoes</p>
-          <p>Ramps</p>
-        </aside>
       </div>
     </div>
     <footer>
