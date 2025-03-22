@@ -234,12 +234,28 @@ fieldset {
   border: none;
 }
 
-.contact {
+/* .contact div label {
+  width: 100%;
+} */
+
+fieldset.contact {
   display: grid;
+  grid-template-columns: 1fr 10fr;
+  gap: 1em;
 }
 
-input {
-  width: 60%;
+fieldset.contact div {
+  display: contents;
+}
+
+fieldset.contact label {
+  grid-column: 1;
+  align-self: center;
+}
+
+fieldset.contact input {
+  grid-column: 2;
+  width: 70%;
 }
 
 #city {
@@ -247,43 +263,38 @@ input {
 }
 
 #state {
-  width: 15%;
+  width: 20%;
 }
 
 #zip {
-  width: 25%;
+  width: 30%;
 }
 
-.meal,
-.meal checkbox,
-.delivery,
-.delivery checkbox {
+fieldset.meal,
+fieldset.delivery {
   display: flex;
-}
-
-.meal,
-.delivery {
+  flex-direction: row;
   gap: 1em;
 }
 
-/* fieldset,
-form,
-input,
-label,
-legend,
+fieldset.meal div,
+fieldset.delivery div {
+  display: flex;
+  align-items: center;
+}
+
+fieldset.meal label,
+fieldset.delivery label {
+  margin-left: 0.5em;
+}
+
+fieldset.referral {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 50%;
+}
 textarea {
-  padding: 1em;
-  margin: 1em 0;
+  width: 100%;
+  resize: vertical; /* 允许用户垂直调整大小 */
 }
-fieldset {
-  padding: 1em;
-}
-legend {
-  font-size: medium;
-  font-family: "Courier New", Courier, monospace;
-  font-family: "Courier New", Courier, monospace;
-}
-input {
-  margin-bottom: auto;
-  font-size: small;
-} */
