@@ -314,3 +314,10 @@ button {
   border-radius: 15px;
   background-color: rgb(246, 224, 65);
 }
+
+aside {
+  padding: 2%;
+  width: 33.5%;
+  float: right;
+  margin-top: 2%; /* 确保侧边栏在页面顶部有适当的间距 */
+}
