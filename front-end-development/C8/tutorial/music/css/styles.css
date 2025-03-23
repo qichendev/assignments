@@ -143,6 +143,31 @@ footer a {
   display: block;
 }
 
+table {
+  border: 1px solid #373684;
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 100%;
+}
+caption {
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 1%;
+}
+th,
+td {
+  border: 1px solid #373684;
+  padding: 2%;
+}
+th {
+  background-color: #373684;
+  color: #fff;
+  font-size: 1.15em;
+}
+tr:nth-child(odd) {
+  background-color: #b7b7e1;
+}
+
 @media (max-width: 550px) {
   aside {
     text-align: center;
@@ -206,6 +231,30 @@ footer a {
     width: 500px;
     height: 450px;
   }
+  table {
+    border: 1px solid #373684;
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 100%;
+  }
+  caption {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 1%;
+  }
+  th,
+  td {
+    border: 1px solid #373684;
+    padding: 2%;
+  }
+  th {
+    background-color: #373684;
+    color: #fff;
+    font-size: 1.15em;
+  }
+  tr:nth-child(odd) {
+    background-color: #b7b7e1;
+  }
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Two-column layout */
@@ -241,7 +290,61 @@ footer a {
     font-size: 1.5em;
     font-weight: bold;
   }
+  fieldset input {
+    margin-bottom: 2%;
+  }
+  fieldset legend {
+    font-weight: bold;
+    font-size: 1.25em;
+  }
+  label {
+    display: block;
+    padding-top: 3%;
+  }
+  form #submit {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 3%;
+    background-color: #b7b7e1;
+    font-size: 1em;
+  }
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
+
+fieldset input {
+  margin-bottom: 2%;
+}
+fieldset legend {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+label {
+  display: block;
+  padding-top: 3%;
+}
+form #submit {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding: 3%;
+  background-color: #b7b7e1;
+  font-size: 1em;
+}
+.form-grid {
+  display: grid;
+  flex-direction: column;
+  gap: 20px;
+}
+
 /* Media Query for Desktop Viewport. */
 @media screen and (min-width: 769px) {
   /* Desktop Viewport:Style rule for header. */
@@ -312,10 +415,39 @@ footer a {
     font-size: 1.5em;
     font-weight: bold;
   }
+  table {
+    width: 70%;
+  }
+  form {
+    width: 70%;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+  }
+  .btn {
+    grid-column: 1 / span 2;
+  }
 }
 @media print {
   body {
     background-color: #fff;
     color: #000;
   }
+}
+.rentals {
+  text-align: center;
+}
+.form-title {
+  text-align: center;
+}
+
+#contact {
+  text-align: center;
 }

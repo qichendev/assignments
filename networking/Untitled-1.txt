@@ -99,3 +99,37 @@ VLAN Name                             Status    Ports
 1003 token-ring-default               active    
 1004 fddinet-default                  active    
 1005 trnet-default                    active    
+
+
+
+
+
+
+Switch>show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/24      on           802.1q         trunking      99
+Gig0/1      on           802.1q         trunking      99
+
+Port        Vlans allowed on trunk
+Fa0/24      99,128
+Gig0/1      64,99
+
+Port        Vlans allowed and active in management domain
+Fa0/24      128
+Gig0/1      64
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/24      128
+Gig0/1      64
+
+Switch>
+
+Switch>show interfaces trunk
+
+
+Switch>
+
+
+路由器-左侧交换机:Gig0/0/0-Gig0/1
+
+路由器-右侧交换机:Gig0/0/1-Fa0/24
