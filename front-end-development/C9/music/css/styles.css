@@ -1,0 +1,453 @@
+/*
+Student Name: Qi Chen
+File Name: styles.css
+Date: 01/26/2025
+*/
+/* CSS Reset */
+body,
+header,
+nav,
+main,
+footer,
+img,
+h1,
+section,
+aside,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+/* Style rule for images */
+img {
+  max-width: 100%;
+  display: block;
+}
+* {
+  box-sizing: border-box;
+}
+/* Style rules for header content */
+header {
+  text-align: center;
+  font-size: 1.5em;
+  color: #373684;
+}
+
+header h1 {
+  font-family: DM Serif Display;
+}
+
+/* Style rules for navigation area */
+nav {
+  background-color: #373684;
+}
+nav ul {
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+nav li {
+  display: block;
+  font-size: 2em;
+  border-top: 1px solid #e5e9fc;
+}
+nav li a {
+  display: block;
+  color: #fff;
+  text-align: center;
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
+/* Style rules for main content */
+main {
+  padding: 2%;
+  background-color: #e5e9fc;
+  overflow: auto;
+  font-family: Roboto;
+}
+main p {
+  font-size: 1.25em;
+}
+.action {
+  font-size: 1.25em;
+  color: #373684;
+  font-weight: bold;
+}
+#piano,
+#guitar,
+#violin {
+  margin: 0 2%;
+}
+#info {
+  clear: left;
+  background-color: #c0caf7;
+  padding: 1% 2%;
+}
+#info ul {
+  margin-left: 10%;
+}
+
+#contact p,
+#contact h2 {
+  text-align: center;
+}
+
+#contact .email-link {
+  text-align: center;
+  color: #4645a8;
+}
+
+#contact a {
+  /* color: #4645a8; */
+  text-decoration: none;
+  font-weight: bold;
+}
+.map {
+  width: 95%;
+  height: 50%;
+  border: 5px solid #373684;
+}
+/* Style rules for footer content */
+footer {
+  text-align: center;
+  font-size: 0.65em;
+  clear: left;
+}
+footer a {
+  color: #4645a8;
+  text-decoration: none;
+}
+.tab-desk {
+  display: none;
+}
+
+.round {
+  border-radius: 8px;
+}
+
+.tel-link {
+  background-color: #373684;
+  padding: 2%;
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.tel-link a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5em;
+  display: block;
+}
+
+table {
+  border: 1px solid #373684;
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 100%;
+}
+caption {
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 1%;
+}
+th,
+td {
+  border: 1px solid #373684;
+  padding: 2%;
+}
+th {
+  background-color: #373684;
+  color: #fff;
+  font-size: 1.15em;
+}
+tr:nth-child(odd) {
+  background-color: #b7b7e1;
+}
+
+@media (max-width: 550px) {
+  aside {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #373684;
+    text-shadow: 3px 3px 10px #8280cb;
+  }
+
+  figure {
+    position: relative;
+    max-width: 275px;
+    margin: 2% auto;
+    border: 8px solid #373684;
+  }
+
+  figcaption {
+    position: absolute;
+    bottom: 0;
+    background: rgba(55, 54, 132, 0.7);
+    color: #fff;
+    width: 100%;
+    padding: 5% 0;
+    text-align: center;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+}
+
+/* Media Query for Tablet Viewport */
+@media screen and (min-width: 550px), print {
+  /* Tablet Viewport: Show tab-desk class, hide mobile class */
+  .tab-desk {
+    display: block;
+  }
+  .mobile {
+    display: none;
+  }
+  /* Tablet Viewport: Style rule for header content */
+  span.tab-desk {
+    display: inline;
+  }
+  /* Tablet Viewport: Style rules for nav area */
+  nav li {
+    border-top: none;
+    display: inline-block;
+    font-size: 1.5em;
+    border-right: 1px solid #e5e9fc;
+  }
+  nav li:last-child {
+    border-right: none;
+  }
+  nav li a {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .map {
+    width: 500px;
+    height: 450px;
+  }
+  table {
+    border: 1px solid #373684;
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 100%;
+  }
+  caption {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 1%;
+  }
+  th,
+  td {
+    border: 1px solid #373684;
+    padding: 2%;
+  }
+  th {
+    background-color: #373684;
+    color: #fff;
+    font-size: 1.15em;
+  }
+  tr:nth-child(odd) {
+    background-color: #b7b7e1;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two-column layout */
+    grid-gap: 20px;
+  }
+  aside {
+    grid-column: 1 / span 2; /* Span across both columns */
+  }
+  aside {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #373684;
+    text-shadow: 3px 3px 10px #8280cb;
+  }
+
+  figure {
+    position: relative;
+    max-width: 275px;
+    margin: 2% auto;
+    border: 8px solid #373684;
+  }
+
+  figcaption {
+    position: absolute;
+    bottom: 0;
+    background: rgba(55, 54, 132, 0.7);
+    color: #fff;
+    width: 100%;
+    padding: 5% 0;
+    text-align: center;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  fieldset input {
+    margin-bottom: 2%;
+  }
+  fieldset legend {
+    font-weight: bold;
+    font-size: 1.25em;
+  }
+  label {
+    display: block;
+    padding-top: 3%;
+  }
+  form #submit {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 3%;
+    background-color: #b7b7e1;
+    font-size: 1em;
+  }
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+fieldset input {
+  margin-bottom: 2%;
+}
+fieldset legend {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+label {
+  display: block;
+  padding-top: 3%;
+}
+form #submit {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding: 3%;
+  background-color: #b7b7e1;
+  font-size: 1em;
+}
+.form-grid {
+  display: grid;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Media Query for Desktop Viewport. */
+@media screen and (min-width: 769px) {
+  /* Desktop Viewport:Style rule for header. */
+  header {
+    padding: 2%;
+  }
+  nav li a {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+  }
+  nav li a:hover {
+    color: #373684;
+    background-color: #e5e9fc;
+  }
+  #info ul {
+    margin-left: 5%;
+  }
+  main h3 {
+    font-size: 1.5em;
+  }
+  #piano,
+  #guitar,
+  #violin {
+    width: 29%;
+    float: left;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  figcaption {
+    font-size: 1em; /* Set font size to 1em */
+  }
+
+  aside {
+    grid-column: 1 / span 4; /* Span across all four columns */
+  }
+  aside {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #373684;
+    text-shadow: 3px 3px 10px #8280cb;
+  }
+
+  figure {
+    position: relative;
+    max-width: 275px;
+    margin: 2% auto;
+    border: 8px solid #373684;
+  }
+
+  figcaption {
+    position: absolute;
+    bottom: 0;
+    background: rgba(55, 54, 132, 0.7);
+    color: #fff;
+    width: 100%;
+    padding: 5% 0;
+    text-align: center;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  table {
+    width: 70%;
+  }
+  form {
+    width: 70%;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+  }
+  .btn {
+    grid-column: 1 / span 2;
+  }
+}
+@media print {
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+}
+.rentals {
+  text-align: center;
+}
+.form-title {
+  text-align: center;
+}
+
+#contact {
+  text-align: center;
+}
