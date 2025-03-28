@@ -1,4 +1,3 @@
--- Drop Tables in proper order with CASCADE to remove constraints
 DROP TABLE BC_BILLINGS CASCADE CONSTRAINTS;
 
 DROP TABLE BC_PROJECTS CASCADE CONSTRAINTS;
@@ -7,7 +6,6 @@ DROP TABLE BC_EMPLOYEES CASCADE CONSTRAINTS;
 
 DROP TABLE BC_JOBS CASCADE CONSTRAINTS;
 
--- Create tables
 CREATE TABLE BC_JOBS (
     job_id NUMBER(3, 0),
     job_title VARCHAR2(50),
@@ -30,10 +28,9 @@ CREATE TABLE BC_PROJECTS (
 CREATE TABLE BC_BILLINGS (
     project_id NUMBER(5, 0),
     employee_id NUMBER(5, 0),
-    hours_billed NUMBER(5, 1) -- Increased from 3,1 to 5,1
+    hours_billed NUMBER(5, 1)
 );
 
--- Insert data into BC_PROJECTS
 INSERT INTO
     BC_PROJECTS(project_id, project_name)
 VALUES
@@ -54,7 +51,6 @@ INSERT INTO
 VALUES
     (25, 'Power Lite');
 
--- Insert data into BC_JOBS
 INSERT INTO
     BC_JOBS(job_id, job_title, charge_hour)
 VALUES
@@ -90,7 +86,6 @@ INSERT INTO
 VALUES
     (507, 'Clerical Support', 26.87);
 
--- Insert data into BC_EMPLOYEES
 INSERT
     ALL INTO bc_employees (employee_id, first_name, last_name, job_id)
 VALUES
@@ -126,7 +121,6 @@ SELECT
 FROM
     DUAL;
 
--- Insert data into BC_BILLINGS
 INSERT
     ALL INTO bc_billings (project_id, employee_id, hours_billed)
 VALUES
@@ -176,7 +170,6 @@ SELECT
 FROM
     DUAL;
 
--- Assign project leaders
 UPDATE
     BC_PROJECTS
 SET
