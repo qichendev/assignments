@@ -1,0 +1,82 @@
+/* Main stylesheet for Bomb Batteries */
+body {
+  background-color: #f0f0f0;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #004d99;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 10px;
+}
+
+nav {
+  background-color: #333;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+nav a:hover {
+  color: #ffcc00;
+}
+
+main {
+  display: block;
+  background-color: white;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #004d99;
+  font-size: 2.2em;
+}
+
+h2 {
+  color: #006600;
+  font-size: 1.8em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+footer {
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+}
+
+footer a {
+  color: #ffcc00;
+}

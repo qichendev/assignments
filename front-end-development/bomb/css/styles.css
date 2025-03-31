@@ -1,0 +1,115 @@
+/* External stylesheet for BOMB Batteries website */
+/* Created by Qi Chen - C0944666 */
+
+/* Body and general styles */
+body {
+    background-color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background-color: #ff5500;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 10px;
+}
+
+/* Navigation */
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+nav a:hover {
+    color: #ff5500;
+}
+
+/* Main content */
+main {
+    display: block;
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h1 {
+    color: #ff5500;
+    font-size: 2.5em;
+}
+
+h2 {
+    color: #333;
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+/* Welcome content */
+.welcome-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcome-content img {
+    margin-bottom: 20px;
+}
+
+/* List items */
+ul, ol {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+}
+
+footer a {
+    color: #ff5500;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

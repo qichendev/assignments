@@ -1,0 +1,81 @@
+/* 
+   Stylesheet for Team page
+   Author: Your Name
+   Student Number: Your Student Number
+*/
+
+/* Section Styling */
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Article Styling */
+article {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    border-left: 5px solid #0066cc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+article h2 {
+    border-bottom: 2px solid #0066cc;
+    padding-bottom: 5px;
+}
+
+/* Aside Styling */
+aside {
+    padding: 15px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+aside h3 {
+    color: #333;
+}
+
+/* Figure and Figcaption Styling */
+figure {
+    margin: 15px 0;
+    text-align: center;
+}
+
+figure img {
+    border-radius: 50%;
+    border: 3px solid #0066cc;
+    max-width: 150px;
+}
+
+figcaption {
+    font-style: italic;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Responsive Layout */
+@media screen and (min-width: 768px) {
+    /* Two-column layout for larger screens */
+    main {
+        display: grid;
+        grid-template-columns: 70% 30%;
+        grid-gap: 20px;
+    }
+    
+    section {
+        grid-column: 1 / -1;
+    }
+    
+    article {
+        grid-column: 1;
+    }
+    
+    aside {
+        grid-column: 2;
+        grid-row: 2 / span 2;
+    }
+}
