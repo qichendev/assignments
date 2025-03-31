@@ -2,100 +2,101 @@
 /* Created by Qi Chen - C0944666 */
 
 /* Default - Mobile First Design */
-.tablet-view, .desktop-view {
-    display: none;
+.tablet-view,
+.desktop-view {
+  display: none;
 }
 
 .mobile-view {
-    display: block;
+  display: block;
 }
 
 /* Responsive navigation */
-nav a {
+/* nav a {
     display: block;
     padding: 8px;
     border-bottom: 1px solid #444;
 }
 
 /* Style pseudo-classes for navigation links */
-nav a:link {
+/* nav a:link {
     color: #fff;
 }
 
 nav a:visited {
     color: #cccccc;
-}
-
-nav a:hover {
-    color: #ff5500;
-    background-color: #444;
+} */
+*/ nav a:hover {
+  color: #ff5500;
+  background-color: #444;
 }
 
 nav a:active {
-    color: #ffaa00;
+  color: #ffaa00;
 }
 
 /* Tablet Media Query */
 @media only screen and (min-width: 600px) {
-    .mobile-view {
-        display: none;
-    }
-    
-    .tablet-view {
-        display: block;
-    }
-    
-    .desktop-view {
-        display: none;
-    }
-    
-    nav a {
-        display: inline-block;
-        border-bottom: none;
-    }
-    
-    h1 {
-        font-size: 2em;
-    }
-    
-    /* Flex layout for tablet */
-    .about-content {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    
-    .about-section {
-        width: 48%;
-    }
+  .mobile-view {
+    display: none;
+  }
+
+  .tablet-view {
+    display: block;
+  }
+
+  .desktop-view {
+    display: none;
+  }
+
+  nav a {
+    display: inline-block;
+    border-bottom: none;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  /* Flex layout for tablet */
+  .about-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .about-section {
+    width: 48%;
+  }
 }
 
 /* Desktop Media Query */
 @media only screen and (min-width: 992px) {
-    .mobile-view, .tablet-view {
-        display: none;
-    }
-    
-    .desktop-view {
-        display: block;
-    }
-    
-    /* Multi-column layout for desktop */
-    .about-content {
-        column-count: 2;
-        column-gap: 30px;
-    }
-    
-    h1 {
-        font-size: 2.5em;
-        column-span: all;
-    }
-    
-    /* Enhanced styling for desktop */
-    .guarantee {
-        background-color: #fff9e0;
-        padding: 20px;
-        border-left: 5px solid #ff5500;
-        margin: 20px 0;
-    }
+  .mobile-view,
+  .tablet-view {
+    display: none;
+  }
+
+  .desktop-view {
+    display: block;
+  }
+
+  /* Multi-column layout for desktop */
+  .about-content {
+    column-count: 2;
+    column-gap: 30px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    column-span: all;
+  }
+
+  /* Enhanced styling for desktop */
+  .guarantee {
+    background-color: #fff9e0;
+    padding: 20px;
+    border-left: 5px solid #ff5500;
+    margin: 20px 0;
+  }
 }
