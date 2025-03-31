@@ -1,0 +1,85 @@
+/* Team page stylesheet for BOMB Batteries website */
+/* Created by Qi Chen - C0944666 */
+
+/* Article styling */
+article {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Section styling */
+section {
+    margin-bottom: 20px;
+}
+
+/* Aside styling */
+aside {
+    background-color: #ffe6cc;
+    padding: 15px;
+    border-left: 5px solid #ff5500;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Team member layout */
+.team-member {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.team-member figure {
+    margin: 0 20px 0 0;
+    text-align: center;
+    min-width: 150px;
+}
+
+.team-member figcaption {
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 0.9em;
+}
+
+/* Department styling */
+.department {
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.department figure {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.department figcaption {
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* Join team aside */
+.join-team {
+    background-color: #e6ffe6;
+    border-left-color: #00cc00;
+}
+
+/* Security clearance aside */
+.security-clearance {
+    background-color: #ffcccc;
+    border-left-color: #cc0000;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+    .team-member {
+        flex-direction: column;
+    }
+    
+    .team-member figure {
+        margin: 0 0 15px 0;
+        width: 100%;
+    }
+}

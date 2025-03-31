@@ -1,0 +1,118 @@
+/* 
+   Stylesheet for About page
+   Author: Your Name
+   Student Number: Your Student Number
+*/
+
+/* Responsive Layout */
+/* Mobile first approach */
+
+/* Default styles for mobile */
+.mobile {
+    display: block;
+}
+
+.tablet, .desktop {
+    display: none;
+}
+
+/* Style for navigation links with pseudo-classes */
+nav a {
+    transition: all 0.3s ease;
+}
+
+nav a:link {
+    color: #ffffff;
+}
+
+nav a:visited {
+    color: #cccccc;
+}
+
+nav a:hover {
+    color: #0099ff;
+    text-decoration: underline;
+}
+
+nav a:active {
+    color: #ff6600;
+}
+
+/* Ordered list styling */
+ol {
+    counter-reset: item;
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+ol li {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+ol li:before {
+    color: #0066cc;
+}
+
+/* Guarantee section */
+h2 + p {
+    padding: 15px;
+    background-color: #f0f8ff;
+    border-left: 5px solid #0066cc;
+}
+
+/* Media Queries */
+/* Tablet Layout */
+@media only screen and (min-width: 768px) {
+    .mobile {
+        display: none;
+    }
+    
+    .tablet {
+        display: block;
+    }
+    
+    .desktop {
+        display: none;
+    }
+    
+    body {
+        font-size: 18px;
+    }
+    
+    .container {
+        width: 90%;
+    }
+    
+    h1 {
+        font-size: 2.2em;
+    }
+}
+
+/* Desktop Layout */
+@media only screen and (min-width: 1024px) {
+    .mobile, .tablet {
+        display: none;
+    }
+    
+    .desktop {
+        display: block;
+    }
+    
+    body {
+        font-size: 20px;
+    }
+    
+    .container {
+        width: 80%;
+    }
+    
+    h1 {
+        font-size: 2.5em;
+    }
+    
+    main {
+        padding: 30px;
+    }
+}

@@ -1,0 +1,83 @@
+/* Training page stylesheet for BOMB Batteries website */
+/* Created by Qi Chen - C0944666 */
+
+/* Training intro section */
+.training-intro {
+    background-color: #fff9e0;
+    padding: 15px;
+    border-left: 5px solid #ff5500;
+    margin-bottom: 30px;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+caption {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #ff5500;
+    color: white;
+    caption-side: top;
+}
+
+th {
+    background-color: #333;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #444;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+.odd-row {
+    background-color: #f2f2f2;
+}
+
+.even-row {
+    background-color: #ffffff;
+}
+
+/* Row hover effect */
+tr:hover {
+    background-color: #ffe6cc;
+}
+
+/* Certification section */
+.certification {
+    background-color: #e6f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.certification h2 {
+    color: #0066cc;
+}
+
+.certification ul {
+    list-style-type: square;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    th, td {
+        min-width: 120px;
+    }
+}
