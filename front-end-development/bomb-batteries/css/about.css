@@ -1,36 +1,42 @@
-/* Responsive styles for About page */
+/* About page stylesheet for BOMB Batteries website */
+/* Created by Qi Chen - C0944666 */
 
-/* Default (Mobile First) Styles */
-.mobile-view {
-  display: block;
-}
-
+/* Default - Mobile First Design */
 .tablet-view,
 .desktop-view {
   display: none;
 }
 
-/* Navigation link pseudo-classes */
-nav a:link {
-  color: white;
-  text-decoration: none;
+.mobile-view {
+  display: block;
+}
+
+/* Responsive navigation */
+/* nav a {
+    display: block;
+    padding: 8px;
+    border-bottom: 1px solid #444;
+}
+
+/* Style pseudo-classes for navigation links */
+/* nav a:link {
+    color: #fff;
 }
 
 nav a:visited {
-  color: #cccccc;
-}
-
-nav a:hover {
-  color: #ffcc00;
-  text-decoration: underline;
+    color: #cccccc;
+} */
+*/ nav a:hover {
+  color: #ff5500;
+  background-color: #444;
 }
 
 nav a:active {
-  color: #ff9900;
+  color: #ffaa00;
 }
 
 /* Tablet Media Query */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media only screen and (min-width: 600px) {
   .mobile-view {
     display: none;
   }
@@ -43,22 +49,30 @@ nav a:active {
     display: none;
   }
 
-  .about-columns {
-    display: flex;
-    gap: 20px;
+  nav a {
+    display: inline-block;
+    border-bottom: none;
   }
 
-  .about-column {
-    flex: 1;
+  h1 {
+    font-size: 2em;
+  }
+
+  /* Flex layout for tablet */
+  .about-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .about-section {
+    width: 48%;
   }
 }
 
 /* Desktop Media Query */
-@media screen and (min-width: 1024px) {
-  .mobile-view {
-    display: none;
-  }
-
+@media only screen and (min-width: 992px) {
+  .mobile-view,
   .tablet-view {
     display: none;
   }
@@ -67,24 +81,22 @@ nav a:active {
     display: block;
   }
 
-  .about-flex {
-    display: flex;
-    gap: 30px;
+  /* Multi-column layout for desktop */
+  .about-content {
+    column-count: 2;
+    column-gap: 30px;
   }
 
-  .about-main {
-    flex: 3;
+  h1 {
+    font-size: 2.5em;
+    column-span: all;
   }
 
-  .about-sidebar {
-    flex: 1;
-  }
-
-  .sidebar-box {
-    background-color: #f5f5f5;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Enhanced styling for desktop */
+  .guarantee {
+    background-color: #fff9e0;
+    padding: 20px;
+    border-left: 5px solid #ff5500;
+    margin: 20px 0;
   }
 }

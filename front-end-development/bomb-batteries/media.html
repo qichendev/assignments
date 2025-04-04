@@ -1,57 +1,50 @@
 <!DOCTYPE html>
+<!-- Name: Qi Chen, Student Number: C0944666 -->
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title>Media - Bomb Batteries</title>
+    <title>Media - BOMB Batteries</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
     <style>
-      .media-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-        justify-content: center;
-      }
-
-      .media-item {
-        flex: 1;
-        min-width: 300px;
-        margin-bottom: 30px;
-      }
-
-      .media-content {
-        background-color: #f5f5f5;
+      .media-section {
+        margin: 30px 0;
         padding: 20px;
+        background-color: #f9f9f9;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
-      video,
-      audio {
+      .media-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .media-caption {
+        font-style: italic;
+        margin-top: 10px;
+        color: #666;
+        text-align: center;
+      }
+
+      audio,
+      video {
         width: 100%;
+        margin: 15px 0;
+      }
+
+      .media-intro {
+        background-color: #fff9e0;
+        padding: 15px;
+        border-left: 5px solid #ff5500;
+        margin-bottom: 30px;
+        border-radius: 0 8px 8px 0;
       }
     </style>
   </head>
   <body>
-    <!-- Qi Chen C0944666 -->
     <div class="container">
-      <header>
-        <img
-          src="images/banner.jpg"
-          alt="Bomb Batteries - Powering Your World"
-          width="900"
-          height="200"
-        />
-      </header>
-
       <nav>
-        <a href="index.html"
-          ><img
-            src="images/logo.png"
-            alt="Bomb Batteries Logo"
-            width="50"
-            height="50"
-        /></a>
         <a href="index.html">Home</a> &nbsp; &nbsp;
         <a href="about.html">About</a> &nbsp; &nbsp;
         <a href="team.html">Our Team</a> &nbsp; &nbsp;
@@ -59,102 +52,119 @@
         <a href="training.html">Training</a> &nbsp; &nbsp;
         <a href="media.html">Media</a> &nbsp; &nbsp;
         <a href="faqs.html">FAQs</a> &nbsp; &nbsp;
-        <a href="contact.html">Contact Us</a>
+        <a href="contact.html">Contact Us</a> &nbsp; &nbsp;
       </nav>
 
       <main>
-        <h1>Media Resources</h1>
+        <h1>BOMB Media Gallery</h1>
 
-        <p>
-          Welcome to our media center! Here you'll find helpful videos and audio
-          content about battery technology, maintenance tips, and product
-          demonstrations. These resources are designed to help you get the most
-          out of your batteries and make informed purchasing decisions.
-        </p>
+        <section class="media-intro">
+          <p>
+            Welcome to our media gallery where you can experience the explosive
+            power of BOMB batteries through audiovisual demonstrations. Please
+            note that no actual nuclear materials were harmed in the making of
+            these videos (that we're legally allowed to admit).
+          </p>
+          <p>
+            For security reasons, some footage has been redacted or altered to
+            comply with international treaties and to prevent our competitors
+            from stealing our proprietary "enrichment" techniques.
+          </p>
+        </section>
 
-        <div class="media-container">
-          <div class="media-item">
-            <h2>Product Demonstration Video</h2>
-            <div class="media-content">
-              <video controls poster="images/video-thumbnail.jpg">
-                <source src="video/battery-demo.mp4" type="video/mp4" />
-                <source src="video/battery-demo.webm" type="video/webm" />
-                Your browser does not support the video tag.
-              </video>
-              <h3>PowerMax Lithium Series: Product Overview</h3>
-              <p>
-                This video demonstrates the features and benefits of our premium
-                PowerMax Lithium battery series. Learn about their extended
-                lifespan, enhanced performance in extreme temperatures, and
-                ideal applications.
-              </p>
-            </div>
+        <section class="media-section">
+          <h2>The Sound of BOMB Power</h2>
+          <div class="media-container">
+            <p>
+              Listen to our CEO, Dr. Ka-Boom, explain the revolutionary
+              technology behind our batteries and why they're banned in at least
+              12 countries:
+            </p>
+            <audio controls>
+              <source src="media/bomb-podcast.mp3" type="audio/mpeg" />
+              <source src="media/bomb-podcast.ogg" type="audio/ogg" />
+              Your browser does not support the audio element.
+            </audio>
+            <p class="media-caption">
+              Audio excerpt from "The Explosive Truth: How BOMB Batteries Are
+              Revolutionizing Energy Storage (And Possibly Violating The Geneva
+              Convention)"
+            </p>
           </div>
+        </section>
 
-          <div class="media-item">
-            <h2>Battery Maintenance Tips</h2>
-            <div class="media-content">
-              <audio controls>
-                <source src="audio/maintenance-tips.mp3" type="audio/mpeg" />
-                <source src="audio/maintenance-tips.ogg" type="audio/ogg" />
-                Your browser does not support the audio tag.
-              </audio>
-              <h3>Expert Battery Maintenance Tips</h3>
-              <p>
-                Listen to our battery expert, Robert Singh, share valuable tips
-                for extending the life of your automotive and deep cycle
-                batteries. This podcast covers proper charging techniques,
-                maintenance schedules, and signs that your battery needs
-                replacement.
-              </p>
-            </div>
+        <section class="media-section">
+          <h2>BOMB Batteries in Action</h2>
+          <div class="media-container">
+            <p>
+              Watch our flagship MEGATON-9000 battery power an entire
+              neighborhood grid for 72 hours (footage accelerated for legal
+              reasons):
+            </p>
+            <video controls>
+              <source src="media/battery-demo.mp4" type="video/mp4" />
+              <source src="media/battery-demo.webm" type="video/webm" />
+              Your browser does not support the video element.
+            </video>
+            <p class="media-caption">
+              Notice the slight green glow? That's our proprietary
+              "Eco-Indicator" and definitely not radiation.
+            </p>
           </div>
-        </div>
+        </section>
 
-        <div class="media-container">
-          <div class="media-item">
-            <h2>Tutorial Video: Choosing the Right Battery</h2>
-            <div class="media-content">
-              <video controls poster="images/tutorial-thumbnail.jpg">
-                <source src="video/choosing-batteries.mp4" type="video/mp4" />
-                <source src="video/choosing-batteries.webm" type="video/webm" />
-                Your browser does not support the video tag.
-              </video>
-              <h3>How to Choose the Right Battery for Your Application</h3>
-              <p>
-                This comprehensive tutorial guides you through the process of
-                selecting the optimal battery for different devices and
-                applications. Learn about different battery chemistries,
-                capacity ratings, and how to match a battery to your specific
-                needs.
-              </p>
-            </div>
+        <section class="media-section">
+          <h2>Customer Testimonials</h2>
+          <div class="media-container">
+            <p>
+              Hear from satisfied customers who have successfully used BOMB
+              batteries without triggering international incidents:
+            </p>
+            <audio controls>
+              <source src="media/testimonials.mp3" type="audio/mpeg" />
+              <source src="media/testimonials.ogg" type="audio/ogg" />
+              Your browser does not support the audio element.
+            </audio>
+            <p class="media-caption">
+              Note: All customers shown are professional actors. Any resemblance
+              to known members of underground militias is purely coincidental.
+            </p>
           </div>
+        </section>
 
-          <div class="media-item">
-            <h2>Customer Testimonials</h2>
-            <div class="media-content">
-              <audio controls>
-                <source src="audio/testimonials.mp3" type="audio/mpeg" />
-                <source src="audio/testimonials.ogg" type="audio/ogg" />
-                Your browser does not support the audio tag.
-              </audio>
-              <h3>Real Customer Experiences</h3>
-              <p>
-                Hear from satisfied customers about their experiences with Bomb
-                Batteries products. These testimonials cover a range of products
-                from our automotive batteries to our specialty industrial power
-                solutions.
-              </p>
-            </div>
+        <section class="media-section">
+          <h2>Product Safety Demonstration</h2>
+          <div class="media-container">
+            <p>
+              Our Chief Safety Officer demonstrates proper handling techniques
+              for our Plutonium-AA batteries:
+            </p>
+            <video controls>
+              <source src="media/safety-demo.mp4" type="video/mp4" />
+              <source src="media/safety-demo.webm" type="video/webm" />
+              Your browser does not support the video element.
+            </video>
+            <p class="media-caption">
+              The hazmat suit is just for show. Mostly.
+            </p>
           </div>
-        </div>
+        </section>
       </main>
 
       <footer>
-        &copy; Copyright 2099. All Rights Reserved.<br />
-        <a href="mailto:contact@bomb.com">Request information</a><br />
-        Qi Chen &nbsp; &nbsp; C0944666
+        <p>
+          &copy; 2025 BOMB Batteries - Explosion Guaranteed or Your Money Back!
+          | <a href="contact.html">Contact Us</a>
+        </p>
+        <p>
+          <small
+            >Warning: BOMB Batteries are not responsible for any craters,
+            sinkholes, mutated wildlife, or spontaneous combustion resulting
+            from product use. By reading this disclaimer, you waive all rights
+            to legal action in this dimension and seven parallel
+            universes.</small
+          >
+        </p>
       </footer>
     </div>
   </body>
