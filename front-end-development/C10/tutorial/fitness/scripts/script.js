@@ -16,21 +16,21 @@ function hamburger() {
 
 function burpees() {
   videoSource.src = "media/burpees.mp4";
-  descriptionSource.src = "media/burpees-description.vtt";
+  descriptionSource.src = "media/burpees-descriptions.vtt";
   video.style.display = "block";
   video.load();
 }
 
 function plank() {
   videoSource.src = "media/plank.mp4";
-  descriptionSource.src = "media/plank-description.vtt";
+  descriptionSource.src = "media/plank-descriptions.vtt";
   video.style.display = "block";
   video.load();
 }
 
 function mountain() {
   videoSource.src = "media/mc.mp4";
-  descriptionSource.src = "media/mountain-description.vtt";
+  descriptionSource.src = "media/mountain-descriptions.vtt";
   video.style.display = "block";
   video.load();
 }
