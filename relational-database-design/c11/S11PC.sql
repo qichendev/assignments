@@ -303,30 +303,30 @@ insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, da
 
 -- SELECT STATEMENT
 
-SELECT dealer_name AS 'Dealer'
-    , UPPER(dealer_street || ' ' || dealer_city || ' , ' || dealer_state || ' ' || dealer_zip) AS 'Address'
+SELECT dealer_name AS "Dealer", 
+       UPPER(dealer_street || ' ' || dealer_city || ' , ' || dealer_state || ' ' || dealer_zip) AS "Address"
 FROM p_dealers
 WHERE dealer_id IN (101, 407, 120)
 ORDER BY dealer_name;
 
-SELECT first_name || ' ' || last_name || AS "Previous Owner"
-    , LOWER(owner_street  || ' ' || owner_city || ' , ' || owner_state || ' ' || owner_zip) AS "Address"
+SELECT first_name || ' ' || last_name AS "Previous Owner",
+       LOWER(owner_street || ' ' || owner_city || ' , ' || owner_state || ' ' || owner_zip) AS "Address"
 FROM p_previous_owners
 WHERE owner_id BETWEEN 1010 AND 1015
 ORDER BY "Previous Owner";
 
-SELECT CONCAT("Previous owner: ", UPPER(last_name)) AS "Previous Owners"
+SELECT CONCAT('Previous owner: ', UPPER(last_name)) AS "Previous Owners"
 FROM p_previous_owners
-WHERE owner_state = 'MI' AND owner_city = "ANN Arbor"
+WHERE owner_state = 'MI' AND UPPER(owner_city) = 'ANN ARBOR'
 ORDER BY last_name;
 
-SELECT UPPER(owner_city) AS "CITY"
-    , LENGTH(owner_city) AS "CITY_LENGTH"
+SELECT UPPER(owner_city) AS "CITY",
+       LENGTH(owner_city) AS "CITY_LENGTH"
 FROM p_previous_owners
 ORDER BY owner_city;
 
-SELECT dealer_name AS "DEALER_NAME"
-    , manager_id AS "MANAGER_ID"
+SELECT dealer_name AS "DEALER_NAME",
+       manager_id AS "MANAGER_ID"
 FROM p_dealers
 WHERE manager_id IS NOT NULL
 ORDER BY dealer_name;
@@ -336,36 +336,36 @@ FROM p_dealers
 WHERE manager_id IS NOT NULL
 ORDER BY dealer_name;
 
-SELECT model_year || " " || car_make || " " || car_model AS "Cars with no previous owner"
+SELECT model_year || ' ' || car_make || ' ' || car_model AS "Cars with no previous owner"
 FROM p_cars
-WHERE previous_owner_id IS NOT NULL
+WHERE previous_owner_id IS NULL
 ORDER BY model_year;
 
 SELECT 
     SUBSTR(first_name, 1, 1) || '. ' || last_name AS name
 FROM 
-    previous_owners
+    p_previous_owners
 WHERE 
-    UPPER(city) = UPPER(:ENTER_CITY)
+    UPPER(owner_city) = UPPER(:ENTER_CITY)
 ORDER BY 
     last_name DESC;
 
-SELECT first_name || " " || last_name AS "PREVIOUS_OWNER"
-  , owner_city
+SELECT first_name || ' ' || last_name AS "PREVIOUS_OWNER",
+       owner_city
 FROM p_previous_owners
-WHERE owner_city LIKE "B%" OR owner_city LIKE "b%"
+WHERE UPPER(owner_city) LIKE 'B%'
 ORDER BY "PREVIOUS_OWNER";
 
-SELECT model_year AS "MODEL_YEAR"
-  , car_make AS "CAR_MAKE"
-  , car_model AS "CAR_MODEL"
-  , CONCAT("$", selling_price) AS "SELLING PRICE"
+SELECT model_year AS "MODEL_YEAR",
+       car_make AS "CAR_MAKE",
+       car_model AS "CAR_MODEL",
+       CONCAT('$', selling_price) AS "SELLING PRICE"
 FROM p_cars
-WHERE car_make IN ("Dodge", "Nissan", "Lincoln") 
-  AND selling_price BETWEEN IN 71000 AND 74000
+WHERE car_make IN ('Dodge', 'Nissan', 'Lincoln') 
+  AND selling_price BETWEEN 71000 AND 74000
 ORDER BY model_year, car_make, car_model DESC;
 
-SELECT CONCAT(first_name, CONCAT(" ", last_name)) AS "NAME"
+SELECT CONCAT(first_name, CONCAT(' ', last_name)) AS "NAME"
 FROM p_previous_owners
-WHERE LOWER(CONCAT(first_name, last_name)) LIKE "%at%"
+WHERE LOWER(CONCAT(first_name, last_name)) LIKE '%at%'
 ORDER BY last_name;
