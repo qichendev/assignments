@@ -1,651 +1,386 @@
-DROP SEQUENCE b_order_id_seq;
+-- Prime Auto Group
 
-DROP TABLE    b_employees   CASCADE CONSTRAINTS;
-DROP TABLE    b_orders      CASCADE CONSTRAINTS;
-DROP TABLE    b_products    CASCADE CONSTRAINTS;
-DROP TABLE    b_order_lines CASCADE CONSTRAINTS;
-DROP TABLE    b_warehouses  CASCADE CONSTRAINTS;
-DROP TABLE    b_inventory   CASCADE CONSTRAINTS;
-DROP TABLE    b_prices      CASCADE CONSTRAINTS;
-DROP TABLE    b_categories;
-DROP TABLE    b_departments;
-DROP TABLE    b_jobs;
-DROP TABLE    b_customers;
+DROP TABLE p_dealers          CASCADE CONSTRAINTS;
+DROP TABLE p_previous_owners  CASCADE CONSTRAINTS;
+DROP TABLE p_cars             CASCADE CONSTRAINTS;
+DROP TABLE p_categories       CASCADE CONSTRAINTS;
+DROP TABLE p_services         CASCADE CONSTRAINTS;
+DROP TABLE p_work_orders      CASCADE CONSTRAINTS;
+-- DROP TABLE p_colors           CASCADE CONSTRAINTS;
+-- DROP TABLE p_car_locations    CASCADE CONSTRAINTS;
+---- SERVICE_REQUESTS
 
-------------------------------------
-CREATE TABLE b_warehouses(
-  warehouse_id    INTEGER       NOT NULL,
-  whse_city       VARCHAR(15) );
+CREATE TABLE p_categories (
+  category_id          INTEGER,
+  category_description VARCHAR(40) );
 
-------------------------------------
-CREATE TABLE b_categories(
-  category_code   VARCHAR(2)    NOT NULL,
-  category_name   VARCHAR(25)   NOT NULL );
-
-CREATE TABLE b_departments (
-  department_code VARCHAR(2)    NOT NULL,
-  department_name VARCHAR(25)   NOT NULL,
-  manager_id      INTEGER );
-
-
-CREATE TABLE b_jobs (
-  job_code        VARCHAR(7)    NOT NULL,
-  job_title       VARCHAR(30)   NOT NULL,
-  min_salary      DECIMAL(9,2)  NOT NULL,
-  max_salary      DECIMAL(9,2)  NOT NULL );
-
-------------------------------------
-CREATE TABLE b_employees(
-  employee_id     INTEGER       NOT NULL,
-  first_name      VARCHAR(15)   NOT NULL,
-  m_initial       VARCHAR(1),
-  last_name       VARCHAR(15)   NOT NULL,
-  street          VARCHAR(50)   NOT NULL,
-  emp_city        VARCHAR(30)   NOT NULL,
-  emp_state       VARCHAR(2)    NOT NULL,
-  emp_zip         VARCHAR(7)    NOT NULL,
-  soc_sec_no      DECIMAL(9)    NOT NULL,
-  hire_date       DATE          DEFAULT current_date NOT NULL,
-  monthly_salary  DECIMAL(7),
-  commission      DECIMAL(7),
-  comm_rate       DECIMAL(3,2),
-  department_code VARCHAR(2),
-  job_code        VARCHAR(7),
-  manager_id      INTEGER ); 
-
---------------------------------------------
-CREATE TABLE b_customers(
-  customer_id     INTEGER
-  GENERATED ALWAYS AS IDENTITY
-  START WITH 100 INCREMENT BY 10
-  NOCACHE
-  NOT NULL,
-  customer_name   VARCHAR(35)  NOT NULL,
-  street          VARCHAR(50)  NOT NULL,
-  cust_city       VARCHAR(30)  NOT NULL,
-  cust_state      VARCHAR(2)   NOT NULL,
-  cust_zip        VARCHAR(7)   NOT NULL,
-  country         VARCHAR(2)   NOT NULL,
-  credit_limit    DECIMAL(7)   DEFAULT 50000 NOT NULL,
-  balance         DECIMAL(9,2) NOT NULL,
-  discount        DECIMAL(3,3),
-  membership_date DATE         DEFAULT CURRENT_DATE );
-
------------------------------------------------
-CREATE TABLE b_products(
-  product_code     VARCHAR(4)   NOT NULL,
-  prod_description VARCHAR(50)  NOT NULL,
-  category_code    VARCHAR(2)   NOT NULL,
-  price            DECIMAL(7,2) NOT NULL ); 
-
--------------------------------------------------
-CREATE TABLE b_orders(
-  order_id        INTEGER      NOT NULL,
-  order_date      DATE         NOT NULL,
-  customer_id     INTEGER      NOT NULL,
-  ship_date       DATE,
-  seller_id       INTEGER ); 
------------------------------------------------
-CREATE TABLE b_order_lines
-( order_id        INTEGER      NOT NULL,
-  product_code    VARCHAR(4)   NOT NULL,
-  quantity        DECIMAL(3,0) NOT NULL,
-  price_paid      DECIMAL(7,2) NOT NULL ); 
-
------------------------------------------------
-CREATE TABLE b_inventory(
-  warehouse_id    INTEGER      NOT NULL,
-  product_code    VARCHAR(4)   NOT NULL,
-  qoh             DECIMAL(5,0) NOT NULL );
-  -- discontinued  VARCHAR(1) DEFAULT'N'  NOT NULL
------------------------------------------------
-CREATE TABLE b_prices(
-  product_code    VARCHAR(4)   NOT NULL,
-  start_date      DATE         NOT NULL,
-  end_date        DATE,
-  price           DECIMAL(7,2) NOT NULL);
-
--------------------------------------
--- SEQUENCE -------------------------
--------------------------------------
-CREATE SEQUENCE b_order_id_seq
-START WITH 1000
-INCREMENT BY 1
-NOCACHE;
-
--------------------------------------
--- PRIMARY Keys ---------------------
--------------------------------------
-ALTER TABLE b_departments
-ADD CONSTRAINT b_departments_pk
-PRIMARY KEY (department_code);
-
-ALTER TABLE b_employees
-ADD CONSTRAINT b_employees_pk
-PRIMARY KEY(employee_id);
+ALTER TABLE p_categories
+ADD CONSTRAINT p_categories_pk
+PRIMARY KEY ( category_id );
     
-ALTER TABLE b_warehouses
-ADD CONSTRAINT b_warehouse_pk
-PRIMARY KEY ( warehouse_id );
+INSERT INTO p_categories VALUES (200, 'Engine maintenance');
+INSERT INTO p_categories VALUES (300, 'Air conditioning');
+INSERT INTO p_categories VALUES (400, 'Tires');
+INSERT INTO p_categories VALUES (500, 'Electronic system');
+INSERT INTO p_categories VALUES (600, 'Body shop');
+INSERT INTO p_categories VALUES (700, 'Detailing');
 
-ALTER TABLE b_jobs
-ADD CONSTRAINT b_jobs_pk
-PRIMARY KEY (job_code);
+CREATE TABLE p_services (
+  service_id           INTEGER,
+  service_description  VARCHAR(50),
+  price                DECIMAL(7,2),
+  category_id          INTEGER );
 
-ALTER TABLE b_categories
-ADD CONSTRAINT b_categories_pk
-PRIMARY KEY ( category_code );
+ALTER TABLE p_services
+ADD CONSTRAINT p_services_pk
+PRIMARY KEY (service_id);
 
-ALTER TABLE b_products
-ADD CONSTRAINT b_products_pk
-PRIMARY KEY ( product_code );
+ALTER TABLE p_services
+ADD CONSTRAINT p_services_category_id_fk
+FOREIGN KEY (category_id)
+REFERENCES p_categories(category_id);
+    
+INSERT INTO p_services VALUES(201, 'Oil & filter', 85.75, 200);
+INSERT INTO p_services VALUES(401, 'Rotate tires', 125.95, 400);
+INSERT INTO p_services VALUES(202, 'Check oil and coolant levels', 99.45, 200);
+INSERT INTO p_services VALUES(203, 'Change air filter', 32.75, 200);
+INSERT INTO p_services VALUES(204, 'Replace transmission fluid', 89.25, 200);
+INSERT INTO p_services VALUES(205, 'Coolant fluid exchange', 60.25, 200);
+INSERT INTO p_services VALUES(206, 'Replace spark plugs', 44.95, 200);
+INSERT INTO p_services VALUES(207, 'Replace windshield wipers', 24.95, 200);
 
-ALTER TABLE b_inventory
-ADD CONSTRAINT b_inventory_pk
-PRIMARY KEY ( warehouse_id, product_code );
+CREATE TABLE p_work_orders (
+  work_ordep_no   INTEGER
+    GENERATED ALWAYS AS IDENTITY
+    START WITH 1001 INCREMENT BY 1
+    NOCACHE
+    NOT NULL,
+  service_id       INTEGER,
+  car_id  VARCHAR(50),
+  odometer       DECIMAL(7),
+  date_scheduled  DATE,
+  date_completed  DATE );
+  -- total_cost      DECIMAL(7,2) );
+  --hours_est
+  --hours_actual
+  -- mechanic_assigned
 
-ALTER TABLE b_customers
-ADD CONSTRAINT b_customers_pk
-PRIMARY KEY ( customer_id );
+ALTER TABLE p_work_orders
+ADD CONSTRAINT p_work_orders_pk
+PRIMARY KEY (work_ordep_no );
+    
+INSERT INTO p_work_orders VALUES(DEFAULT, 201, 1, 23000, '2025-05-15', '2025-05-15');
 
-ALTER TABLE b_orders
-ADD CONSTRAINT b_orders_pk
-PRIMARY KEY ( order_id );
+CREATE TABLE p_dealers (
+	dealer_id       INTEGER,
+	dealer_name     VARCHAR(40),
+  dealer_street   VARCHAR(50),    
+	dealer_city     VARCHAR(30),
+	dealer_state    VARCHAR(2),
+  dealer_zip      DECIMAL(5),
+	manager_id      INTEGER );
 
-ALTER TABLE b_order_lines
-ADD CONSTRAINT b_order_lines_pk
-PRIMARY KEY(order_id, product_code);
+ALTER TABLE p_dealers
+ADD CONSTRAINT p_dealers_pk
+PRIMARY KEY ( dealer_id );
+    
+INSERT INTO p_dealers VALUES (101, 'Downtown Autos', '123 Main Street', 'Detroit', 'MI', 48208, 396);
+INSERT INTO p_dealers VALUES (206, 'Eastside Better Used Cars', '1046 Sandhill Parkway', 'Troy', 'MI', 48085, 912);
+INSERT INTO p_dealers VALUES (407, 'Westside Car Sales', '2745 Clearlake Circle', 'Southfield', 'MI', 48075, 912);
+INSERT INTO p_dealers VALUES (681, 'Uptown Preowned Cars', '7349 Lakeview Drive', 'Dearborn', 'MI', 48228, 396);
+INSERT INTO p_dealers VALUES (817, 'Lakeside Used Vehicles', '2573 Ridge Vally Drive', 'Utica', 'MI', 48315, 267);
+INSERT INTO p_dealers VALUES (110, 'Notheast Auto Sales', '9134 Sunnyside Drive', 'Rochester', 'MI', 48306, NULL);
+INSERT INTO p_dealers VALUES (120, 'Bayside Autos', '8364 Airport Drive', 'Ann Arbor', 'MI', 48103, 267);
 
-ALTER TABLE b_prices
-ADD CONSTRAINT b_prices_pk
-PRIMARY KEY (product_code, start_date);
-
--------------------------------------
--- UNIQUE Keys ---------------------
--------------------------------------
-ALTER TABLE b_categories
-ADD CONSTRAINT b_categories_category_name_uk
-UNIQUE(category_name);
-
-ALTER TABLE b_departments
-ADD CONSTRAINT b_departments_department_name_uk
-UNIQUE(department_name);
-
-ALTER TABLE b_jobs
-ADD CONSTRAINT b_jobs_job_title_uk
-UNIQUE(job_title);
-
--------------------------------------
--- Foreign Keys ---------------------
--------------------------------------
-ALTER TABLE b_products
-ADD CONSTRAINT prod_category_code_fk
-FOREIGN KEY ( category_code )
-REFERENCES b_categories ( category_code ); 
-
-ALTER TABLE b_inventory
-ADD CONSTRAINT inv_warehouse_id_fk
-FOREIGN KEY ( warehouse_id )
-REFERENCES b_warehouses ( warehouse_id );
- 
-ALTER TABLE b_inventory
-ADD CONSTRAINT inv_product_code_fk
-FOREIGN KEY ( product_code )
-REFERENCES b_products ( product_code );
-
-ALTER TABLE b_employees
-ADD CONSTRAINT b_employees_department_id_fk
-FOREIGN KEY (department_code)
-REFERENCES b_departments (department_code);
-
-ALTER TABLE b_employees
-ADD CONSTRAINT b_employees_manager_id_fk
-FOREIGN KEY (manager_id)
-REFERENCES b_employees (employee_id);
-
-ALTER TABLE b_employees
-ADD CONSTRAINT b_employees_job_code_fk
-FOREIGN KEY (job_code)
-REFERENCES b_jobs (job_code);
-
-ALTER TABLE b_orders
-ADD CONSTRAINT b_orders_customer_id_fk
-FOREIGN KEY(customer_id)
-REFERENCES b_customers(customer_id);
-
-ALTER TABLE b_orders
-ADD CONSTRAINT orders_seller_id_fk
-FOREIGN KEY (seller_id)
-REFERENCES b_employees (employee_id);
-
-ALTER TABLE b_order_lines
-ADD CONSTRAINT ol_order_id_fk
-FOREIGN KEY ( order_id )
-REFERENCES b_orders ( order_id );
-      
-ALTER TABLE b_order_lines 
-ADD CONSTRAINT ol_product_code_fk
-FOREIGN KEY( product_code )
-REFERENCES b_products( product_code );
-
-ALTER TABLE b_prices
-ADD CONSTRAINT b_prices_product_code_fk
-FOREIGN KEY(product_code)
-REFERENCES b_products(product_code);
-
--------------------------------------
--- Constraints ----------------------
--------------------------------------
-ALTER TABLE b_customers
-ADD CONSTRAINT b_cust_state_ck
-CHECK(cust_state IN ('CA', 'CO', 'MI', 'MN', 'NY', 'NV', 'ON', 'SC', 'TX', 'WI', 'FL') );
+/*
+CREATE TABLE p_car_locations (
+  location_code  VARCHAR(2),
+  dealer_id      INTEGER,
+  car_id          INTEGER );
+--  location_fee      DECIMAL(3),
+--  renewal_date  DATE,
+--  renewal_period  DECIMAL(1),
+-- location_date
   
-ALTER TABLE b_customers
-ADD CONSTRAINT b_customers_credit_limit_ck
-CHECK(Credit_Limit < 1500000);
   
-ALTER TABLE b_customers
-ADD CONSTRAINT b_customers_balance_lt_credit_limit_ck
-CHECK(Balance < Credit_Limit);
+ALTER TABLE p_car_locations
+ADD CONSTRAINT p_car_locations_pk
+PRIMARY KEY ( location_code );
+
+INSERT INTO p_car_locations VALUES ('A1',101, 1001);
+INSERT INTO p_car_locations VALUES ('A2',101, 1002);
+INSERT INTO p_car_locations VALUES ('A3',101, NULL );
+INSERT INTO p_car_locations VALUES ('A4',101, 1001);
+INSERT INTO p_car_locations VALUES ('A5',101, 1002);
+INSERT INTO p_car_locations VALUES ('A6',101, NULL );
+INSERT INTO p_car_locations VALUES ('B1',102, 1001);
+INSERT INTO p_car_locations VALUES ('B2',102, 1002);
+INSERT INTO p_car_locations VALUES ('B3',102, NULL );
+INSERT INTO p_car_locations VALUES ('B4',102, 1001);
+INSERT INTO p_car_locations VALUES ('B5',102, 1002);
+INSERT INTO p_car_locations VALUES ('B6',102, NULL );
+*/
+
+CREATE TABLE p_previous_owners (
+  owner_id      INTEGER,
+  first_name    VARCHAR(50),
+  last_name     VARCHAR(50),
+  owner_street  VARCHAR(50),
+  owner_city    VARCHAR(50),
+  owner_state   VARCHAR(2),
+  owner_zip     DECIMAL(5),
+  phone_number  DECIMAL(10) );
+	
+ALTER TABLE p_previous_owners
+ADD CONSTRAINT p_previous_owners_pk
+PRIMARY KEY ( owner_id );
+
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1001, 'Michaela', 'Kinker', '5 Northport Park', 'Detroit', 'MI', '48242', '3133216444');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1002, 'Sherrie', 'Sackey', '3 Monterey Road', 'Detroit', 'MI', '48232', '3139721555');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1003, 'Erroll', 'Draper', '1 Heffernan Court', 'Detroit', 'MI', '48217', '3133119665');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1004, 'Julia', 'Yaneev', '5 Lakewood Gardens Park', 'Grand Rapids', 'MI', '49560', '6166162332');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1005, 'Mireille', 'Gerdes', '4 Schlimgen Place', 'Battle Creek', 'MI', '49018', '2695620220');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1006, 'Thacher', 'McDill', '66193 Birchwood Street', 'Lansing', 'MI', '48912', '5177888432');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1007, 'Dell', 'Buske', '162 Granby Center', 'Lansing', 'MI', '48956', '5176580980');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1008, 'Rodie', 'Mazdon', '684 Warbler Way', 'Lansing', 'MI', '48956', '5176835751');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1009, 'Dido', 'Snugg', '333 La Follette Drive', 'Detroit', 'MI', '48242', '2481230657');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1010, 'Vanda', 'Millgate', '16675 Grover Terrace', 'Detroit', 'MI', '48275', '3138716494');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1011, 'Emlynn', 'Trousdale', '30 Toban Place', 'Detroit', 'MI', '48206', '8108737741');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1012, 'Sherlocke', 'Harkess', '99438 Manitowish Hill', 'Grand Rapids', 'MI', '49505', '6161896592');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1013, 'Corie', 'Molines', '68 Golf View Street', 'Detroit', 'MI', '48217', '3136883109');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1014, 'Savina', 'Blucher', '39488 Esker Drive', 'Detroit', 'MI', '48258', '7347515667');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1015, 'Daren', 'Edmonds', '169 East Plaza', 'Lansing', 'MI', '48901', '5174847342');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1016, 'Marcille', 'Harber', '776 Thierer Circle', 'Grand Rapids', 'MI', '49510', '6167718852');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1017, 'Haleigh', 'Springthorpe', '41 Reindahl Alley', 'Warren', 'MI', '48092', '8104598348');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1018, 'Mariellen', 'Nel', '66 Erie Way', 'Detroit', 'MI', '48242', '3137155180');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1019, 'Karisa', 'Castilljo', '591 Blaine Circle', 'Lansing', 'MI', '48912', '5176519068');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1020, 'Adrianne', 'Peche', '6189 Mcbride Street', 'Lansing', 'MI', '48901', '5176712024');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1021, 'Nelli', 'Mularkey', '90695 Redwing Court', 'Saginaw', 'MI', '48604', '9897063682');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1022, 'Sarina', 'Chipping', '5 Bayside Trail', 'Grand Rapids', 'MI', '49544', '6169921788');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1023, 'Paul', 'Heasly', '6 Marcy Crossing', 'Lansing', 'MI', '48956', '5178083387');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1024, 'Tito', 'Nial', '36 Brickson Park Court', 'Detroit', 'MI', '48267', '3131104421');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1025, 'Isis', 'Scragg', '8 1st Parkway', 'Detroit', 'MI', '48267', '3137357740');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1026, 'Dane', 'Driussi', '3 Graedel Lane', 'Flint', 'MI', '48555', '8106473982');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1027, 'Pippo', 'Hugett', '234 Homewood Circle', 'Grand Rapids', 'MI', '49544', '6162441538');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1028, 'Albert', 'Widd', '0965 Old Gate Plaza', 'Battle Creek', 'MI', '49018', '2699250318');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1029, 'Morna', 'Tuminelli', '0 Hintze Avenue', 'Grand Rapids', 'MI', '49510', '6166774694');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1030, 'Anjanette', 'Cohani', '4427 Laurel Circle', 'Grand Rapids', 'MI', '49518', '6168748576');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1031, 'Dolf', 'Hutcheons', '925 Main Terrace', 'Troy', 'MI', '48098', '2483659855');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1032, 'Katharina', 'Veevers', '08463 Dwight Way', 'Troy', 'MI', '48098', '2487950505');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1033, 'Bobbi', 'Eliet', '9896 Grover Avenue', 'Detroit', 'MI', '48217', '3139082263');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1034, 'Garrett', 'Klais', '429 School Terrace', 'Grand Rapids', 'MI', '49544', '6166279297');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1035, 'Norbert', 'Sleney', '428 Menomonie Crossing', 'Southfield', 'MI', '48076', '3132063972');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1036, 'Will', 'Handscomb', '4405 Hazelcrest Trail', 'Flint', 'MI', '48550', '8103518474');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1037, 'Aldric', 'Bungey', '4 Green Point', 'Detroit', 'MI', '48295', '3133100917');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1038, 'Prince', 'Knotte', '13261 Erie Plaza', 'Detroit', 'MI', '48206', '5862636140');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1039, 'Archambault', 'Hoff', '59999 Westend Drive', 'Warren', 'MI', '48092', '8108754172');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1040, 'Murial', 'Duxbury', '6362 Loftsgordon Avenue', 'Saginaw', 'MI', '48604', '9894059322');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1041, 'Esmeralda', 'Thirsk', '656 Weeping Birch Pass', 'Lansing', 'MI', '48956', '5173466857');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1042, 'Reggie', 'Rook', '87388 Dottie Pass', 'Flint', 'MI', '48555', '8106474615');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1043, 'Dunstan', 'Pau', '515 Anderson Lane', 'Warren', 'MI', '48092', '5862681825');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1044, 'Louisa', 'Pennoni', '4 Express Street', 'Detroit', 'MI', '48275', '3139893921');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1045, 'Sammie', 'Rene', '3885 Stone Corner Crossing', 'Detroit', 'MI', '48267', '3134462271');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1046, 'Lindsy', 'Dockwra', '8 Coolidge Place', 'Detroit', 'MI', '48258', '2481831323');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1047, 'Kamilah', 'Fosbraey', '5679 Scott Crossing', 'Ann Arbor', 'MI', '48107', '7342030339');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1048, 'Durand', 'Ivanikhin', '42 Jana Drive', 'Detroit', 'MI', '48258', '2488616105');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1049, 'Hugo', 'Blakeborough', '60 Farragut Point', 'Southfield', 'MI', '48076', '8108495115');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1050, 'Wynne', 'Pierucci', '73 Nobel Drive', 'Detroit', 'MI', '48211', '7346083636');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1051, 'Jodie', 'Shaefer', '3 Crest Line Park', 'Detroit', 'MI', '48206', '5861634502');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1052, 'Nolan', 'Stock', '3041 John Wall Plaza', 'Grand Rapids', 'MI', '49544', '6164288714');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1053, 'Arline', 'Chadd', '01 Blaine Hill', 'Grand Rapids', 'MI', '49518', '6168680923');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1054, 'Ronnie', 'Adamovitch', '768 Shoshone Park', 'Detroit', 'MI', '48267', '3136340828');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1055, 'Kathye', 'McGurn', '949 Ramsey Crossing', 'Ann Arbor', 'MI', '48107', '7349824830');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1056, 'Hewet', 'Feechan', '7 Manley Drive', 'Dearborn', 'MI', '48126', '3135049486');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1057, 'Port', 'Bydaway', '8 Kingsford Junction', 'Dearborn', 'MI', '48126', '7345540142');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1058, 'Anatole', 'Gutherson', '67691 Hoffman Plaza', 'battle creek', 'MI', '49018', '2694519429');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1059, 'Ingamar', 'Gifford', '6 Longview Parkway', 'Flint', 'MI', '48550', '8101511698');
+insert into p_previous_owners (owner_id, first_name, last_name, owner_street, owner_city, owner_state, owner_zip, phone_number) values (1060, 'Gillie', 'Gouthier', '88071 La Follette Hill', 'Detroit', 'MI', '48211', '8105128760');
+
+
+/*
+CREATE TABLE p_colors
+	(	colop_id					INTEGER,
+		color             VARCHAR(20) );
+
+ALTER TABLE p_colors
+ADD CONSTRAINT p_colors_pk
+PRIMARY KEY (colop_id);
+*/
+
+CREATE TABLE p_cars (
+  car_id              INTEGER,    
+  car_make            VARCHAR(50),
+  car_model           VARCHAR(50),
+  model_year          DECIMAL(4),
+  color               VARCHAR(20),
+  odometer            DECIMAL(7),
+  date_acquired       DATE,
+  acquired_price      DECIMAL(7),
+  selling_price       DECIMAL(7),
+  next_service_date   DATE,
+  dealer_id           INTEGER,
+  previous_owner_id   INTEGER );
   
-ALTER TABLE b_customers
-ADD CONSTRAINT b_customers_discount_ck
-CHECK(discount BETWEEN 0 AND .225);
+  -- location_code
+  -- last_service_date
+  -- dealer_fee
+  -- vin VARCHAR(17)
 
-ALTER TABLE b_orders
-ADD CONSTRAINT b_orders_ship_date_gt_order_date_ck
-CHECK(ship_date > order_date);
-  
-ALTER TABLE b_orders
-ADD CONSTRAINT b_orders_order_date_ck
-CHECK(order_date BETWEEN DATE '2019-01-01' AND DATE '2025-12-31');
-  
-ALTER TABLE b_orders
-ADD CONSTRAINT b_orders_ship_date_ck
-CHECK(ship_date BETWEEN DATE '2019-01-01' AND DATE '2025-12-31');
+ALTER TABLE p_cars
+ADD CONSTRAINT p_cars_pk
+PRIMARY KEY (car_id);
 
-ALTER TABLE b_prices
-ADD CONSTRAINT b_prices_price_ck
-CHECK(price BETWEEN 20.00 AND 8000.00 ); 
- 
-ALTER TABLE b_inventory
-ADD CONSTRAINT b_inventory_on_hand_ck
-CHECK(qoh BETWEEN 0 AND 150 );  
- 
-ALTER TABLE b_employees
-ADD CONSTRAINT b_employees_state_prov_ck
-CHECK(emp_state IN (' ', 'CA', 'CO', 'MI', 'MN', 'NY', 'NV', 'ON', 'SC', 'TX', 'WI', 'FL') );
-  
-ALTER TABLE b_employees
-ADD CONSTRAINT b_employees_sellers_rate_ck
-CHECK(comm_rate BETWEEN 0.03 AND 0.07 );
+ALTER TABLE p_cars
+ADD CONSTRAINT p_cars_dealer_id_fk
+FOREIGN KEY (dealer_id)
+REFERENCES p_dealers(dealer_id);
 
------------------------------------------
-INSERT INTO b_departments VALUES ('AD', 'Administration', 104);
-INSERT INTO b_departments VALUES ('AC', 'Accounting', 105);
-INSERT INTO b_departments VALUES ('MK', 'Marketing', NULL);
-INSERT INTO b_departments VALUES ('TR', 'Training', 110);
-INSERT INTO b_departments VALUES ('IT', 'Information Technology', NULL);
-INSERT INTO b_departments VALUES ('CA', 'Cameras', NULL);
-INSERT INTO b_departments VALUES ('MA', 'Major Appliances', 111);
-INSERT INTO b_departments VALUES ('SA', 'Small Appliances', NULL);
-INSERT INTO b_departments VALUES ('OP', 'Office Products', NULL);
-INSERT INTO b_departments VALUES ('VG', 'Video Games', 113);
-INSERT INTO b_departments VALUES ('HT', 'Home Theatre', 112);
+ALTER TABLE p_cars
+ADD CONSTRAINT p_cars_fk
+FOREIGN KEY (previous_owner_id)
+REFERENCES p_previous_owners(owner_id);
+	
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1001, 'Audi', '5000S', 2015, 'white', 73016, '2025-01-24', 59516, 70762, '2025-01-24', 101, 1001);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1002, 'BMW', '7 Series', 2016, 'white', 63018, '2025-09-01', 60018, 71358, '2025-09-01', 110, 1002);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1003, 'Saab', '900', 2017, 'blue', 53020, '2022-08-07', 60520, 71955, '2022-08-07', 101, 1003);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1004, 'Mitsubishi', 'Outlander', 2016, 'gray', 63020, '2025-08-19', 60020, 71361, '2025-08-19', 681, 1004);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1005, 'Jeep', 'Grand Cherokee', 2016, 'white', 63021, '2024-10-14', 60021, 71362, '2024-10-14', 817, 1005);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1006, 'Lincoln', 'Navigator L', 2019, 'red', 33025, '2021-07-07', 61525, 73150, null, 817, 1006);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1007, 'Ford', 'Thunderbird', 2018, 'white', 43025, '2022-09-12', 61025, 72556, '2022-09-12', 110, 1007);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1008, 'Mitsubishi', 'Mirage', 2016, 'white', 63024, '2023-10-12', 60024, 71366, '2023-10-12', 817, 1008);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1009, 'Nissan', '300ZX', 2020, 'gray', 23029, '2022-01-08', 62029, 73749, '2022-01-08', 206, null);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1010, 'Audi', 'A3', 2018, 'red', 43028, '2024-10-21', 61028, 72559, '2024-10-21', 407, 1010);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1011, 'Volvo', 'V70', 2019, 'gray', 33030, '2022-05-11', 61530, 73156, null, 817, 1011);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1012, 'Chevrolet', 'Suburban 2500', 2018, 'blue', 43030, '2021-08-18', 61030, 72562, '2021-08-18', 110, 1012);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1013, 'Suzuki', 'Aerio', 2019, 'red', 33032, '2025-07-23', 61532, 73158, '2025-07-23', 817, 1013);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1014, 'Chevrolet', 'Colorado', 2020, 'black', 23034, '2022-06-06', 62034, 73755, '2022-06-06', 110, 1014);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1015, 'GMC', 'Sonoma Club Coupe', 2017, 'white', 53032, '2022-08-13', 60532, 71970, '2022-08-13', 110, 1015);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1016, 'Dodge', 'Nitro', 2016, 'white', 63032, '2025-06-21', 60032, 71375, '2025-06-21', 120, 1016);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1017, 'Mazda', 'B-Series Plus', 2017, 'red', 53034, '2021-08-20', 60534, 71972, '2021-08-20', 681, 1017);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1018, 'Mitsubishi', 'Excel', 2018, 'white', 43036, '2024-03-13', 61036, 72569, '2024-03-13', 681, null);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1019, 'Mitsubishi', 'RVR', 2015, 'blue', 73034, '2023-04-25', 59534, 70783, '2023-04-25', 110, 1019);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1020, 'Oldsmobile', 'Achieva', 2015, 'silver', 73035, '2022-10-04', 59535, 70784, '2022-10-04', 206, 1020);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1021, 'Chevrolet', 'Express 1500', 2018, 'gray', 43039, '2022-06-08', 61039, 72572, '2022-06-08', 206, 1021);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1022, 'Land Rover', 'Range Rover', 2017, 'silver', 53039, '2025-01-02', 60539, 71978, '2025-01-02', 120, 1022);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1023, 'Dodge', 'Shadow', 2016, 'white', 63039, '2022-07-29', 60039, 71383, '2022-07-29', 110, 1023);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1024, 'Toyota', 'Ipsum', 2016, 'white', 63040, '2021-10-04', 60040, 71385, '2021-10-04', 101, 1024);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1025, 'Mazda', 'MX-5', 2019, 'silver', 33044, '2025-06-22', 61544, 73173, '2025-06-22', 120, null);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1026, 'Suzuki', 'XL7', 2016, 'silver', 63042, '2024-08-06', 60042, 71387, '2024-08-06', 681, 1026);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1027, 'Hyundai', 'Tucson', 2017, 'gray', 53044, '2023-01-17', 60544, 71984, '2023-01-17', 817, 1027);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1028, 'Nissan', '200SX', 2017, 'red', 53045, '2023-12-02', 60545, 71985, '2023-12-02', 120, 1028);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1029, 'Nissan', 'Sentra', 2018, 'red', 43047, '2025-03-12', 61047, 72582, '2025-03-12', 681, 1029);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1030, 'Chevrolet', 'Traverse', 2020, 'white', 23050, '2021-01-21', 62050, 73774, '2021-01-21', 101, 1030);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1031, 'Mazda', 'MPV', 2020, 'black', 23051, '2025-10-14', 62051, 73776, '2025-10-14', 407, 1031);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1032, 'Honda', 'Element', 2018, 'silver', 43050, '2022-04-25', 61050, 72585, null, 407, 1032);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1033, 'Toyota', 'Tacoma', 2017, 'gray', 53050, '2023-03-04', 60550, 71991, '2023-03-04', 101, 1033);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1034, 'Chevrolet', 'Suburban', 2018, 'white', 43052, '2024-06-20', 61052, 72588, '2024-06-20', 407, 1034);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1035, 'Infiniti', 'J', 2015, 'blue', 73050, '2022-04-26', 59550, 70802, '2022-04-26', 101, null);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1036, 'Pontiac', 'Grand Am', 2017, 'gray', 53053, '2025-02-26', 60553, 71994, '2025-02-26', 817, 1036);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1037, 'Ford', 'Tempo', 2016, 'white', 63053, '2024-08-19', 60053, 71400, '2024-08-19', 407, 1037);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1038, 'Audi', 'A3', 2016, 'gray', 63054, '2021-02-20', 60054, 71401, '2021-02-20', 817, 1038);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1039, 'Ford', 'Expedition EL', 2019, 'silver', 33058, '2021-03-02', 61558, 73189, '2021-03-02', 101, 1039);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1040, 'BMW', '530', 2017, 'silver', 53057, '2022-07-04', 60557, 71999, '2022-07-04', 120, null);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1041, 'Mitsubishi', 'Pajero', 2020, 'silver', 23061, '2024-06-20', 62061, 73787, '2024-06-20', 407, 1041);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1042, 'Lincoln', 'Continental', 2016, 'blue', 63058, '2021-11-15', 60058, 71406, '2021-11-15', 110, 1042);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1043, 'Chevrolet', 'Cavalier', 2015, 'black', 73058, '2025-10-01', 59558, 70811, '2025-10-01', 681, 1043);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1044, 'Dodge', 'Dakota Club', 2016, 'red', 63060, '2024-11-14', 60060, 71408, '2024-11-14', 407, 1044);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1045, 'Toyota', 'Avalon', 2016, 'silver', 63061, '2023-08-03', 60061, 71410, '2023-08-03', 407, 1045);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1046, 'Volvo', 'XC90', 2016, 'blue', 63062, '2023-10-07', 60062, 71411, '2023-10-07', 120, 1046);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1047, 'Chevrolet', 'Impala', 2020, 'silver', 23067, '2024-03-31', 62067, 73795, '2024-03-31', 817, 1047);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1048, 'Geo', 'Metro', 2019, 'blue', 33067, '2022-04-28', 61567, 73200, '2022-04-28', 817, 1048);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1049, 'Dodge', 'Dakota Club', 2016, 'white', 63065, '2025-08-15', 60065, 71414, '2025-08-15', 101, 1049);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1050, 'Dodge', 'Caravan', 2017, 'blue', 53067, '2025-06-16', 60567, 72011, '2025-06-16', 120, 1050);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1051, 'Maybach', '57', 2019, 'silver', 33070, '2021-11-11', 61570, 73204, '2021-11-11', 206, 1051);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1052, 'Land Rover', 'Freelander', 2020, 'red', 23072, '2024-12-11', 62072, 73801, '2024-12-11', 101, 1052);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1053, 'Ford', 'Taurus', 2019, 'white', 33072, '2021-01-02', 61572, 73206, '2021-01-02', 110, 1053);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1054, 'Toyota', 'Land Cruiser', 2016, 'silver', 63070, '2021-01-09', 60070, 71420, '2021-01-09', 407, 1054);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1055, 'Buick', 'Regal', 2018, 'white', 43073, '2023-05-27', 61073, 72613, '2023-05-27', 407, 1055);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1056, 'Lincoln', 'Navigator', 2019, 'red', 33075, '2022-09-02', 61575, 73210, null, 681, null);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1057, 'Nissan', 'Altima', 2020, 'gray', 23077, '2024-12-21', 62077, 73806, '2024-12-21', 206, 1057);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1058, 'Mazda', 'Tribute', 2018, 'white', 43076, '2023-08-31', 61076, 72616, null, 110, 1058);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1059, 'GMC', 'Sierra 2500', 2020, 'gray', 23079, '2021-03-31', 62079, 73809, '2021-03-31', 110, 1059);
+insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, date_acquired, acquired_price, selling_price, next_service_date, dealer_id, previous_owner_id) values (1060, 'Acura', 'Integra', 2015, 'silver', 73075, '2022-03-01', 59575, 70832, '2022-03-01', 101, 1060);
 
-INSERT INTO b_categories VALUES ('SG','Sporting Goods');
-INSERT INTO b_categories VALUES ('HW','Hardware');
-INSERT INTO b_categories VALUES ('LA', 'Large Appliances');
-INSERT INTO b_categories VALUES ('SA', 'Small Appliances');
- 
-INSERT INTO b_warehouses VALUES (1,'Miami');
-INSERT INTO b_warehouses VALUES (2,'Miami');
-INSERT INTO b_warehouses VALUES (3,'Detroit');
-INSERT INTO b_warehouses VALUES (4,'Toronto');
-INSERT INTO b_warehouses VALUES (5,'Chicago');
-INSERT INTO b_warehouses VALUES (6,'Dallas');
-INSERT INTO b_warehouses VALUES (7,'San Diego');
+-- SELECT STATEMENT
 
-INSERT INTO b_jobs VALUES ('AD_PRES', 'President', 150000, 200000);
-INSERT INTO b_jobs VALUES ('AD_VP',   'Vice President', 100000, 145000);
-INSERT INTO b_jobs VALUES ('MK_MGR', 'Marketing Manager', 70000, 115000);
-INSERT INTO b_jobs VALUES ('MK_REP', 'Marketing Representative', 45000, 65000);
-INSERT INTO b_jobs VALUES ('DT_MGR', 'Department Manager', 90000, 133000);
-INSERT INTO b_jobs VALUES ('SL_ACE', 'Sales Associate', 32000, 40000);
-INSERT INTO b_jobs VALUES ('AC_MGR', 'Accounting Manager', 70000, 110000);
-INSERT INTO b_jobs VALUES ('IT_MGR', 'IT Manager', 85000, 140000);
-INSERT INTO b_jobs VALUES ('IT_DEV', 'Software Developer', 60000, 90000);
-INSERT INTO b_jobs VALUES ('AD_TRN', 'Trainer', 40000, 52000);
+SELECT dealer_name, dealer_city
+FROM p_dealers
+ORDER BY dealer_name;
 
-INSERT INTO b_employees VALUES (104,'Terry',  ' ', 'Manis',     '375 Sandhill Lane', 'Troy',     'MI','53321',  750348365, '2000-05-20', 11000, 542, 0.05, 'AD', 'DT_MGR', NULL);
-INSERT INTO b_employees VALUES (105,'Sandy',  ' ', 'Black',     '9467 Range Road',   'San Diego','CA','33553',  285013858, '2000-07-18', 7700,  216, 0.07, 'AC', 'DT_MGR', 104);
-INSERT INTO b_employees VALUES (106,'Janis',  ' ', 'Hill',      '4923 Big Hill Road','Denver',   'CO','33336',  194012638, '2001-09-24', 6585,  487, 0.05, 'VG', 'SL_ACE', 104);
-INSERT INTO b_employees VALUES (107,'Jim',    ' ', 'Smith',     '148 Main Street',   'Kenoshia', 'WI','64765',  910481945, '2002-11-30', 6000,  345, 0.03, 'HT', 'SL_ACE', 105);
-INSERT INTO b_employees VALUES (108,'Jane',   ' ', 'White',     '8123 Taylor Drive', 'Rochester','NY','45322',  285305673, '2001-10-22', 4500,  329, 0.03, 'MA', 'SL_ACE', 106);
-INSERT INTO b_employees VALUES (109,'Troy',   ' ', 'Mansion',   '3585 Sunny Drive',  'Toronto',  'ON','J5F 9J4',164950123, '2003-04-12', 3200,  561, 0.05, 'SA', 'SL_ACE', 107);
-INSERT INTO b_employees VALUES (110,'Lauren', 'M', 'Alexander', ' ',                 ' ',        ' ', ' ',      749583756, '2007-05-20', 4500,  585, 0.05, 'TR', 'DT_MGR', NULL);
-INSERT INTO b_employees VALUES (111,'Lisa',   'L', 'James',  ' ', ' ', ' ',' ',                                 396812058, '2008-02-15', 6500,  560, 0.07, 'MA', 'DT_MGR', 110);
-INSERT INTO b_employees VALUES (112,'Dave',   ' ', 'Bernard',  ' ', ' ', ' ',' ',                               184759364, '2010-07-24', 6000,  910, 0.03, 'HT', 'DT_MGR', 111);
-INSERT INTO b_employees VALUES (113,'Steve',  'L', 'Carr',  ' ', ' ', ' ',       ' ',                           018593745, '2007-07-29', 5500,  548, 0.05, 'VG', 'DT_MGR', 112);
-INSERT INTO b_employees VALUES (114,'Marg',   'A', 'Horner',  ' ', ' ', ' ',         ' ',                       947581253, '2007-06-13', 4500,  500, 0.07, 'MA', 'SL_ACE', 111);
-INSERT INTO b_employees VALUES (124,'Scott',  ' ', 'Long',  ' ', ' ', ' ', ' ',                                 912058121, '2009-08-17', 3500,  954, 0.03, 'TR', 'AD_TRN', 113);
-INSERT INTO b_employees VALUES (115,'Jim',    ' ', 'Best',  ' ', ' ', ' ',     ' ',                             184629673, '2010-10-22', 2400,  145, 0.05, 'SA', 'SL_ACE', NULL);
-INSERT INTO b_employees VALUES (126,'Sue',    'A', 'McDonald',  ' ', ' ', ' ',     ' ',                         285912756, '2008-02-15', 3600,  945, NULL, NULL, NULL,     110);
-INSERT INTO b_employees VALUES (117,'Trish',  'S', 'Albert',  ' ', ' ', ' ',    ' ',                            649105738, '2009-07-22', 1800,  934, 0.07, 'VG', 'SL_ACE', 113);
-INSERT INTO b_employees VALUES (125,'Terry',  'J', 'Maxwell',  ' ', ' ', ' ',    ' ',                           385937712, '2006-10-25', 2200,  472, 0.05, 'HT', 'SL_ACE', 112);
-INSERT INTO b_employees VALUES (119,'Dave',   ' ', 'Nisbet',  ' ', ' ', ' ',         ' ',                       759127547, '2005-04-18', 3900,  211, NULL, NULL, NULL,     110);
-INSERT INTO b_employees VALUES (120,'Anne',   'M', 'Richie',  ' ', ' ', ' ',     ' ',                           834577193, '2010-11-28', 4000,  026, 0.03, 'MA', 'SL_ACE', 111);
-INSERT INTO b_employees VALUES (122,'Jake',   'L', 'Lee',  ' ', ' ', ' ',      ' ',                             812954926, '2012-06-15', 4500,  111, 0.05, 'VG', 'SL_ACE', 113);
-INSERT INTO b_employees VALUES (118,'Janice', 'B', 'Harper',  ' ', ' ', ' ',   ' ',                             912758396, '2007-09-11', 2900,  574, 0.07, 'HT', 'SL_ACE', 112);
-INSERT INTO b_employees VALUES (123,'Linda',  'M', 'Johnson',  ' ', ' ', ' ',  ' ',                             295734812, '2010-08-10', 2400,  543, 0.03, 'MA', 'SL_ACE', 114);
-INSERT INTO b_employees VALUES (121,'William','J', 'Johnson',  ' ', ' ', ' ',  ' ',                             374912745, '2007-01-24', 3100,  157, NULL, NULL, NULL,     110);
-INSERT INTO b_employees VALUES (127,'Sharron',' ', 'Evans',  ' ', ' ', ' ',      ' ',                           492337745, '2006-10-16', 2900,  463, 0.05, 'MA', 'SL_ACE', 114);
-INSERT INTO b_employees VALUES (116,'Robert', ' ', 'Henry',  ' ', ' ', ' ',      ' ',                           512850475, '2009-05-25', 3700,  593, 0.07, 'MA', 'SL_ACE', 111);
-INSERT INTO b_employees VALUES (131,'Barb',   'L', 'Gibbens',  ' ', ' ', ' ',    ' ',                           852951124, '2011-03-15', 2900,  182, NULL, NULL, NULL,     115);
-INSERT INTO b_employees VALUES (135,'Greg',   'J', 'Zimmerman',  ' ', ' ', ' ',  ' ',                           539554832, '2007-04-19', 3150,  835, 0.05, 'IT', 'IT_DEV', 115);
-INSERT INTO b_employees VALUES (132,'Bob',    'R', 'Allan',  ' ', ' ', ' ',      ' ',                           284447883, '2008-02-13', 2400,  623, 0.07, 'IT', 'IT_DEV', 114);
-INSERT INTO b_employees VALUES (136,'Paula',  'A', 'Morris',  ' ', ' ', ' ',     ' ',                           812740127, '2006-11-24', 2250,  734, 0.05, 'IT', 'IT_DEV', NULL);
-INSERT INTO b_employees VALUES (139,'Rick',   'D', 'Peters',  ' ', ' ', ' ',     ' ',                           294477289, '2013-03-15', 2875,  342, 0.03, 'IT', 'IT_DEV', 110);
+SELECT service_id
+    , service_description
+    , price AS "old price"
+    , price * 1.065 AS "new price"
+FROM p_services
+ORDER BY service_id;
 
-INSERT INTO b_customers VALUES (DEFAULT, 'Everything Electronics',      '8639 24TH Avenue',    'Fort Gratiot',     'MI', '48059',   'US', 38000, 24500.75, .020, '2010-05-20');
-INSERT INTO b_customers VALUES (DEFAULT, 'Worldwide Digital Inc',       '9119 North West Ave', 'Rochester',        'MN', '55901',   'US', 60000, 27560.85, .105, '2011-07-15');
-INSERT INTO b_customers VALUES (DEFAULT, 'Best Digital Products',       '9339 Exmouth Street', 'Sarnia',           'ON', 'N7S 3X9', 'CA', 42500, 12860.55, .020, '2010-05-20');
-INSERT INTO b_customers VALUES (DEFAULT, 'Worldwide Digital Inc',       '26388 Yonge Street',  'Newmarket',        'ON', 'L3Y 8S1', 'CA', 35000, 18575.75, .010, '2013-10-25');
-INSERT INTO b_customers VALUES (DEFAULT, 'Big Box Digital',             '9463 South Coulter',  'Amarillo',         'TX', '79121',   'US', 54500, 34240.25, .125, '2014-06-18');
-INSERT INTO b_customers VALUES (DEFAULT, 'Big Box Digital',             '2757 College Avenue', 'San Diego',        'CA', '72115',   'US', 55000, 41712.17, NULL, '2014-06-18');
-INSERT INTO b_customers VALUES (DEFAULT, 'billy''s toys',               '5151 Mission Road',   'San Diego',        'CA', '92108',   'US', 75000, 57583.65, NULL, '2010-05-20');
-INSERT INTO b_customers VALUES (DEFAULT, 'Star-Mart Store #2177',       '3382 Murphy Road',    'sAn diEgo',        'CA', '82123',   'US', 99000, 75732.19, NULL, '2010-07-15');
-INSERT INTO b_customers VALUES (DEFAULT, 'Technology R Us',             '2342 W.250Th St',     'New Hartford',     'NY', '13413',   'US', 55000, 40012.55, NULL, '2013-10-25');
-INSERT INTO b_customers VALUES (DEFAULT, 'Digital Junkies',             '9522 2Nd Ct',         'Syracuse',         'NY', '13290',   'US', 60000, 25600.85, .105, '2010-05-20');
-INSERT INTO b_customers VALUES (DEFAULT, 'Best Electronics',            '7673 N Academy Blvd', 'Colorado Springs', 'CO', '70920',   'US', 30000, 16000.55, .060, '2010-07-15');
-INSERT INTO b_customers VALUES (DEFAULT, 'Armstrong Digital',           '5390 Wadsworth Blvd', 'Lakewood',         'CO', '80124',   'US', 25000, 24900.66, .040, '2013-10-25');
-INSERT INTO b_customers VALUES (DEFAULT, 'Best Bargain',                '3150 Center Point Rd','Colorado Springs', 'CO', '80922',   'US', 26000, 25900.47, .020, '2010-05-20');
-INSERT INTO b_customers VALUES (DEFAULT, 'Best Digital Products',       '9588 52ND Street',    'Kenoshia',         'WI', '53144',   'US', 37500, 12375.85, .020, '2010-07-15');
-INSERT INTO b_customers VALUES (DEFAULT, 'Everything Electronics',      '8383 8TH Street',     'Wisconsin Rapids', 'WI', '54494',   'US', 28550, 23401.25, .050, '2013-10-25');
-INSERT INTO b_customers VALUES (DEFAULT, 'Big Box Digital',             '2757 Airport Bld',    'Columbia',         'SC', '92115',   'US', 55000, 30012.55, NULL, '2010-05-20');
-INSERT INTO b_customers VALUES (DEFAULT, 'Worldwide Digital Inc',       '9119 Dumbar St',      'Spartanburg',      'SC', '55901',   'US', 60000, 25600.85, .105, '2010-07-15');
-INSERT INTO b_customers VALUES (DEFAULT, 'Best Digital Products',       '9339 E Palmetto St',  'Florence',         'SC', 'N7S 3X9', 'US', 42500, 18600.55, .020, '2013-10-25');
-INSERT INTO b_customers VALUES (DEFAULT, 'Frys Electronics',            '6845 Las Vegas Blvd', 'Las Vegas',        'NV', '89119',   'US', 68200, 41200.75, .050, '2010-05-20');
-INSERT INTO b_customers VALUES (DEFAULT, 'Jerry''s Sports',             '10950 West Blvd',     'Las Vegas',        'NV', '89135',   'US', 57000, 13375.85, .100, '2010-07-15');
-INSERT INTO b_customers VALUES (DEFAULT, 'Office Depot',                '2202 Harvard Way',    'Reno',             'NV', '89502',   'US', 31550, 24201.33, .045, '2013-10-25'); 
+SELECT model_year AS "MODEL YEAR"
+    , car_make AS "MAKE"
+    , car_model AS "MODEL"
+    , odometer AS "ODOMETER"
+FROM p_cars
+WHERE dealer_id = 101 AND model_year BETWEEN 2017 AND 2020
+ORDER BY model_year;
 
-INSERT INTO b_products VALUES ('AT94', 'Iron',                                      'SA', 69.99);
-INSERT INTO b_products VALUES ('BV06', 'Home Gym',                                  'SG', 2350.69);
-INSERT INTO b_products VALUES ('CD52', 'Microwave Oven',                            'SA', 224.99);
-INSERT INTO b_products VALUES ('DL71', 'Cordless Drill',                            'HW', 122.59);
-INSERT INTO b_products VALUES ('DR93', 'Black Gas-Range',                           'LA', 1300.29);
-INSERT INTO b_products VALUES ('DW11', 'Washer',                                    'LA', 1250.19);
-INSERT INTO b_products VALUES ('FD21', 'Stand Mixer',                               'SA', 99.99);
-INSERT INTO b_products VALUES ('KL62', 'Dryer',                                     'LA', 1195.79);
-INSERT INTO b_products VALUES ('KT03', 'Dishwasher',                                'LA', 895.59);
-INSERT INTO b_products VALUES ('KV29', 'Treadmill',                                 'SG', 1475.29);
-INSERT INTO b_products VALUES ('RF23', 'Refrigerator',                              'LA', 1500.39);
-INSERT INTO b_products VALUES ('CM12', 'Coffee Maker',                              'SA', 59.99);
-INSERT INTO b_products VALUES ('W902', 'High Efficiency Top Load Washer',           'LA', 1575.89);
-INSERT INTO b_products VALUES ('W283', 'Stackable Washer and Dryer Combo',          'LA', 2575.39);
-INSERT INTO b_products VALUES ('W740', 'High Efficiency Front Load Washer',         'LA', 1375.29);
-INSERT INTO b_products VALUES ('C136', 'Portable Air Conditioner',                  'LA', 450.79);
-INSERT INTO b_products VALUES ('C832', 'Portable Canister Cleaner',                 'SA', 400.99);
-INSERT INTO b_products VALUES ('V438', 'Wet/Dry Hand Vacuum',                       'SA', 89.99);
-INSERT INTO b_products VALUES ('I192', 'Full Digital Iron',                         'SA', 102.99);
-INSERT INTO b_products VALUES ('D951', 'Built-In Dishwasher',                       'LA', 1200.79);
-INSERT INTO b_products VALUES ('R812', 'Top Freezer Refrigerator',                  'LA', 1500.99);
-INSERT INTO b_products VALUES ('R501', 'Range with Dual Fuel',                      'LA', 1695.29);
-INSERT INTO b_products VALUES ('R759', 'Freestanding Gas Range',                    'LA', 1425.89);
-INSERT INTO b_products VALUES ('B159', 'Brushed Stainless Steel Blender',           'SA', 95.99);
-INSERT INTO b_products VALUES ('C812', 'BrewStation 6 Cup Coffeemaker',             'SA', 145.69);
-INSERT INTO b_products VALUES ('F246', 'Extra-large Deep Fryer',                    'SA', 189.59);
-INSERT INTO b_products VALUES ('P729', '3-piece Stainless Appliance Package',       'LA', 5500.99);
-INSERT INTO b_products VALUES ('R930', 'Self-Clean Smooth-Top Stainless Range',     'LA', 1565.69);
-INSERT INTO b_products VALUES ('W940', 'Water Cooler',                              'SA', 250.29);
-INSERT INTO b_products VALUES ('C730', 'Programmable Coffee Maker',                 'SA', 125.99);
-INSERT INTO b_products VALUES ('O639', 'Countertop Oven',                           'SA', 169.99);
-INSERT INTO b_products VALUES ('F930', 'Chest Freezer',                             'LA', 1995.49);
-INSERT INTO b_products VALUES ('R940', 'Side-By-Side Stainless Steel Refrigerator', 'LA', 2400.99);
-INSERT INTO b_products VALUES ('B935', 'Blender',                                   'SA', 49.99);
+SELECT dealer_id AS "DEALER"
+    , selling_price AS "Selling"
+    , car_make AS "Make"
+    , car_model AS "Model"
+    , odometer AS "Odometer"
+FROM p_cars
+WHERE selling_price > 72000
+     OR dealer_id = 120 AND selling_price > 71500
+ORDER BY selling_price DESC;
 
-INSERT INTO b_inventory VALUES (1, 'AT94', 43);
-INSERT INTO b_inventory VALUES (1, 'BV06', 24);
-INSERT INTO b_inventory VALUES (1, 'CD52', 21);
-INSERT INTO b_inventory VALUES (1, 'DL71', 11);
-INSERT INTO b_inventory VALUES (1, 'DR93', 31);
-INSERT INTO b_inventory VALUES (1, 'DW11', 12);
-INSERT INTO b_inventory VALUES (2, 'FD21', 12);
-INSERT INTO b_inventory VALUES (2, 'KL62', 34);
-INSERT INTO b_inventory VALUES (2, 'KT03', 23);
-INSERT INTO b_inventory VALUES (2, 'KV29', 25);
-INSERT INTO b_inventory VALUES (2, 'AT94', 43);
-INSERT INTO b_inventory VALUES (3, 'BV06', 34);
-INSERT INTO b_inventory VALUES (3, 'CD52', 11);
-INSERT INTO b_inventory VALUES (3, 'DL71', 41);
-INSERT INTO b_inventory VALUES (3, 'DR93', 21);
-INSERT INTO b_inventory VALUES (3, 'DW11', 42);
-INSERT INTO b_inventory VALUES (4, 'FD21', 52);
-INSERT INTO b_inventory VALUES (4, 'KL62', 14);
-INSERT INTO b_inventory VALUES (4, 'KT03', 53);
-INSERT INTO b_inventory VALUES (4, 'KV29', 35);
+SELECT color AS "COLOR"
+    , car_make AS "MAKE"
+    , car_model AS "MODEL"
+    , model_year AS "YEAR"
+FROM p_cars
+WHERE color IN ('red', 'blue', 'black') AND model_year BETWEEN 2018 AND 2020
+ORDER BY color, model_year;
 
-INSERT INTO b_prices VALUES ('AT94','2019-09-01', '2020-01-15', 69.95);
-INSERT INTO b_prices VALUES ('AT94','2020-01-15', '2020-06-10', 74.95);
-INSERT INTO b_prices VALUES ('AT94','2020-06-10', NULL, 79.95);
-INSERT INTO b_prices VALUES ('BV06','2019-06-20', '2019-10-15', 794.95);
-INSERT INTO b_prices VALUES ('BV06','2019-10-15', NULL, 849.49);
-INSERT INTO b_prices VALUES ('CD52','2019-09-22', '2020-01-05', 165.00);
-INSERT INTO b_prices VALUES ('CD52','2020-01-05', NULL, 184.65);
+SELECT car_make
+    , car_model
+    , model_year
+    , selling_price AS "Old selling price"
+    , selling_price * 1.05 AS "New selling price"
+FROM p_cars
+WHERE dealer_id = 101 AND selling_price * 1.05 > 75000
+     OR dealer_id = 120 AND selling_price * 1.05 > 74500
+ORDER BY selling_price DESC;
 
+VARIABLE low_price NUMBER;
+VARIABLE high_price NUMBER;
+EXEC :low_price := 72600;
+EXEC :high_price := 73500;
 
------------------------------------------
--- Order 1 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL,'2020-09-13', 100, '2020-09-22', 105)
+SELECT selling_price AS "Selling price"
+    , car_make AS "Make"
+    , car_model AS "Model"
+    , model_year AS "Year"
+FROM p_cars
+WHERE selling_price BETWEEN :low_price AND :high_price
+ORDER BY selling_price DESC;
 
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'CD52', 2, 224.99)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'DR93', 1, 1300.29)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'DW11', 3, 1250.19)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KL62', 2, 1195.79)
-SELECT 1 FROM DUAL;
+SELECT first_name || ' ' || last_name AS "PRIVIOUS NAME"
+FROM p_previous_owners
+WHERE first_name LIKE '%and%'
+     OR last_name LIKE '%and%'
+ORDER BY last_name;
 
------------------------------------------
--- Order 2 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-09-14' ,120, '2020-09-24', 135)
+SELECT car_make
+    , car_model
+    , model_year
+    , dealer_id
+FROM p_cars
+WHERE car_make IN ('Audi', 'BMW', 'Lincoln')
+ORDER BY car_model, car_make;
 
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'AT94', 2, 69.99)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KL62', 1, 1195.79)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'CD52', 2, 224.99)
-SELECT 1 FROM DUAL;
-  
------------------------------------------
--- Order 3 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-09-15', 110, '2020-09-30', 115)
-
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KV29', 2, 1475.29)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KT03', 1, 895.59)
-SELECT 1 FROM DUAL;
-
------------------------------------------
--- Order 4 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-10-17', 130, '2020-10-20', 125)
-
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'AT94', 11, 69.99)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KT03', 1, 895.59)
-SELECT 1 FROM DUAL;
-
------------------------------------------
--- Order 5 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-10-18', 100, '2020-10-24', 105)
- 
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'DR93', 1, 1300.29)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'DW11', 1, 1250.19)
-SELECT 1 FROM DUAL;
-
------------------------------------------
--- Order 6 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-10-20', 120, '2020-10-28', 125)
-
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KL62', 4, 1195.79)
-SELECT 1 FROM DUAL;
-
------------------------------------------
--- Order 7 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-11-14', 130, NULL, 115)
-
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KT03', 2, 895.59)
-SELECT 1 FROM DUAL;
-  
------------------------------------------
--- Order 8 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-11-15', 100, '2020-11-20', 105)
-
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'BV06', 2, 2350.69)
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'CD52', 4, 224.99)
-SELECT 1 FROM DUAL;
-
------------------------------------------
--- Order 9 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-11-16', 110, '2020-11-19', 120)
-
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'DR93', 1, 1300.29)
-SELECT 1 FROM DUAL;
-
------------------------------------------
--- Order 10 --
-INSERT ALL
-INTO b_orders VALUES (b_order_id_seq.NEXTVAL, '2020-11-16', 120, NULL, 125)
-
-INTO b_order_lines VALUES (b_order_id_seq.CURRVAL, 'KV29', 2, 1475.29)
-SELECT 1 FROM DUAL;
-
-
-
--- SELECT statements
-
-SELECT category_code, category_name
-    FROM b_categories ORDER BY category_code;
-
-SELECT customer_name, credit_limit, balance
-    FROM b_customers
-    WHERE BALANCE BETWEEN 40000 AND 80000
-    ORDER BY customer_name DESC;
-
-SELECT prod_description, price
-    FROM b_products
-    WHERE category_code = 'SA' AND PRICE > 200
-    ORDER BY price DESC;
-
-SELECT DISTINCT cust_city FROM b_customers
-    WHERE cust_state IN ('NY', 'CO')
-    ORDER BY cust_city;
-
-SELECT customer_name, credit_limit, balance
-    FROM b_customers
-    WHERE customer_id = 130;
-
-SELECT customer_name, CONCAT(cust_city, cust_state) AS "Location", credit_limit - balance AS "Available Credit"
-    FROM b_customers
-    WHERE credit_limit - balance > 30000
-    ORDER BY "Available Credit" DESC;
-
-SELECT product_code, qoh
-    FROM b_inventory
-    WHERE qoh BETWEEN 20 AND 30
-    ORDER BY qoh DESC;
-
-SELECT customer_name, CONCAT(CONCAT(street, cust_city), cust_state) AS "ADDRESS"
-    FROM b_customers
-    WHERE balance BETWEEN 40000 AND 60000
-    ORDER BY customer_name DESC;
-
-SELECT order_date, order_id
-    FROM b_orders
-    WHERE order_date BETWEEN '2020-10-20' AND '2020-11-20'
-    ORDER BY order_date DESC;
-
-SELECT category_code, prod_description
-    FROM b_products
-    WHERE category_code IN ('SG', 'HW', 'LA')
-    ORDER BY prod_description;
-
-SELECT category_code, prod_description
-    FROM b_products
-    WHERE category_code NOT IN ('SG', 'HW', 'LA')
-    ORDER BY prod_description;
-
-SELECT CONCAT(first_name, last_name) AS "EMPLOYEE"
-    FROM b_employees
-    WHERE manager_id IS NULL
-    ORDER BY last_name;
-
-SELECT employee_id, CONCAT(first_name, last_name) AS "EMPLOYEE", manager_id
-    FROM b_employees
-    WHERE manager_id IS NOT NULL
-    ORDER BY last_name;
-
-SELECT category_code, prod_description, price
-    FROM b_products
-    WHERE prod_description LIKE '%maker%'
-    ORDER BY category_code;
-
-SELECT warehouse_id, product_code, qoh
-    FROM b_inventory
-    WHERE qoh > 40
-    ORDER BY warehouse_id;
-
-SELECT order_id, customer_id, ship_date
-    FROM b_orders
-    WHERE ship_date < '2020-10-20'
-    ORDER BY order_id DESC;
-
-SELECT CONCAT(cust_city, cust_state) AS "Location", customer_id, customer_name
-    FROM b_customers
-    WHERE customer_name LIKE 'B%'
-    ORDER BY "Location";
-
-SELECT prod_description
-    FROM b_products
-    WHERE prod_description LIKE '%Range%'
-    ORDER BY prod_description;
-
-SELECT CONCAT(first_name, last_name) AS "NAME"
-    FROM b_employees
-    WHERE last_name LIKE '%s%i%'
-    ORDER BY last_name;
-
-SELECT customer_name, CONCAT(cust_city, cust_state) AS "Location"
-    FROM b_customers
-    WHERE customer_name LIKE '%B%i%g%' OR customer_name LIKE '%B%g%i%'
-    ORDER BY customer_name;
-
-SELECT customer_name, cust_city
-    FROM b_customers
-    WHERE cust_city IN ('Colorado Springs', 'Las Vegas', 'San Diego')
-    ORDER BY cust_city;
-
-SELECT seller_id, order_date, order_id
-    FROM b_orders
-    WHERE seller_id IN ('105', '115', '125') AND 
-          ship_date > '2020-09-16'
-    ORDER BY order_id, order_date, seller_id;
-
-SELECT customer_name, cust_city
-    FROM b_customers
-    WHERE credit_limit BETWEEN 30000 AND 60000
-        AND cust_state IN ('CA', 'CO')
-    ORDER BY customer_name;
-
-SELECT category_code, product_code, prod_description
-    FROM b_products
-    WHERE category_code NOT IN ('LA', 'SA')
-    ORDER BY category_code, product_code;
-
-SELECT order_id, product_code, quantity, price_paid, quantity * price_paid AS "EXTENDED PRICE"
-    FROM b_order_lines
-    WHERE product_code IN ('CD52', 'DR93', 'KV29')
-    ORDER BY order_id, "EXTENDED PRICE" DESC;
+SELECT car_make
+    , car_model
+    , model_year
+    , selling_price - acquired_price AS "Profit"
+FROM p_cars
+WHERE selling_price - acquired_price > 11700
+ORDER BY "Profit" DESC;
