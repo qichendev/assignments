@@ -304,9 +304,9 @@ insert into p_cars (car_id, car_make, car_model, model_year, color, odometer, da
 -- SELECT STATEMENTS
 
 SELECT service_id AS "SERVICE_ID"
-    , CONCAT("$", price) AS "ORIGINAL_PRICE"
-    , CONCAT("$", ROUND(price)) AS "MONDAY_PRICE"
-    , CONCAT("$", ROUND(price + 1)) AS "TUESDAY_PRICE"
+    , TO_CHAR(price, '$999.99') AS "ORIGINAL_PRICE"
+    , TO_CHAR(ROUND(price), '$999.99') AS "MONDAY_PRICE"
+    , TO_CHAR(ROUND(price + 1), '$999.99') AS "TUESDAY_PRICE"
 FROM p_services
 ORDER BY service_id;
 
@@ -321,22 +321,92 @@ SELECT car_make
     , TO_CHAR(date_acquired, 'MM/DD/YYYY') AS "DATE_PURCHASED"
     , selling_price
 FROM p_cars
-WHERE date_acquired BETWEEN "2021-01-01" AND "2023-12-31"
+WHERE date_acquired BETWEEN DATE '2021-01-01' AND DATE '2023-12-31'
     AND selling_price BETWEEN 70000 AND 71400
 ORDER BY date_acquired;
 
 SELECT car_make AS "CAR_MAKE"
-    , EXTRACT(YEAR FROM DATE date_acquired) AS "YEAR_ACQUIRED"
-    , TO_CHAR(ROUND(selling_price), "$99,999.99")  AS "OLD_SELLING_PRICE"
-    , TO_CHAR(ROUND(selling_price), "$99,999.99") * CASE EXTRACT(YEAR FROM DATE date_acquired) % 2
+    , EXTRACT(YEAR FROM date_acquired) AS "YEAR_ACQUIRED"
+    , TO_CHAR(ROUND(selling_price), '$99,999.99') AS "OLD_SELLING_PRICE"
+    , TO_CHAR(ROUND(selling_price * CASE MOD(EXTRACT(YEAR FROM date_acquired), 2)
         WHEN 1 THEN 1.1
-        ELSE 1.05 AS "NEW_SELLING_PRICE"
+        ELSE 1.05 END), '$99,999.99') AS "NEW_SELLING_PRICE"
 FROM p_cars
-WHERE model_year BETWEEN "2021-01-01" AND "2024-12-31"
+WHERE model_year BETWEEN 2021 AND 2024
 ORDER BY "NEW_SELLING_PRICE" DESC;
 
-SELECT car_make
-    , model_year
-    , selling_price
-    , category_description
-FROM p_cars
+SELECT 
+  car_make AS "Make",
+  model_year AS "Year",
+  selling_price AS "Selling Price",
+  CASE 
+    WHEN selling_price > 73000 THEN 'Like new'
+    WHEN selling_price BETWEEN 72000 AND 72999 THEN 'Great Value'
+    WHEN selling_price BETWEEN 71000 AND 71999 THEN 'Low-cost transportation'
+    WHEN selling_price BETWEEN 60000 AND 70999 THEN 'Bargain deals'
+    ELSE 'Other'
+  END AS "Category"
+FROM 
+  p_cars
+WHERE 
+  car_make IN ('Buick', 'Lincoln', 'Honda', 'Oldsmobile', 'Land Rover')
+ORDER BY 
+  "Category", car_make, selling_price;
+
+SELECT 
+  service_id AS "Service id",
+  service_description AS "Description",
+  price AS "Old price",
+  CEIL(price) AS "New price"
+FROM 
+  p_services
+WHERE 
+  price >= 50.00
+ORDER BY 
+  service_id;
+
+SELECT 
+  car_id AS "CAR_ID",
+  TO_CHAR(next_service_date, 'Day, Month DD, YYYY') AS "Next Service"
+FROM 
+  p_cars
+WHERE 
+  EXTRACT(YEAR FROM next_service_date) = :ENTER_YEAR
+  AND EXTRACT(MONTH FROM next_service_date) = :ENTER_MONTH
+ORDER BY 
+  car_id;
+
+SELECT 
+  car_make AS "CAR_MAKE",
+  model_year AS "MODEL_YEAR",
+  COALESCE(TO_CHAR(previous_owner_id), 'No previous owner on record') AS "PREVIOUS_OWNER"
+FROM 
+  p_cars
+WHERE 
+  car_make IN ('Lincoln', 'Mazda')
+ORDER BY 
+  car_make, model_year;
+
+SELECT 
+  car_id AS "CAR_ID",
+  car_make AS "CAR_MAKE",
+  car_model AS "CAR_MODEL",
+  FLOOR((DATE '2026-01-01' - date_acquired) / 7) AS "WEEKS_ON_LOT"
+FROM 
+  p_cars
+WHERE 
+  FLOOR((DATE '2026-01-01' - date_acquired) / 7) > 250
+ORDER BY 
+  "WEEKS_ON_LOT" DESC;
+
+SELECT 
+  car_make AS "CAR_MAKE",
+  car_model AS "CAR_MODEL",
+  TO_CHAR(date_acquired, 'Day, Month DD, YYYY') AS "ACQUIRED"
+FROM 
+  p_cars
+WHERE 
+  EXTRACT(YEAR FROM date_acquired) = 2023
+ORDER BY 
+  EXTRACT(MONTH FROM date_acquired), EXTRACT(DAY FROM date_acquired);
+
