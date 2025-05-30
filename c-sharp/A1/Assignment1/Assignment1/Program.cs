@@ -128,13 +128,13 @@ namespace Assignment1
                             () => test.age,
                             message =>
                             {
-                                DisplayTestResult(testDescription, message == test.expectedFeedback);
+                                DisplayTestResult(testDescription + " feedback: " + message, message == test.expectedFeedback);
                             }
                         );
                     }
                     catch (Exception e)
                     {
-                        DisplayTestResult(testDescription, e.Message == test.expectedException);
+                        DisplayTestResult(testDescription + " exception: " + e.Message, e.Message == test.expectedException);
                     }
                 }
             }
@@ -153,8 +153,8 @@ namespace Assignment1
 
         static void Main(string[] args)
         {
-            // CinemaRunner.RunAllTests();
-            CinemaRunner.Run();
+            CinemaRunner.RunAllTests();
+            // CinemaRunner.Run();
         }
     }
 }
