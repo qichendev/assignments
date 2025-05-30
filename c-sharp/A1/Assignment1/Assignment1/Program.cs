@@ -113,14 +113,14 @@ namespace Assignment1
                     new { numberOfFilm = injectedSmallNumber
                         , age = "18", expectedFeedback = ""
                         , expectedException = "Invalid number of film input: " + injectedSmallNumber },
-                    new { numberOfFilm = "4"
+                    new { numberOfFilm = "-90"
                         , age = "18"
-                        , expectedFeedback = "Enjoy the film"
-                        , expectedException = "" },
+                        , expectedFeedback = ""
+                        , expectedException = "Invalid number of film input: -90" },
                     new { numberOfFilm = "4"
-                        , age = "17"
-                        , expectedFeedback = "Access Denied - You are too young"
-                        , expectedException = "" },
+                        , age = "-89"
+                        , expectedFeedback = ""
+                        , expectedException = "Invalid age input: -89" },
                     new { numberOfFilm = "5"
                         , age = "13"
                         , expectedFeedback = "Enjoy the film"
@@ -161,8 +161,8 @@ namespace Assignment1
 
         static void Main(string[] args)
         {
-            CinemaRunner.RunAllTests();
-            // CinemaRunner.Run();
+            // CinemaRunner.RunAllTests();
+            CinemaRunner.Run();
         }
     }
 }
