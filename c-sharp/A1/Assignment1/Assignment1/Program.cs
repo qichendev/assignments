@@ -47,11 +47,19 @@ namespace Assignment1
                         throw new Exception("Invalid number of film input: " + input);
                     }
                 );
+                if (numberOfFilm < 1 || numberOfFilm > films.Length)
+                {
+                    throw new Exception("Invalid number of film input: " + numberOfFilm);
+                }
                 Console.WriteLine("Enter your age: ");
                 var age = ReadIntFromString(getUserAge == null ? Console.ReadLine() : getUserAge()
                     , input => {
                         throw new Exception("Invalid age input: " + input);
                     });
+                if (age < 0)
+                {
+                    throw new Exception("Invalid age input: " + age);
+                }
                 Feedback = Feedback == null ? Console.WriteLine : Feedback;
                 if (films[numberOfFilm - 1].MatchAge(age))
                 {
