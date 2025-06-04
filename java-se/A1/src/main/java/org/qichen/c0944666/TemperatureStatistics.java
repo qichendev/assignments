@@ -1,3 +1,5 @@
+package org.qichen.c0944666;
+
 public class TemperatureStatistics {
     /**
      * Constructors

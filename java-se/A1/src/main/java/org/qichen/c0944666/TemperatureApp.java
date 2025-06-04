@@ -1,3 +1,5 @@
+package org.qichen.c0944666;
+
 import java.util.Scanner;
 
 public class TemperatureApp {
