@@ -526,125 +526,65 @@ SELECT 1 FROM DUAL;
 -- SELECT STATEMENTS
 
 -- 1 --
-SELECT e.employee_id AS EMPLOYEE_ID
-    , e.last_name AS LAST_NAME
-    , d.department_name AS DEPARTMENT_NAME
-    , e.hire_date AS HIRE_DATE
+SELECT d.department_name,
+       e.first_name || ' ' || e.last_name AS employee,
+       j.job_title,
+       e.monthly_salary
 FROM b_employees e
-JOIN b_departments d
-    ON e.department_code = d.department_code
-WHERE e.hire_date BETWEEN TO_DATE('2010-01-01', 'YYYY-MM-DD') AND TO_DATE('2010-12-31', 'YYYY-MM-DD')
-ORDER BY e.employee_id;
+JOIN b_departments d ON e.department_code = d.department_code
+JOIN b_jobs j ON e.job_code = j.job_code
+WHERE j.job_title IN (
+    SELECT job_title
+    FROM b_jobs
+    WHERE job_title IN ('Department Manager', 'Software Developer')
+)
+ORDER BY d.department_name, e.last_name;
 
 -- 2 --
-SELECT d.department_code AS DEPARTMENT_CODE
-    , d.department_name AS DEPARTMENT_NAME
-    , e.first_name AS FIRST_NAME
-    , e.last_name AS LAST_NAME
-FROM b_employees e
-RIGHT OUTER JOIN b_departments d
-    ON e.department_code = d.department_code
-ORDER BY d.department_code;
+SELECT first_name, last_name, monthly_salary AS salary
+FROM b_employees
+WHERE monthly_salary <= ALL (
+    SELECT monthly_salary
+    FROM b_employees
+);
 
 -- 3 --
-SELECT e.last_name AS LAST_NAME
-    , e.first_name AS FIRST_NAME
-    , COALESCE(d.department_name, 'Not Assigned') AS DEPARTMENT_NAME
+SELECT d.department_name,
+       e.first_name || ' ' || e.last_name AS employee,
+       e.monthly_salary
 FROM b_employees e
-LEFT OUTER JOIN b_departments d
-    ON e.department_code = d.department_code
-ORDER BY e.last_name;
+JOIN b_departments d ON e.department_code = d.department_code
+WHERE e.monthly_salary = ANY (
+    SELECT MIN(monthly_salary)
+    FROM b_employees
+    GROUP BY department_code
+)
+ORDER BY d.department_name, e.last_name;
 
 -- 4 --
-SELECT d.department_name AS DEPARTMENT_NAME
-    , e.first_name || ' ' || e.last_name AS MANAGER
-FROM b_departments d
-JOIN b_employees e
-    ON d.manager_id = e.employee_id
+SELECT d.department_name,
+       e.first_name || ' ' || e.last_name AS employee,
+       e.monthly_salary
+FROM b_employees e
+JOIN b_departments d ON e.department_code = d.department_code
+WHERE e.monthly_salary = (
+    SELECT MAX(monthly_salary)
+    FROM b_employees
+    WHERE department_code = e.department_code
+)
 ORDER BY d.department_name;
 
 -- 5 --
-SELECT e.first_name AS EMPLOYEE_FIRST_NAME
-    , e.last_name AS EMPLOYEE_LAST_NAME
-    , e.monthly_salary * 12 AS YEARLY_SALARY
-    , j.max_salary AS MAX_SALARY
-FROM b_employees e
-JOIN b_jobs j
-    ON e.job_code = j.job_code
-WHERE j.max_salary > 50000
-ORDER BY j.max_salary DESC;
-
--- 6 --
-SELECT d.department_name AS DEPARTMENT_NAME,
-       e.first_name || ' ' || e.last_name AS EMPLOYEE,
-       j.job_title AS JOB_TITLE
-FROM b_employees e
-JOIN b_departments d
-  ON e.department_code = d.department_code
-JOIN b_jobs j
-  ON e.job_code = j.job_code
-WHERE d.department_name IN ('Video Games', 'Information Technology')
-ORDER BY d.department_name, e.last_name;
-
--- 7 --
-SELECT d.department_code AS DEPT_CODE,
-       d.department_name AS DEPARTMENT_NAME,
-       TO_CHAR(AVG(e.monthly_salary * 12), '$99,999.00') AS AVERAGE_YEARLY_SALARY
-FROM b_employees e
-JOIN b_departments d
-  ON e.department_code = d.department_code
-GROUP BY d.department_code, d.department_name
-HAVING AVG(e.monthly_salary * 12) > 50000
-ORDER BY AVG(e.monthly_salary * 12) DESC;
-
--- 8 --
-SELECT d.department_code AS DEPT_CODE,
-       d.department_name AS DEPARTMENT_NAME,
-       COALESCE(TO_CHAR(d.manager_id), 'Not assigned') AS MANAGER,
-       COALESCE(e.first_name, '-----') AS FIRST_NAME,
-       COALESCE(e.last_name, '-----') AS LAST_NAME
-FROM b_departments d
-LEFT JOIN b_employees e
-  ON d.manager_id = e.employee_id
-ORDER BY d.department_code;
-
--- 9 --
-SELECT
-  w.whse_city AS WHSE_CITY,
-  w.warehouse_id AS WHSE,
-  c.category_name AS CATEGORY,
-  p.product_code || ' ' || p.prod_description AS "PRODUCT DESCRIPTION",
-  i.qoh AS QOH
-FROM b_warehouses w
-JOIN b_inventory i
-  ON w.warehouse_id = i.warehouse_id
-JOIN b_products p
-  ON i.product_code = p.product_code
-JOIN b_categories c
-  ON p.category_code = c.category_code
-ORDER BY
-  w.whse_city,
-  w.warehouse_id,
-  c.category_name,
-  p.product_code;
-
--- 10 --
-SELECT
-  c.customer_name AS CUSTOMER_NAME,
-  TO_CHAR(o.order_date, 'MM/DD/YYYY') AS ORDER_DATE,
-  o.order_id AS "ORDER",
-  ol.product_code AS CODE,
-  ol.quantity AS QTY,
-  ol.price_paid AS PRICE,
-  p.prod_description AS DESCRIPTION
-FROM b_customers c
-JOIN b_orders o
-  ON c.customer_id = o.customer_id
-JOIN b_order_lines ol
-  ON o.order_id = ol.order_id
-JOIN b_products p
-  ON ol.product_code = p.product_code
-ORDER BY
-  c.customer_name,
-  o.order_id,
-  ol.product_code;
+SELECT c.customer_name,
+       o.order_id,
+       (o.ship_date - o.order_date) AS days_to_ship
+FROM b_orders o
+JOIN b_customers c ON o.customer_id = c.customer_id
+WHERE o.ship_date IS NOT NULL
+  AND (o.ship_date - o.order_date) > (
+      SELECT AVG(ship_date - order_date)
+      FROM b_orders
+      WHERE customer_id = o.customer_id
+        AND ship_date IS NOT NULL
+  )
+ORDER BY days_to_ship DESC;
