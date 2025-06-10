@@ -1,0 +1,2 @@
+WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=/Users/chenqi/Documents/GitHub/homework/relational-database-design/db-client/Wallet_V6QVL411954IKLBD)))
+SSL_SERVER_DN_MATCH=yes
