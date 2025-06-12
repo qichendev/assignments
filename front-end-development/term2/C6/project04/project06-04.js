@@ -60,3 +60,26 @@ model.onchange = function() {
    }     
 }
 
+function showAll(selectList) {
+   let options = selectList.options;
+   let optionLength = options.length;
+   for (let i = 0; i < optionLength; i++) {
+      options[i].style.display = "block";
+   }
+}
+
+function filterSelect(selectList, category) {
+   let options = selectList.options;
+   let optionLength = options.length;
+   for (let i = 0; i < optionLength; i++) {
+      if (options[i].className === category) {
+         options[i].style.display = "block";
+      } else {
+         options[i].style.display = "none";
+      }
+   }
+}
+document.getElementById("selectVehicle").onclick = function() {
+   document.getElementById("vehicle").innerHTML = 
+      make.value + " " + model.value + " " + trim.value;
+}

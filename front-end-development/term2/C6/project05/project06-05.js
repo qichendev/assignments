@@ -10,76 +10,65 @@
       Filename: project06-05.js
 */
 
-window.addEventListener("load", function() {
-   // Calculate the shopping cart when the page loads
+
+window.addEventListener("load", function () {
    calcCart();
-   
-   // Verify that the user has selected a session to attend
-   document.getElementById("regSubmit").click = sessionTest;   
-   
-   // Recalculate the shopping chart when any field loses the focus
-   document.getElementById("fnBox").blur = calcCart;
-   document.getElementById("lnBox").blur = calcCart; 
-   document.getElementById("groupBox").blur = calcCart;   
-   document.getElementById("mailBox").blur = calcCart;   
-   document.getElementById("phoneBox").blur = calcCart;   
-   document.getElementById("sessionBox").change = calcCart;   
-   document.getElementById("banquetBox").blur = calcCart; 
-   document.getElementById("mediaCB").click = calcCart;   
+
+   document.getElementById("regSubmit").addEventListener("click", sessionTest);
+
+   document.getElementById("fnBox").addEventListener("blur", calcCart);
+   document.getElementById("lnBox").addEventListener("blur", calcCart);
+   document.getElementById("groupBox").addEventListener("blur", calcCart);
+   document.getElementById("mailBox").addEventListener("blur", calcCart);
+   document.getElementById("phoneBox").addEventListener("blur", calcCart);
+   document.getElementById("sessionBox").addEventListener("change", calcCart);
+   document.getElementById("banquetBox").addEventListener("blur", calcCart);
+   document.getElementById("mediaCB").addEventListener("click", calcCart);
 });
 
-
-// Function to verify that a session was selected by the user
 function sessionTest() {
    var confSession = document.getElementById("sessionBox");
    if (confSession.selectedIndex === -1) {
-      confSession.setValidity("Select a Session Package");
+      confSession.setCustomValidity("Select a Session Package");
    } else {
-      confSession.setValidity("");
+      confSession.setCustomValidity("");
    }
 }
 
-// Function to calculate the shopping cart total
 function calcCart() {
-   
-   // Calculate the banquet cost for all guests 
-   let guestCost = document.forms.register.elements.banquetGuests.value*55;
-   document.getElementById("regBanquet").textContent = document.forms.register.elements.banquetGuests.value;
-   
-   // Determine the cost of the selected session
-   let sessionCost = 0;       // Initial cost of the session
-   let sessionChoice = "";    // Initial chosen session
+   const form = document.forms.register;
 
-   // Index of the chosen session
-   let selectedSession = document.getElementById("sessionBox").index;
-   
-   // Retrieve the name and cost of the selected session  
+   let banquetGuests = form.elements.banquetGuests.value;
+   let guestCost = banquetGuests * 55;
+   document.getElementById("regBanquet").textContent = banquetGuests;
+
+   let sessionCost = 0;
+   let sessionChoice = "";
+
+   let sessionBox = document.getElementById("sessionBox");
+   let selectedSession = sessionBox.selectedIndex;
+
    if (selectedSession !== -1) {
-      sessionChoice = document.forms.register.elements.sessionBox[selectedSession].text;
-      sessionCost = document.forms.register.elements.sessionBox[selectedSession].value;
+      sessionChoice = sessionBox.options[selectedSession].text;
+      sessionCost = sessionBox.options[selectedSession].value;
    }
-   
-   // Determine the cost of the media pack
-   let mediaCost = 0;      // Initial media cost
-   let mediaChoice = "";   // Initial media choice
-   
-   // If the user selects the media pack, update the choice and cost
-   if (document.forms.register.elements.mediaCB.check) {
+
+   let mediaCost = 0;
+   let mediaChoice = "";
+
+   if (form.elements.mediaCB.checked) {
       mediaChoice = "yes";
       mediaCost = 115;
    }
-   
-   // Calculate total cost of the conference
-   // Multiply field values by 1 to convert them from text strings to numeric values
-   let totalCost = guestCost*1 + sessionCost*1 + mediaCost*1;
-   
-   // Display the field values and calculated values in the Shopping Cart table
-   document.getElementById("regName").textContent = document.forms.register.elements.firstName.value + " " + document.forms.register.elements.lastName.value;
-   document.getElementById("regGroup").textContent = document.forms.register.elements.group.value;
-   document.getElementById("regEmail").textContent = document.forms.register.elements.email.value;
-   document.getElementById("regPhone").textContent = document.forms.register.elements.phoneNumber.value;
+
+   let totalCost = Number(guestCost) + Number(sessionCost) + Number(mediaCost);
+
+   document.getElementById("regName").textContent = form.elements.firstName.value + " " + form.elements.lastName.value;
+   document.getElementById("regGroup").textContent = form.elements.group.value;
+   document.getElementById("regEmail").textContent = form.elements.email.value;
+   document.getElementById("regPhone").textContent = form.elements.phoneNumber.value;
    document.getElementById("regSession").textContent = sessionChoice;
-   document.getElementById("regBanquet").textContent = document.forms.register.elements.banquetGuests.value; 
+   document.getElementById("regBanquet").textContent = banquetGuests;
    document.getElementById("regPack").textContent = mediaChoice;
-   document.getElementById("regTotal").textContent = totalCost.toLocaleString("en-US", style: "currency", currency: "USD");
+   document.getElementById("regTotal").textContent = totalCost.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }
