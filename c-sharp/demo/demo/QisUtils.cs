@@ -44,7 +44,7 @@ namespace QisUtils
             Console.WriteLine(isPassed ? " Passed" : " Failed");
             Console.ResetColor();
         }
-        public void runWithTestData(QisApp qisApp, TestData[] testData)
+        public void RunWithTestData(QisApp qisApp, TestData[] testData)
         {
             for (var i = 0; i < testData.Length; i++)
             {

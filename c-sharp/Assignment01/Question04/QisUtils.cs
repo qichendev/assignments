@@ -5,84 +5,97 @@ namespace QisUtils
 {
     public interface RedirectedIO
     {
-        string readLine();
-        void writeLine(string output);
+        string ReadLine();
+        void WriteLine(string output);
     }
     public interface QisApp
     {
-        void executeSolution(RedirectedIO redirectedInput);
+        void ExecuteSolution(RedirectedIO redirectedInput);
     }
     public abstract class TestData : RedirectedIO
     {
-        public TestData(Queue<string> streamedInput
-            , Queue<string> expectedSubmission
-            , string expectedException = "")
+        private Queue<string> streamedInput;
+        private Queue<string> actualSubmission;
+        private Queue<string> expectedSubmission;
+        private string testDescription;
+        private string expectedException;
+
+        public TestData(string expectedException = "")
         {
             this.expectedException = expectedException;
-            this.streamedInput = streamedInput;
-            this.actualSubmission = new Queue<string>();
-            this.expectedSubmission = expectedSubmission;
+            streamedInput = new Queue<string>();
+            actualSubmission = new Queue<string>();
+            expectedSubmission = new Queue<string>();
             testDescription = string.Empty;
         }
-        public string readLine()
+
+        public string ReadLine()
         {
             return streamedInput.Dequeue();
         }
-        public void writeLine(string output)
+
+        public void WriteLine(string output)
         {
             actualSubmission.Enqueue(output);
         }
-        public Queue<string> streamedInput { get; set; }
-        public Queue<string> actualSubmission { get; set; }
-        public Queue<string> expectedSubmission { get; set; }
-        public string expectedException { get; set; }
-        public string testDescription { get; set; }
-    };
+
+        public Queue<string> GetStreamedInput()
+        {
+            return streamedInput;
+        }
+
+        public abstract string GetTestDescription();
+
+        public string ExpectedException { get { return expectedException; } set { expectedException = value; } }
+        public Queue<string> ActualSubmission { get { return actualSubmission; } }
+        public Queue<string> ExpectedSubmission { get { return expectedSubmission; } set { expectedSubmission = value; } }
+        public string TestDescription { get { return testDescription; } set { testDescription = value; } }
+    }
     public class QisWorkBench
     {
-        private void displayTestResult(string testDescription, bool isPassed)
+        private void DisplayTestResult(string testDescription, bool isPassed)
         {
             Console.Write(testDescription);
             Console.ForegroundColor = isPassed ? ConsoleColor.Green : ConsoleColor.Red;
             Console.WriteLine(isPassed ? " Passed" : " Failed");
             Console.ResetColor();
         }
-        public void runWithTestData(QisApp qisApp, TestData[] testData)
+        public void RunWithTestData(QisApp qisApp, TestData[] testData)
         {
             for (var i = 0; i < testData.Length; i++)
             {
                 var test = testData[i];
                 try
                 {
-                    qisApp.executeSolution(test);
-                    displayTestResult("Test No." + (i + 1) + ": " 
-                        + "Expected Submission: " + string.Join(", ", test.expectedSubmission) 
-                        + " Actual Submission: " + string.Join(", ", test.actualSubmission)
-                        , test.expectedSubmission.Cast<string>().SequenceEqual(test.actualSubmission.Cast<string>()));
+                    qisApp.ExecuteSolution(test);
+                    DisplayTestResult("Test No." + (i + 1) + ": " 
+                        + "Expected Submission: " + string.Join(", ", test.ExpectedSubmission) 
+                        + " Actual Submission: " + string.Join(", ", test.ActualSubmission)
+                        , test.ExpectedSubmission.Cast<string>().SequenceEqual(test.ActualSubmission.Cast<string>()));
                 }
                 catch (Exception e)
                 {
-                    displayTestResult("Test No." + (i + 1) + ": " + test.testDescription
-                        + " exception: " + e.Message, e.Message == test.expectedException);
+                    DisplayTestResult("Test No." + (i + 1) + ": " + test.TestDescription
+                        + " exception: " + e.Message, e.Message == test.ExpectedException);
                 }
             }
         }
         private class ConsoleIO : RedirectedIO
         {
-            public string readLine()
+            public string ReadLine()
             {
                 return Console.ReadLine();
             }
-            public void writeLine(string output)
+            public void WriteLine(string output)
             {
                 Console.WriteLine(output);
             }
         }
-        public void run(QisApp qisApp)
+        public void Run(QisApp qisApp)
         {
             try
             {
-                qisApp.executeSolution(new ConsoleIO());
+                qisApp.ExecuteSolution(new ConsoleIO());
             }
             catch (Exception e)
             {

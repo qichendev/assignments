@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Question06
 {
@@ -10,33 +11,35 @@ namespace Question06
     {
         class WordWithVowels
         {
-            public string word;
-            public int vowels;
+            public string Word;
+            public int Vowels;
         }
         public static void Main(string[] args)
         {
-            TextReader reader = new StreamReader("words.txt");
+            var reader = new StreamReader("words.txt");
             Queue<WordWithVowels> lines = new Queue<WordWithVowels>();
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                lines.Enqueue(new WordWithVowels { word = line, vowels = 0 });
+                lines.Enqueue(new WordWithVowels { Word = line, Vowels = 0 });
             }
             reader.Close();
             var vowels = new HashSet<char> {'a', 'e', 'i', 'o', 'u'};
             int maxVowels = 0;
-            for (int i = 0; i < lines.Count; i++)
+            
+            // Process each word in the queue
+            foreach (var wordWithVowels in lines)
             {
-                for (int j = 0; j < lines[i].Length; j++)
+                for (int j = 0; j < wordWithVowels.Word.Length; j++)
                 {
-                    if (vowels.Contains(lines[i].word[j].ToLower()))
+                    if (vowels.Contains(char.ToLower(wordWithVowels.Word[j])))
                     {
-                        lines[i].vowels++;
+                        wordWithVowels.Vowels++;
                     }
                 }
-                if (lines[i].vowels > maxVowels)
+                if (wordWithVowels.Vowels > maxVowels)
                 {
-                    maxVowels = lines[i].vowels;
+                    maxVowels = wordWithVowels.Vowels;
                 }
             }
             Console.WriteLine("The largest number of vowels in any one word is: " + maxVowels);

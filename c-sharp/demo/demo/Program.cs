@@ -113,7 +113,7 @@ namespace Question03
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().runWithTestData(new Cinema(), new TestData[] {
+            new QisWorkBench().RunWithTestData(new Cinema(), new TestData[] {
                 new CinemaTestData(new int[] { 1, 13 }, 
                     new string[] { "Access Denied - You are too young" }, ""),
                 new CinemaTestData(new int[] { 1, 14 }, 

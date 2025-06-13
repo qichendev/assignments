@@ -9,43 +9,43 @@ namespace Question04
 {
     public class SalesFigure
     {
-        public int storeNumber { get; set; }
-        public int salesFigure { get; set; }
+        public int StoreNumber { get; set; }
+        public int Amount { get; set; }
         public SalesFigure(int storeNumber)
         {
-            this.storeNumber = storeNumber;
+            this.StoreNumber = storeNumber;
         }
-        public bool parseSalesFigure(string input)
+        public bool ParseSalesFigure(string input)
         {
             int value;
             if (!int.TryParse(input, out value) || value < 0)
             {
                 throw new Exception("Invalid sales figure. Please enter a number greater than 0.");
             }
-            salesFigure = value;
+            Amount = value;
             return true;
         }
     }
     public class SalesFigureBarChart: QisApp
     {
-        public void executeSolution(RedirectedIO io)
+        public void ExecuteSolution(RedirectedIO io)
         {
             SalesFigure[] salesFigures = new SalesFigure[5];
             for (int i = 0; i < salesFigures.Length; i++)
             {
                 salesFigures[i] = new SalesFigure(i + 1);
                 Console.WriteLine("Enter today's sales for store " + (i + 1) + ": ");
-                salesFigures[i].parseSalesFigure(io.readLine());
+                salesFigures[i].ParseSalesFigure(io.ReadLine());
             }
             for (int i = 0; i < salesFigures.Length; i++)
             {
                 Console.Write("Store " + (i + 1) + ": ");
                 StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < salesFigures[i].salesFigure / 100; j++)
+                for (int j = 0; j < salesFigures[i].Amount / 100; j++)
                 {
                     sb.Append("*");
                 }
-                io.writeLine(sb.ToString());
+                io.WriteLine(sb.ToString());
             }
         }
     }
@@ -53,13 +53,29 @@ namespace Question04
     {
         public SalesFigureBarChartTestData(Queue<string> salesFigures
             , Queue<string> expectedSubmission
-            , string expectedException) : base(salesFigures, expectedSubmission, expectedException){}
+            , string expectedException) : base(expectedException)
+        {
+            foreach (var figure in salesFigures)
+            {
+                GetStreamedInput().Enqueue(figure);
+                TestDescription += figure + ", ";
+            }
+            foreach (string output in expectedSubmission)
+            {
+                ExpectedSubmission.Enqueue(output);
+            }
+        }
+
+        public override string GetTestDescription()
+        {
+            return TestDescription;
+        }
     }
     public class Program
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().runWithTestData(new SalesFigureBarChart(), new TestData[] {
+            new QisWorkBench().RunWithTestData(new SalesFigureBarChart(), new TestData[] {
                 new SalesFigureBarChartTestData(
                     new Queue<string>(new string[] { "1000", "2000", "3000", "1500", "2500" }),
                     new Queue<string>(new string[] { "**********", "********************", "******************************", "***************", "*************************" }), 

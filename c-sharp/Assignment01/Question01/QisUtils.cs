@@ -4,7 +4,7 @@ namespace QisUtils
 {
     public interface DataSource
     {
-        string readLine();
+        string ReadLine();
     }
     public class RedirectedInput
     {
@@ -13,36 +13,36 @@ namespace QisUtils
         {
             this.dataSource = dataSource;
         }
-        public string read()
+        public string Read()
         {
-            return dataSource.readLine();
+            return dataSource.ReadLine();
         }
     }
     public interface QisApp
     {
-        void executeSolution(RedirectedInput redirectedInput, Action<string> submit);
+        void ExecuteSolution(RedirectedInput redirectedInput, Action<string> submit);
     }
     public abstract class TestData : DataSource
     {
-        public abstract Queue<string> getStreamedInput();
-        public string readLine()
+        public abstract Queue<string> GetStreamedInput();
+        public string ReadLine()
         {
-            return getStreamedInput().Dequeue();
+            return GetStreamedInput().Dequeue();
         }
-        public abstract string getTestDescription();
-        public string expectedSubmission { get; set; }
-        public string expectedException { get; set; }
+        public abstract string GetTestDescription();
+        public string ExpectedSubmission { get; set; }
+        public string ExpectedException { get; set; }
     };
     public class QisWorkBench
     {
-        private void displayTestResult(string testDescription, bool isPassed)
+        private void DisplayTestResult(string testDescription, bool isPassed)
         {
             Console.Write(testDescription);
             Console.ForegroundColor = isPassed ? ConsoleColor.Green : ConsoleColor.Red;
             Console.WriteLine(isPassed ? " Passed" : " Failed");
             Console.ResetColor();
         }
-        public void runWithTestData(QisApp qisApp, TestData[] testData)
+        public void RunWithTestData(QisApp qisApp, TestData[] testData)
         {
             for (var i = 0; i < testData.Length; i++)
             {
@@ -50,20 +50,20 @@ namespace QisUtils
                 try
                 {
                     var redirectedInput = new RedirectedInput(test);
-                    qisApp.executeSolution(redirectedInput
-                        , submission => displayTestResult("Test No." + (i + 1) + ": " + test.getTestDescription()
-                            + " submission: " + submission, submission == test.expectedSubmission));
+                    qisApp.ExecuteSolution(redirectedInput
+                        , submission => DisplayTestResult("Test No." + (i + 1) + ": " + test.GetTestDescription()
+                            + " submission: " + submission, submission == test.ExpectedSubmission));
                 }
                 catch (Exception e)
                 {
-                    displayTestResult("Test No." + (i + 1) + ": " + test.getTestDescription()
-                        + " exception: " + e.Message, e.Message == test.expectedException);
+                    DisplayTestResult("Test No." + (i + 1) + ": " + test.GetTestDescription()
+                        + " exception: " + e.Message, e.Message == test.ExpectedException);
                 }
             }
         }
         private class ConsoleInput : DataSource
         {
-            public string readLine()
+            public string ReadLine()
             {
                 var ret = Console.ReadLine();
                 if (ret != null)
@@ -76,11 +76,11 @@ namespace QisUtils
                 }
             }
         }
-        public void run(QisApp qisApp)
+        public void Run(QisApp qisApp)
         {
             try
             {
-                qisApp.executeSolution(new RedirectedInput(new ConsoleInput()), Console.WriteLine);
+                qisApp.ExecuteSolution(new RedirectedInput(new ConsoleInput()), Console.WriteLine);
             }
             catch (Exception e)
             {

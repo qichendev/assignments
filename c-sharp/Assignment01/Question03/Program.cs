@@ -9,9 +9,9 @@ namespace Question03
 {
     class ExpectedCinemaData
     {
-        public int numberOfFilm { get; set; }
-        public int age { get; set; }
-        public bool parseNumberOfFilm(string input)
+        public int NumberOfFilm { get; set; }
+        public int Age { get; set; }
+        public bool ParseNumberOfFilm(string input)
         {
             int numberOfFilm;
             if (!Int32.TryParse(input, out numberOfFilm) || numberOfFilm < 1 || numberOfFilm > 5)
@@ -19,10 +19,10 @@ namespace Question03
                 Console.WriteLine("That film number is out of range. Please enter a number between 1 and 5: ");
                 return false;
             }
-            this.numberOfFilm = numberOfFilm;
+            this.NumberOfFilm = numberOfFilm;
             return true;
         }
-        public bool parseAge(string input)
+        public bool ParseAge(string input)
         {
             int age;
             if (!Int32.TryParse(input, out age) || age < 5 || age > 120)
@@ -30,7 +30,7 @@ namespace Question03
                 Console.WriteLine("That age is out of range. Please enter an age between 5 and 120: ");
                 return false;
             }
-            this.age = age;
+            this.Age = age;
             return true;
         }
     }
@@ -39,26 +39,26 @@ namespace Question03
     {
         class Film
         {
-            public bool matchAge(int age)
+            public bool MatchAge(int age)
             {
-                if (requiredAge == "PG" || requiredAge == "F")
+                if (RequiredAge == "PG" || RequiredAge == "F")
                 {
                     return true;
                 }
-                return age >= Int32.Parse(requiredAge);
+                return age >= Int32.Parse(RequiredAge);
             }
-            public string name { get; set; }
-            public string requiredAge { get; set; }
+            public string Name { get; set; }
+            public string RequiredAge { get; set; }
         }
 
-        public void executeSolution(RedirectedIO io)
+        public void ExecuteSolution(RedirectedIO io)
         {
             Film[] films = new Film[] {
-                new Film { name = "Species", requiredAge = "14" },
-                new Film { name = "Fight Club", requiredAge = "14" },
-                new Film { name = "Stargate", requiredAge = "PG" },
-                new Film { name = "The Terminator", requiredAge = "18" },
-                new Film { name = "Surf's Up", requiredAge = "F" }
+                new Film { Name = "Species", RequiredAge = "14" },
+                new Film { Name = "Fight Club", RequiredAge = "14" },
+                new Film { Name = "Stargate", RequiredAge = "PG" },
+                new Film { Name = "The Terminator", RequiredAge = "18" },
+                new Film { Name = "Surf's Up", RequiredAge = "F" }
             };
             do
             {
@@ -66,29 +66,29 @@ namespace Question03
                     + "We are presently showing:");
                 for (int i = 0; i < films.Length; i++)
                 {
-                    Console.WriteLine((i + 1) + ". " + films[i].name + "(" + films[i].requiredAge + ")");
+                    Console.WriteLine((i + 1) + ". " + films[i].Name + "(" + films[i].RequiredAge + ")");
                 }
                 Console.WriteLine("Enter the number of the film you wish to see: ");
                 ExpectedCinemaData expectedData = new ExpectedCinemaData();
                 do
                 {
                 }
-                while (!expectedData.parseNumberOfFilm(io.readLine()));
+                while (!expectedData.ParseNumberOfFilm(io.ReadLine()));
                 Console.WriteLine("Enter your age: ");
                 do
                 {
                 }
-                while (!expectedData.parseAge(io.readLine()));
-                if (films[expectedData.numberOfFilm - 1].matchAge(expectedData.age))
+                while (!expectedData.ParseAge(io.ReadLine()));
+                if (films[expectedData.NumberOfFilm - 1].MatchAge(expectedData.Age))
                 {
-                    io.writeLine("Enjoy the film");
+                    io.WriteLine("Enjoy the film");
                 }
                 else
                 {
-                    io.writeLine("Access Denied - You are too young");
+                    io.WriteLine("Access Denied - You are too young");
                 }
                 Console.WriteLine("Another customer? (Y or N): ");
-            } while (io.readLine() != "N");
+            } while (io.ReadLine() != "N");
         }
     }
 
@@ -98,14 +98,18 @@ namespace Question03
         {
             foreach (var filmNumberAndAge in bunchUserOptionAndFilmNumberAndAge)
             {
-                base.streamedInput.Enqueue(filmNumberAndAge);
-                base.testDescription += filmNumberAndAge + ", ";
+                GetStreamedInput().Enqueue(filmNumberAndAge);
+                TestDescription += filmNumberAndAge + ", ";
             }
             foreach (string output in expectedSubmission)
             {
-                base.expectedSubmission.Enqueue(output);
+                ExpectedSubmission.Enqueue(output);
             }
-            this.expectedException = expectedException;
+        }
+
+        public override string GetTestDescription()
+        {
+            return TestDescription;
         }
     }
 
@@ -113,7 +117,7 @@ namespace Question03
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().runWithTestData(new Cinema(), new TestData[] {
+            new QisWorkBench().RunWithTestData(new Cinema(), new TestData[] {
                 new CinemaTestData(new string[] { "1", "13", "N" }, 
                     new string[] { "Access Denied - You are too young" }, ""),
                 new CinemaTestData(new string[] { "1", "14", "N" }, 

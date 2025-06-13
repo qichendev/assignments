@@ -9,25 +9,25 @@ namespace Question01
 {
     class ExpectedCinemaData
     {
-        public int numberOfFilm { get; set; }
-        public int age { get; set; }
-        public void parseNumberOfFilm(string input)
+        public int NumberOfFilm { get; set; }
+        public int Age { get; set; }
+        public void ParseNumberOfFilm(string input)
         {
             int value;
             if (!Int32.TryParse(input, out value) || value < 1 || value > 5)
             {
                 throw new Exception("Invalid number of film input: " + input);
             }
-            numberOfFilm = value;
+            NumberOfFilm = value;
         }
-        public void parseAge(string input)
+        public void ParseAge(string input)
         {
             int value;
             if (!Int32.TryParse(input, out value) || value < 1)
             {
                 throw new Exception("Invalid age input: " + input);
             }
-            age = value;
+            Age = value;
         }
     }
 
@@ -35,39 +35,39 @@ namespace Question01
     {
         class Film
         {
-            public bool matchAge(int age)
+            public bool MatchAge(int age)
             {
-                if (requiredAge == "PG" || requiredAge == "F")
+                if (RequiredAge == "PG" || RequiredAge == "F")
                 {
                     return true;
                 }
-                return age >= Int32.Parse(requiredAge);
+                return age >= Int32.Parse(RequiredAge);
             }
-            public string name { get; set; }
-            public string requiredAge { get; set; }
+            public string Name { get; set; }
+            public string RequiredAge { get; set; }
         }
 
-        public void executeSolution(RedirectedInput input, Action<string> submit)
+        public void ExecuteSolution(RedirectedInput input, Action<string> submit)
         {
             Film[] films = new Film[] {
-                new Film { name = "Species", requiredAge = "14" },
-                new Film { name = "Fight Club", requiredAge = "14" },
-                new Film { name = "Stargate", requiredAge = "PG" },
-                new Film { name = "The Terminator", requiredAge = "18" },
-                new Film { name = "Surf's Up", requiredAge = "F" }
+                new Film { Name = "Species", RequiredAge = "14" },
+                new Film { Name = "Fight Club", RequiredAge = "14" },
+                new Film { Name = "Stargate", RequiredAge = "PG" },
+                new Film { Name = "The Terminator", RequiredAge = "18" },
+                new Film { Name = "Surf's Up", RequiredAge = "F" }
             };
             Console.WriteLine("Welcome to Famous Players\n"
                 + "We are presently showing:");
             for (int i = 0; i < films.Length; i++)
             {
-                Console.WriteLine((i + 1) + ". " + films[i].name + "(" + films[i].requiredAge + ")");
+                Console.WriteLine((i + 1) + ". " + films[i].Name + "(" + films[i].RequiredAge + ")");
             }
             Console.WriteLine("Enter the number of the film you wish to see: ");
             ExpectedCinemaData expectedData = new ExpectedCinemaData();
-            expectedData.parseNumberOfFilm(input.read());
+            expectedData.ParseNumberOfFilm(input.Read());
             Console.WriteLine("Enter your age: ");
-            expectedData.parseAge(input.read());
-            if (films[expectedData.numberOfFilm - 1].matchAge(expectedData.age))
+            expectedData.ParseAge(input.Read());
+            if (films[expectedData.NumberOfFilm - 1].MatchAge(expectedData.Age))
             {
                 submit("Enjoy the film");
             }
@@ -85,19 +85,19 @@ namespace Question01
         public CinemaTestData(ExpectedCinemaData expectedData, string expectedSubmission, string expectedException)
         {
             streamedInput = new Queue<string>();
-            streamedInput.Enqueue(expectedData.numberOfFilm.ToString());
-            streamedInput.Enqueue(expectedData.age.ToString());
-            this.expectedSubmission = expectedSubmission;
-            this.expectedException = expectedException;
-            testDescription = " numberOfFilm: " + expectedData.numberOfFilm + " age: " + expectedData.age;
+            streamedInput.Enqueue(expectedData.NumberOfFilm.ToString());
+            streamedInput.Enqueue(expectedData.Age.ToString());
+            this.ExpectedSubmission = expectedSubmission;
+            this.ExpectedException = expectedException;
+            testDescription = " numberOfFilm: " + expectedData.NumberOfFilm + " age: " + expectedData.Age;
         }
 
-        public override Queue<string> getStreamedInput()
+        public override Queue<string> GetStreamedInput()
         {
             return streamedInput;
         }
 
-        public override string getTestDescription()
+        public override string GetTestDescription()
         {
             return testDescription;
         }
@@ -107,36 +107,36 @@ namespace Question01
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().runWithTestData(new Cinema(), new TestData[] {
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 1, age = 13 }, 
+            new QisWorkBench().RunWithTestData(new Cinema(), new TestData[] {
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 13 }, 
                     "Access Denied - You are too young", ""),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 1, age = 14 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 14 }, 
                     "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 1, age = 0 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 0 }, 
                     "", "Invalid age input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 2, age = 13 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 2, Age = 13 }, 
                     "Access Denied - You are too young", ""),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 2, age = 0 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 2, Age = 0 }, 
                     "", "Invalid age input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 0, age = 13 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 0, Age = 13 }, 
                     "", "Invalid number of film input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 3, age = 19 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 3, Age = 19 }, 
                     "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 0, age = 18 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 0, Age = 18 }, 
                     "", "Invalid number of film input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = -90, age = 18 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = -90, Age = 18 }, 
                     "", "Invalid number of film input: -90"),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 4, age = -89 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = -89 }, 
                     "", "Invalid age input: -89"),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 5, age = 13 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 5, Age = 13 }, 
                     "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 4, age = 17 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = 17 }, 
                     "Access Denied - You are too young", ""),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 4, age = 18 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = 18 }, 
                     "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 6, age = 18 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 6, Age = 18 }, 
                     "", "Invalid number of film input: 6"),
-                new CinemaTestData(new ExpectedCinemaData { numberOfFilm = 3, age = 999 }, 
+                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 3, Age = 999 }, 
                     "Enjoy the film", "")
             });
         }

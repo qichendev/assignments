@@ -9,8 +9,8 @@ namespace Question02
 {
     class ExpectedPotatoData
     {
-        public int weight { get; set; }
-        public void parseWeight(string input)
+        public int Weight { get; set; }
+        public void ParseWeight(string input)
         {
             int value;
             if (!Int32.TryParse(input, out value))
@@ -21,13 +21,13 @@ namespace Question02
             {
                 throw new Exception("Invalid weight input: " + value);
             }
-            weight = value;
+            Weight = value;
         }
     }
 
     class PotatoClassifier: QisApp
     {
-        private string getGrade(int weight)
+        private string GetGrade(int weight)
         {
             if (weight >= 809)
                 return "Z";
@@ -38,12 +38,12 @@ namespace Question02
             else
                 return "X";
         }
-        public void executeSolution(RedirectedInput input, Action<string> submit)
+        public void ExecuteSolution(RedirectedInput input, Action<string> submit)
         {
             Console.WriteLine("Enter the weight of the potato in grams: ");
             ExpectedPotatoData data = new ExpectedPotatoData();
-            data.parseWeight(input.read());
-            submit(getGrade(data.weight));
+            data.ParseWeight(input.Read());
+            submit(GetGrade(data.Weight));
         }
     }
 
@@ -51,21 +51,23 @@ namespace Question02
     {
         private Queue<string> streamedInput;
         private string testDescription;
+        public override string ExpectedSubmission { get; set; }
+        public override string ExpectedException { get; set; }
         public PotatoTestData(ExpectedPotatoData expectedData
             , string expectedSubmission
             , string expectedException)
         {
             streamedInput = new Queue<string>();
-            streamedInput.Enqueue(expectedData.weight.ToString());
-            this.expectedSubmission = expectedSubmission;
-            this.expectedException = expectedException;
-            testDescription = " weight: " + expectedData.weight;
+            streamedInput.Enqueue(expectedData.Weight.ToString());
+            ExpectedSubmission = expectedSubmission;
+            ExpectedException = expectedException;
+            testDescription = " weight: " + expectedData.Weight;
         }
-        public override Queue<string> getStreamedInput()
+        public override Queue<string> GetStreamedInput()
         {
             return streamedInput;
         }
-        public override string getTestDescription()
+        public override string GetTestDescription()
         {
             return testDescription;
         }
@@ -75,16 +77,16 @@ namespace Question02
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().runWithTestData(new PotatoClassifier(), new TestData[] {
-                new PotatoTestData(new ExpectedPotatoData { weight = 809 }, "Z", ""),
-                new PotatoTestData(new ExpectedPotatoData { weight = 454 }, "B", ""),
-                new PotatoTestData(new ExpectedPotatoData { weight = 240 }, "A", ""),
-                new PotatoTestData(new ExpectedPotatoData { weight = 0 }, "X", ""),
-                new PotatoTestData(new ExpectedPotatoData { weight = -1 }, "", "Invalid weight input: -1"),
-                new PotatoTestData(new ExpectedPotatoData { weight = int.MaxValue }, "Z", ""),
-                new PotatoTestData(new ExpectedPotatoData { weight = int.MinValue }, "", "Invalid weight input: -2147483648"),
-                new PotatoTestData(new ExpectedPotatoData { weight = 999999999 }, "Z", ""),
-                new PotatoTestData(new ExpectedPotatoData { weight = -999999999 }, "", "Invalid weight input: -999999999")
+            new QisWorkBench().RunWithTestData(new PotatoClassifier(), new TestData[] {
+                new PotatoTestData(new ExpectedPotatoData { Weight = 809 }, "Z", ""),
+                new PotatoTestData(new ExpectedPotatoData { Weight = 454 }, "B", ""),
+                new PotatoTestData(new ExpectedPotatoData { Weight = 240 }, "A", ""),
+                new PotatoTestData(new ExpectedPotatoData { Weight = 0 }, "X", ""),
+                new PotatoTestData(new ExpectedPotatoData { Weight = -1 }, "", "Invalid weight input: -1"),
+                new PotatoTestData(new ExpectedPotatoData { Weight = int.MaxValue }, "Z", ""),
+                new PotatoTestData(new ExpectedPotatoData { Weight = int.MinValue }, "", "Invalid weight input: -2147483648"),
+                new PotatoTestData(new ExpectedPotatoData { Weight = 999999999 }, "Z", ""),
+                new PotatoTestData(new ExpectedPotatoData { Weight = -999999999 }, "", "Invalid weight input: -999999999")
             });
         }
     }
