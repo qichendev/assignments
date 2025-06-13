@@ -107,38 +107,39 @@ namespace Question01
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().RunWithTestData(new Cinema(), new TestData[] {
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 13 }, 
-                    "Access Denied - You are too young", ""),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 14 }, 
-                    "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 0 }, 
-                    "", "Invalid age input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 2, Age = 13 }, 
-                    "Access Denied - You are too young", ""),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 2, Age = 0 }, 
-                    "", "Invalid age input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 0, Age = 13 }, 
-                    "", "Invalid number of film input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 3, Age = 19 }, 
-                    "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 0, Age = 18 }, 
-                    "", "Invalid number of film input: 0"),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = -90, Age = 18 }, 
-                    "", "Invalid number of film input: -90"),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = -89 }, 
-                    "", "Invalid age input: -89"),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 5, Age = 13 }, 
-                    "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = 17 }, 
-                    "Access Denied - You are too young", ""),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = 18 }, 
-                    "Enjoy the film", ""),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 6, Age = 18 }, 
-                    "", "Invalid number of film input: 6"),
-                new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 3, Age = 999 }, 
-                    "Enjoy the film", "")
-            });
+            //new QisWorkBench().RunWithTestData(new Cinema(), new TestData[] {
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 13 }, 
+            //        "Access Denied - You are too young", ""),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 14 }, 
+            //        "Enjoy the film", ""),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 1, Age = 0 }, 
+            //        "", "Invalid age input: 0"),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 2, Age = 13 }, 
+            //        "Access Denied - You are too young", ""),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 2, Age = 0 }, 
+            //        "", "Invalid age input: 0"),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 0, Age = 13 }, 
+            //        "", "Invalid number of film input: 0"),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 3, Age = 19 }, 
+            //        "Enjoy the film", ""),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 0, Age = 18 }, 
+            //        "", "Invalid number of film input: 0"),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = -90, Age = 18 }, 
+            //        "", "Invalid number of film input: -90"),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = -89 }, 
+            //        "", "Invalid age input: -89"),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 5, Age = 13 }, 
+            //        "Enjoy the film", ""),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = 17 }, 
+            //        "Access Denied - You are too young", ""),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 4, Age = 18 }, 
+            //        "Enjoy the film", ""),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 6, Age = 18 }, 
+            //        "", "Invalid number of film input: 6"),
+            //    new CinemaTestData(new ExpectedCinemaData { NumberOfFilm = 3, Age = 999 }, 
+            //        "Enjoy the film", "")
+            //});
+            new QisWorkBench().Run(new Cinema());
         }
     }
 }

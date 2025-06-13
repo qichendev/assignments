@@ -16,7 +16,7 @@ namespace Question06
         }
         public static void Main(string[] args)
         {
-            var reader = new StreamReader("words.txt");
+            var reader = new StreamReader("works.txt");
             Queue<WordWithVowels> lines = new Queue<WordWithVowels>();
             string line;
             while ((line = reader.ReadLine()) != null)

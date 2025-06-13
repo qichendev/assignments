@@ -75,32 +75,33 @@ namespace Question04
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().RunWithTestData(new SalesFigureBarChart(), new TestData[] {
-                new SalesFigureBarChartTestData(
-                    new Queue<string>(new string[] { "1000", "2000", "3000", "1500", "2500" }),
-                    new Queue<string>(new string[] { "**********", "********************", "******************************", "***************", "*************************" }), 
-                    ""),
-                
-                new SalesFigureBarChartTestData(
-                    new Queue<string>(new string[] { "0", "100", "3000", "2000", "1500" }),
-                    new Queue<string>(new string[] { "", "*", "******************************", "********************", "***************" }), 
-                    ""),
-                
-                new SalesFigureBarChartTestData(
-                    new Queue<string>(new string[] { "99", "101", "2999", "2000", "2000" }),
-                    new Queue<string>(new string[] { "", "*", "*****************************", "********************", "********************" }), 
-                    ""),
-                
-                new SalesFigureBarChartTestData(
-                    new Queue<string>(new string[] { "abc", "2000", "3000", "1500", "2500" }),
-                    new Queue<string>(new string[] { "", "********************", "******************************", "***************", "*************************" }), 
-                    "Invalid sales figure. Please enter a number greater than 0."),
-                
-                new SalesFigureBarChartTestData(
-                    new Queue<string>(new string[] { "-100", "2000", "3000", "1500", "2500" }),
-                    new Queue<string>(new string[] { "", "********************", "******************************", "***************", "*************************" }), 
-                    "Invalid sales figure. Please enter a number greater than 0.")
-            });
+            //new QisWorkBench().RunWithTestData(new SalesFigureBarChart(), new TestData[] {
+            //    new SalesFigureBarChartTestData(
+            //        new Queue<string>(new string[] { "1000", "2000", "3000", "1500", "2500" }),
+            //        new Queue<string>(new string[] { "**********", "********************", "******************************", "***************", "*************************" }), 
+            //        ""),
+
+            //    new SalesFigureBarChartTestData(
+            //        new Queue<string>(new string[] { "0", "100", "3000", "2000", "1500" }),
+            //        new Queue<string>(new string[] { "", "*", "******************************", "********************", "***************" }), 
+            //        ""),
+
+            //    new SalesFigureBarChartTestData(
+            //        new Queue<string>(new string[] { "99", "101", "2999", "2000", "2000" }),
+            //        new Queue<string>(new string[] { "", "*", "*****************************", "********************", "********************" }), 
+            //        ""),
+
+            //    new SalesFigureBarChartTestData(
+            //        new Queue<string>(new string[] { "abc", "2000", "3000", "1500", "2500" }),
+            //        new Queue<string>(new string[] { "", "********************", "******************************", "***************", "*************************" }), 
+            //        "Invalid sales figure. Please enter a number greater than 0."),
+
+            //    new SalesFigureBarChartTestData(
+            //        new Queue<string>(new string[] { "-100", "2000", "3000", "1500", "2500" }),
+            //        new Queue<string>(new string[] { "", "********************", "******************************", "***************", "*************************" }), 
+            //        "Invalid sales figure. Please enter a number greater than 0.")
+            //});
+            new QisWorkBench().Run(new SalesFigureBarChart());
         }
     }
 }

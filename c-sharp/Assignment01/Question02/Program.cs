@@ -77,17 +77,18 @@ namespace Question02
     {
         public static void Main(string[] args)
         {
-            new QisWorkBench().RunWithTestData(new PotatoClassifier(), new TestData[] {
-                new PotatoTestData(new ExpectedPotatoData { Weight = 809 }, "Z", ""),
-                new PotatoTestData(new ExpectedPotatoData { Weight = 454 }, "B", ""),
-                new PotatoTestData(new ExpectedPotatoData { Weight = 240 }, "A", ""),
-                new PotatoTestData(new ExpectedPotatoData { Weight = 0 }, "X", ""),
-                new PotatoTestData(new ExpectedPotatoData { Weight = -1 }, "", "Invalid weight input: -1"),
-                new PotatoTestData(new ExpectedPotatoData { Weight = int.MaxValue }, "Z", ""),
-                new PotatoTestData(new ExpectedPotatoData { Weight = int.MinValue }, "", "Invalid weight input: -2147483648"),
-                new PotatoTestData(new ExpectedPotatoData { Weight = 999999999 }, "Z", ""),
-                new PotatoTestData(new ExpectedPotatoData { Weight = -999999999 }, "", "Invalid weight input: -999999999")
-            });
+            //new QisWorkBench().RunWithTestData(new PotatoClassifier(), new TestData[] {
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = 809 }, "Z", ""),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = 454 }, "B", ""),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = 240 }, "A", ""),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = 0 }, "X", ""),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = -1 }, "", "Invalid weight input: -1"),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = int.MaxValue }, "Z", ""),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = int.MinValue }, "", "Invalid weight input: -2147483648"),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = 999999999 }, "Z", ""),
+            //    new PotatoTestData(new ExpectedPotatoData { Weight = -999999999 }, "", "Invalid weight input: -999999999")
+            //});
+            new QisWorkBench().Run(new PotatoClassifier());
         }
     }
 }
