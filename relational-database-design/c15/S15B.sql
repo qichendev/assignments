@@ -614,20 +614,20 @@ CREATE OR REPLACE VIEW C15V3 AS
 -- 3.2
 SELECT *
 FROM C15V3
-ORDER BY employee_id;
+ORDER BY employee_id
 FETCH FIRST 10 ROWS ONLY;
 
 -- 4.1
 CREATE OR REPLACE VIEW C15V4 AS
-    SELECT d.department_name AS DEPT_NAME
-        , MIN(e.salary) AS LOWEST_SALARY
-        , MAX(e.salary) AS HIGHEST_SALARY
-        , AVG(e.salary) AS AVERAGE_SALARY
+    SELECT d.department_name AS DEPT_NAME,
+           MIN(e.monthly_salary) AS LOWEST_SALARY,
+           MAX(e.monthly_salary) AS HIGHEST_SALARY,
+           AVG(e.monthly_salary) AS AVGERAGE_SALARY
     FROM b_departments d
     LEFT OUTER JOIN b_employees e
     ON d.department_code = e.department_code
     GROUP BY d.department_name
-    ORDER BY DEPT_NAME;
+    ORDER BY d.department_name;
     
 -- 4.2
 SELECT *
@@ -636,10 +636,10 @@ ORDER BY DEPT_NAME;
 
 -- 4.3
 SELECT DEPT_NAME
-    , TO_CHAR(AVERAGE_SALARY, '$999,999.99') AS AVERAGE_SALARY
+    , TO_CHAR(AVGERAGE_SALARY, '$999,999.99') AS AVGERAGE_SALARY
 FROM C15V4
 WHERE DEPT_NAME IS NOT NULL
-    AND AVERAGE_SALARY > 4000
+    AND AVGERAGE_SALARY > 4000
 ORDER BY DEPT_NAME;
 
 -- 5.1
@@ -656,7 +656,8 @@ CREATE OR REPLACE VIEW C15V5 AS
         ON bc.customer_id = bo.customer_id
         JOIN b_order_lines bol
         ON bo.order_id = bol.order_id
-        JOIN b_products bp;
+        JOIN b_products bp
+        ON bol.product_code = bp.product_code;
 
 -- 5.2
 SELECT *
@@ -666,19 +667,19 @@ ORDER BY customer_name, order_date;
 -- 6.1
 CREATE OR REPLACE VIEW C15V6 AS
     SELECT bc.category_name
-        , bp.product_code
-        , bp.prod_description
-        , bo.order_id
+        , bp.product_code AS PRODUCT_CODE
+        , bp.prod_description AS PRODUCT_DESCRIPTION
+        , bo.order_id AS ORDER_ID
         , bo.order_date
         , bol.quantity
-        , bol.price_paid
+        , bol.price_paid AS PRICE_PAID
     FROM b_categories bc
         JOIN b_products bp
         ON bc.category_code = bp.category_code
-        JOIN b_orders bo
-        ON bp.product_code = bo.product_code
         JOIN b_order_lines bol
-        ON bo.order_id = bol.order_id;
+        ON bp.product_code = bol.product_code
+        JOIN b_orders bo
+        ON bol.order_id = bo.order_id
     WHERE bc.category_name IN ('Small Appliances', 'Sporting Goods');
 
 -- 6.2
@@ -687,17 +688,16 @@ FROM C15V6;
 
 -- 6.3
 SELECT product_code
-    , prod_description
+    , PRODUCT_DESCRIPTION
     , order_id
     , price_paid
 FROM C15V6
 WHERE price_paid > 1000
-GROUP BY product_code, prod_description
 ORDER BY product_code, order_id DESC;
 
 -- 6.4
 SELECT order_id AS ORDER_ID
     , SUM(price_paid) AS TOTAL_ORDER
 FROM C15V6
-WHERE HAVING SUM(price_paid) > 700
+HAVING SUM(price_paid) > 700
 GROUP BY order_id;
