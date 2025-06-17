@@ -584,50 +584,48 @@ WHERE JOB_TITLE = 'Department Manager'
 ORDER BY SALARY_DIFFERENCE DESC;
 
 -- 2.4
-SELECT be.first_name || ' ' || be.last_name AS EMPLOYEE_NAME
-    , TO_CHAR(MAX(be.monthly_salary), '$999,999.99') AS MAX_SALARY
-    , TO_CHAR(be.monthly_salary * 12, '$999,999.99') AS YEARLY_SALARY
-    , TO_CHAR(MAX(be.monthly_salary) - be.monthly_salary * 12, '$999,999.99') AS SALARY_DIFFERENCE
-FROM b_employees be
-    JOIN b_jobs bj
-    ON be.job_code = bj.job_code
-WHERE bj.job_title = 'Department Manager'
-    AND be.monthly_salary > 50000
-GROUP BY be.first_name || ' ' || be.last_name, be.monthly_salary
+SELECT 
+    e.first_name || ' ' || e.last_name AS EMPLOYEE_NAME,
+    TO_CHAR(j.max_salary, '$999,999.99') AS MAX_SALARY,
+    TO_CHAR(e.monthly_salary * 12, '$999,999.99') AS YEARLY_SALARY,
+    TO_CHAR(j.max_salary - (e.monthly_salary * 12), '$999,999.99') AS SALARY_DIFFERENCE
+FROM b_employees e
+JOIN b_jobs j
+ON e.job_code = j.job_code
+WHERE j.job_title = 'Department Manager'
 ORDER BY SALARY_DIFFERENCE DESC;
 
 -- 3.1
 CREATE OR REPLACE VIEW C15V3 AS
-    SELECT e.employee_id
+    SELECT e.employee_id AS EMP_ID
         , e.first_name || ' ' || e.last_name AS EMPLOYEE_NAME
         , d.department_name AS DEPARTMENT_NAME
         , e.manager_id AS MGR_ID
         , m.first_name || ' ' || m.last_name AS MGR_NAME
     FROM b_employees e
-        JOIN b_departments d
+        LEFT OUTER JOIN b_departments d
         ON e.department_code = d.department_code
-        JOIN b_employees m
+        LEFT OUTER JOIN b_employees m
         ON e.manager_id = m.employee_id
-    WHERE e.monthly_salary > 50000
     ORDER BY e.employee_id;
     
 -- 3.2
 SELECT *
 FROM C15V3
-ORDER BY employee_id;
+ORDER BY EMP_ID
 FETCH FIRST 10 ROWS ONLY;
 
 -- 4.1
 CREATE OR REPLACE VIEW C15V4 AS
-    SELECT d.department_name AS DEPT_NAME
-        , MIN(e.salary) AS LOWEST_SALARY
-        , MAX(e.salary) AS HIGHEST_SALARY
-        , AVG(e.salary) AS AVERAGE_SALARY
+    SELECT d.department_name AS DEPT_NAME,
+           MIN(e.monthly_salary) AS LOWEST_SALARY,
+           MAX(e.monthly_salary) AS HIGHEST_SALARY,
+           AVG(e.monthly_salary) AS AVGERAGE_SALARY
     FROM b_departments d
     LEFT OUTER JOIN b_employees e
     ON d.department_code = e.department_code
     GROUP BY d.department_name
-    ORDER BY DEPT_NAME;
+    ORDER BY d.department_name;
     
 -- 4.2
 SELECT *
@@ -636,27 +634,28 @@ ORDER BY DEPT_NAME;
 
 -- 4.3
 SELECT DEPT_NAME
-    , TO_CHAR(AVERAGE_SALARY, '$999,999.99') AS AVERAGE_SALARY
+    , TO_CHAR(AVGERAGE_SALARY, '$999,999.99') AS AVERAGE_SALARY
 FROM C15V4
 WHERE DEPT_NAME IS NOT NULL
-    AND AVERAGE_SALARY > 4000
+    AND AVGERAGE_SALARY > 4000
 ORDER BY DEPT_NAME;
 
 -- 5.1
 CREATE OR REPLACE VIEW C15V5 AS
-    SELECT bc.customer_name
-        , bo.order_date
-        , bo.order_id
-        , bp.product_code
-        , bol.quantity
-        , bp.price
-        , bp.prod_description
+    SELECT bc.customer_name AS CUSTOMER_NAME
+        , bo.order_date AS ORDER_DATE
+        , bo.order_id AS ORDER
+        , bp.product_code AS PRODUCT
+        , bol.quantity AS QTY
+        , bp.price AS PRICE
+        , bp.prod_description AS DESCRIPTION
     FROM b_customers bc
         JOIN b_orders bo
         ON bc.customer_id = bo.customer_id
         JOIN b_order_lines bol
         ON bo.order_id = bol.order_id
         JOIN b_products bp;
+        ON bol.product_code = bp.product_code
 
 -- 5.2
 SELECT *
