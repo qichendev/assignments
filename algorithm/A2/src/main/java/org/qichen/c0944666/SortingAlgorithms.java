@@ -16,30 +16,46 @@ public class SortingAlgorithms {
             }
         }
     }
-    private final ArrayList<Integer> buffer = new ArrayList<Integer>();
-    private void combineSortedArries(int[] array, int lstart, int lend, int rstart, int rend) {
-        var start = lstart;
-        buffer.clear();
-        while (lstart != lend && rstart != rend) {
-            buffer.add(array[lstart] > array[rstart] ? array[rstart++] : array[lstart++]);
+
+    /**
+     *
+     * @param arr input array, sorting array after processing
+     */
+    public void mergeSort(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            return;
         }
-        while (lstart != lend || rstart != rend) {
-            buffer.add(rstart != rend ? array[rstart++] : array[lstart++]);
-        }
-        var arrayIterator = start;
-        for (var i: buffer) {
-            array[arrayIterator++] = i;
-        }
+        sort(arr, 0, arr.length - 1);
     }
-    public void mergeSort(int[] array, int start, int end) {
-        if (end - start == 2) {
-            var tmp = array[start];
-            array[start] = array[start + 1];
-            array[start + 1] = tmp;
-        } else if (end - start > 2){
-            mergeSort(array, start, end / 2 - 1);
-            mergeSort(array, end / 2 - 1, end);
-            combineSortedArries(array, start, end / 2, end / 2, end);
+
+    private void sort(int[] arr, int left, int right) {
+        if (left == right) {
+            return;
+        }
+        int mid = left + (right - left) / 2;
+        sort(arr, left, mid);
+        sort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+
+    private void merge(int[] arr, int left, int mid, int right) {
+        int[] help = new int[right - left + 1];
+        int i = 0;
+
+        int p1 = left;
+        int p2 = mid + 1;
+
+        while (p1 <= mid && p2 <= right) {
+            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+        }
+        while (p1 <= mid) {
+            help[i++] = arr[p1++];
+        }
+        while (p2 <= right) {
+            help[i++] = arr[p2++];
+        }
+        for (i = 0; i < help.length; i++) {
+            arr[left + i] = help[i];
         }
     }
 }
