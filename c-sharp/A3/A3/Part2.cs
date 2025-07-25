@@ -21,6 +21,7 @@ namespace A3
         }
     }
 
+    // Part2DoublyLinkedList class
     public class Part2DoublyLinkedList
     {
         private int size;
@@ -58,6 +59,7 @@ namespace A3
             size++;
         }
 
+        // remove node from list
         public void Remove(Part2DNode v)
         {
             if (v == header || v == tail) throw new ArgumentException("Cannot remove header or tail");
@@ -71,6 +73,7 @@ namespace A3
         }
     }
 
+    // Stack class
     public class Stack
     {
         private Part2DoublyLinkedList list;
@@ -107,6 +110,7 @@ namespace A3
         }
     }
 
+    // BracketMatcher class
     public class BracketMatcher
     {
         private bool IsMatchingPair(char opening, char closing)

@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace A3
 {
+    // Track class
     public class Track
     {
         private string name;
@@ -100,6 +101,7 @@ namespace A3
         }
     }
 
+    // DoublyLinkedList class
     public class DoublyLinkedList
     {
         private int size;
@@ -153,6 +155,7 @@ namespace A3
         }
     }
 
+    // Playlist class
     public class Playlist
     {
         private string name;

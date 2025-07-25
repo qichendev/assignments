@@ -8,11 +8,13 @@ namespace A3
 {
     internal class Program
     {
+        // main method
         static void Main(string[] args)
         {
             TestPart1();
             TestPart2();
         }
+        // test part 2
         static void TestPart2()
         {
             var matcher = new BracketMatcher();
@@ -23,6 +25,7 @@ namespace A3
                 Console.WriteLine($"Input: {input} - Valid: {isValid}");
             }
         }
+        // test part 1
         static void TestPart1()
         {
             Playlist playlist = new Playlist("My Awesome Playlist");
