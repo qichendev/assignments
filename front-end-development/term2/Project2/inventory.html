@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Inventory - Battery Mall Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="inventory-page">
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <i class="fas fa-battery-full"></i>
+            <span>Battery Mall</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="inventory.html" class="active"><i class="fas fa-boxes"></i> Inventory</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <div class="user-info">
+                <span id="userName">Admin User</span>
+                <span id="userRole">Administrator</span>
+            </div>
+            <div class="user-actions">
+                <button class="btn-icon" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationCount">3</span>
+                </button>
+                <button class="btn-icon" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <i class="fas fa-home"></i>
+            <a href="dashboard.html">Dashboard</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Inventory</span>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1><i class="fas fa-boxes"></i> Battery Inventory</h1>
+                <p>Manage your battery products, stock levels, and categories</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="exportInventory()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+                <button class="btn btn-primary" onclick="showAddBatteryModal()">
+                    <i class="fas fa-plus"></i> Add Battery
+                </button>
+            </div>
+        </div>
+
+        <!-- Inventory Controls -->
+        <div class="inventory-controls">
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search batteries by model, brand, or type..." 
+                           oninput="searchBatteries(this.value)">
+                </div>
+                <button class="btn btn-outline" onclick="clearSearch()">
+                    <i class="fas fa-times"></i> Clear
+                </button>
+            </div>
+
+            <div class="filter-section">
+                <select id="categoryFilter" onchange="filterByCategory(this.value)">
+                    <option value="">All Categories</option>
+                    <option value="automotive">Automotive</option>
+                    <option value="marine">Marine</option>
+                    <option value="motorcycle">Motorcycle</option>
+                    <option value="ups">UPS/Backup</option>
+                    <option value="solar">Solar</option>
+                </select>
+
+                <select id="typeFilter" onchange="filterByType(this.value)">
+                    <option value="">All Types</option>
+                    <option value="lead-acid">Lead Acid</option>
+                    <option value="lithium">Lithium</option>
+                    <option value="agm">AGM</option>
+                    <option value="gel">Gel</option>
+                </select>
+
+                <select id="stockFilter" onchange="filterByStock(this.value)">
+                    <option value="">All Stock Levels</option>
+                    <option value="in-stock">In Stock</option>
+                    <option value="low-stock">Low Stock</option>
+                    <option value="out-of-stock">Out of Stock</option>
+                </select>
+
+                <select id="sortBy" onchange="sortInventory(this.value)">
+                    <option value="name">Sort by Name</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="stock-low">Stock: Low to High</option>
+                    <option value="stock-high">Stock: High to Low</option>
+                    <option value="date-new">Date: Newest First</option>
+                    <option value="date-old">Date: Oldest First</option>
+                </select>
+            </div>
+
+            <div class="view-options">
+                <button class="view-btn active" data-view="grid" onclick="changeView('grid')">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="list" onclick="changeView('list')">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Management -->
+        <div class="category-management">
+            <h3><i class="fas fa-tags"></i> Categories</h3>
+            <div class="category-list" id="categoryList">
+                <div class="category-item" data-category="automotive" ondrop="dropBatteryOnCategory(event)" ondragover="allowDrop(event)">
+                    <i class="fas fa-car"></i>
+                    <span>Automotive</span>
+                    <span class="category-count" id="automotive-count">0</span>
+                </div>
+                <div class="category-item" data-category="marine" ondrop="dropBatteryOnCategory(event)" ondragover="allowDrop(event)">
+                    <i class="fas fa-ship"></i>
+                    <span>Marine</span>
+                    <span class="category-count" id="marine-count">0</span>
+                </div>
+                <div class="category-item" data-category="motorcycle" ondrop="dropBatteryOnCategory(event)" ondragover="allowDrop(event)">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>Motorcycle</span>
+                    <span class="category-count" id="motorcycle-count">0</span>
+                </div>
+                <div class="category-item" data-category="ups" ondrop="dropBatteryOnCategory(event)" ondragover="allowDrop(event)">
+                    <i class="fas fa-plug"></i>
+                    <span>UPS/Backup</span>
+                    <span class="category-count" id="ups-count">0</span>
+                </div>
+                <div class="category-item" data-category="solar" ondrop="dropBatteryOnCategory(event)" ondragover="allowDrop(event)">
+                    <i class="fas fa-solar-panel"></i>
+                    <span>Solar</span>
+                    <span class="category-count" id="solar-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Grid -->
+        <div class="inventory-container">
+            <div class="inventory-grid" id="inventoryGrid">
+                <!-- Battery items will be loaded dynamically -->
+            </div>
+            
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading inventory...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-battery-empty"></i>
+                <h3>No batteries found</h3>
+                <p>Try adjusting your search or filter criteria, or add a new battery to get started.</p>
+                <button class="btn btn-primary" onclick="showAddBatteryModal()">
+                    <i class="fas fa-plus"></i> Add Your First Battery
+                </button>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container" id="paginationContainer">
+            <div class="pagination-info">
+                <span>Showing <span id="itemsStart">1</span>-<span id="itemsEnd">20</span> of <span id="totalItems">0</span> batteries</span>
+            </div>
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons will be generated dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Battery Modal -->
+    <div id="batteryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-plus"></i> Add New Battery</h3>
+                <button class="close-btn" onclick="closeBatteryModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="batteryForm" novalidate>
+                    <input type="hidden" id="batteryId" name="batteryId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="batteryModel">
+                                <i class="fas fa-tag"></i> Model *
+                            </label>
+                            <input type="text" id="batteryModel" name="batteryModel" required>
+                            <span class="error-message" id="batteryModelError"></span>
+                            <small>e.g., X12-100, PowerMax Pro 200</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="batteryBrand">
+                                <i class="fas fa-industry"></i> Brand *
+                            </label>
+                            <input type="text" id="batteryBrand" name="batteryBrand" required>
+                            <span class="error-message" id="batteryBrandError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="batteryVoltage">
+                                <i class="fas fa-bolt"></i> Voltage *
+                            </label>
+                            <select id="batteryVoltage" name="batteryVoltage" required>
+                                <option value="">Select Voltage</option>
+                                <option value="6V">6V</option>
+                                <option value="12V">12V</option>
+                                <option value="24V">24V</option>
+                                <option value="48V">48V</option>
+                            </select>
+                            <span class="error-message" id="batteryVoltageError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="batteryCapacity">
+                                <i class="fas fa-battery-half"></i> Capacity (Ah) *
+                            </label>
+                            <input type="number" id="batteryCapacity" name="batteryCapacity" min="1" max="1000" required>
+                            <span class="error-message" id="batteryCapacityError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="batteryType">
+                                <i class="fas fa-cogs"></i> Type *
+                            </label>
+                            <select id="batteryType" name="batteryType" required>
+                                <option value="">Select Type</option>
+                                <option value="lead-acid">Lead Acid</option>
+                                <option value="lithium">Lithium</option>
+                                <option value="agm">AGM</option>
+                                <option value="gel">Gel</option>
+                            </select>
+                            <span class="error-message" id="batteryTypeError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="batteryCategory">
+                                <i class="fas fa-tags"></i> Category *
+                            </label>
+                            <select id="batteryCategory" name="batteryCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="automotive">Automotive</option>
+                                <option value="marine">Marine</option>
+                                <option value="motorcycle">Motorcycle</option>
+                                <option value="ups">UPS/Backup</option>
+                                <option value="solar">Solar</option>
+                            </select>
+                            <span class="error-message" id="batteryCategoryError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="batteryPrice">
+                                <i class="fas fa-dollar-sign"></i> Price ($) *
+                            </label>
+                            <input type="number" id="batteryPrice" name="batteryPrice" min="0" step="0.01" required>
+                            <span class="error-message" id="batteryPriceError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="batteryStock">
+                                <i class="fas fa-boxes"></i> Stock Quantity *
+                            </label>
+                            <input type="number" id="batteryStock" name="batteryStock" min="0" required>
+                            <span class="error-message" id="batteryStockError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="batteryDescription">
+                            <i class="fas fa-align-left"></i> Description
+                        </label>
+                        <textarea id="batteryDescription" name="batteryDescription" rows="3" 
+                                  placeholder="Enter battery description, features, specifications..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="batteryWarranty">
+                                <i class="fas fa-shield-alt"></i> Warranty (months)
+                            </label>
+                            <input type="number" id="batteryWarranty" name="batteryWarranty" min="0" max="120">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="batteryWeight">
+                                <i class="fas fa-weight"></i> Weight (kg)
+                            </label>
+                            <input type="number" id="batteryWeight" name="batteryWeight" min="0" step="0.1">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeBatteryModal()">
+                    Cancel
+                </button>
+                <button type="submit" form="batteryForm" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Battery
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Actions Modal -->
+    <div id="bulkActionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-tasks"></i> Bulk Actions</h3>
+                <button class="close-btn" onclick="closeBulkActionsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Selected <span id="selectedCount">0</span> batteries</p>
+                <div class="bulk-actions">
+                    <button class="btn btn-warning" onclick="bulkUpdateStock()">
+                        <i class="fas fa-edit"></i> Update Stock
+                    </button>
+                    <button class="btn btn-info" onclick="bulkUpdatePrice()">
+                        <i class="fas fa-dollar-sign"></i> Update Price
+                    </button>
+                    <button class="btn btn-secondary" onclick="bulkChangeCategory()">
+                        <i class="fas fa-tags"></i> Change Category
+                    </button>
+                    <button class="btn btn-danger" onclick="bulkDelete()">
+                        <i class="fas fa-trash"></i> Delete Selected
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/dragdrop.js"></script>
+</body>
+</html>

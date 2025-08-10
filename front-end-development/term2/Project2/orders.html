@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Battery Mall Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="orders-page">
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <i class="fas fa-battery-full"></i>
+            <span>Battery Mall</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="inventory.html"><i class="fas fa-boxes"></i> Inventory</a></li>
+            <li><a href="orders.html" class="active"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <div class="user-info">
+                <span id="userName">Admin User</span>
+                <span id="userRole">Administrator</span>
+            </div>
+            <div class="user-actions">
+                <button class="btn-icon" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationCount">3</span>
+                </button>
+                <button class="btn-icon" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <i class="fas fa-home"></i>
+            <a href="dashboard.html">Dashboard</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Orders</span>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1><i class="fas fa-shopping-cart"></i> Order Management</h1>
+                <p>Track and manage customer orders with drag-and-drop status updates</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="exportOrders()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+                <button class="btn btn-primary" onclick="showNewOrderModal()">
+                    <i class="fas fa-plus"></i> New Order
+                </button>
+            </div>
+        </div>
+
+        <!-- Order Controls -->
+        <div class="order-controls">
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search orders by ID, customer, or product..." 
+                           oninput="searchOrders(this.value)">
+                </div>
+                <button class="btn btn-outline" onclick="clearSearch()">
+                    <i class="fas fa-times"></i> Clear
+                </button>
+            </div>
+
+            <div class="filter-section">
+                <select id="statusFilter" onchange="filterByStatus(this.value)">
+                    <option value="">All Statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+
+                <select id="dateFilter" onchange="filterByDate(this.value)">
+                    <option value="">All Dates</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+
+                <select id="priorityFilter" onchange="filterByPriority(this.value)">
+                    <option value="">All Priorities</option>
+                    <option value="high">High Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="low">Low Priority</option>
+                </select>
+            </div>
+
+            <div class="view-options">
+                <button class="view-btn active" data-view="kanban" onclick="changeView('kanban')">
+                    <i class="fas fa-columns"></i> Kanban
+                </button>
+                <button class="view-btn" data-view="list" onclick="changeView('list')">
+                    <i class="fas fa-list"></i> List
+                </button>
+                <button class="view-btn" data-view="calendar" onclick="changeView('calendar')">
+                    <i class="fas fa-calendar"></i> Calendar
+                </button>
+            </div>
+        </div>
+
+        <!-- Order Status Board (Kanban View) -->
+        <div class="order-board" id="orderBoard">
+            <div class="board-column" data-status="pending">
+                <div class="column-header">
+                    <div class="column-title">
+                        <i class="fas fa-clock"></i>
+                        <span>Pending</span>
+                        <span class="order-count" id="pendingCount">0</span>
+                    </div>
+                    <div class="column-actions">
+                        <button class="btn-icon" onclick="addOrderToColumn('pending')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="column-content" id="pendingOrders" 
+                     ondrop="dropOrder(event)" ondragover="allowDrop(event)">
+                    <!-- Pending orders will be loaded here -->
+                </div>
+            </div>
+
+            <div class="board-column" data-status="processing">
+                <div class="column-header">
+                    <div class="column-title">
+                        <i class="fas fa-cog"></i>
+                        <span>Processing</span>
+                        <span class="order-count" id="processingCount">0</span>
+                    </div>
+                    <div class="column-actions">
+                        <button class="btn-icon" onclick="addOrderToColumn('processing')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="column-content" id="processingOrders" 
+                     ondrop="dropOrder(event)" ondragover="allowDrop(event)">
+                    <!-- Processing orders will be loaded here -->
+                </div>
+            </div>
+
+            <div class="board-column" data-status="shipped">
+                <div class="column-header">
+                    <div class="column-title">
+                        <i class="fas fa-truck"></i>
+                        <span>Shipped</span>
+                        <span class="order-count" id="shippedCount">0</span>
+                    </div>
+                    <div class="column-actions">
+                        <button class="btn-icon" onclick="addOrderToColumn('shipped')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="column-content" id="shippedOrders" 
+                     ondrop="dropOrder(event)" ondragover="allowDrop(event)">
+                    <!-- Shipped orders will be loaded here -->
+                </div>
+            </div>
+
+            <div class="board-column" data-status="delivered">
+                <div class="column-header">
+                    <div class="column-title">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Delivered</span>
+                        <span class="order-count" id="deliveredCount">0</span>
+                    </div>
+                    <div class="column-actions">
+                        <button class="btn-icon" onclick="addOrderToColumn('delivered')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="column-content" id="deliveredOrders" 
+                     ondrop="dropOrder(event)" ondragover="allowDrop(event)">
+                    <!-- Delivered orders will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Order List View -->
+        <div class="order-list-view" id="orderListView" style="display: none;">
+            <div class="list-controls">
+                <div class="bulk-actions">
+                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                    <label for="selectAll">Select All</label>
+                    <button class="btn btn-sm btn-secondary" onclick="bulkUpdateStatus()" disabled id="bulkUpdateBtn">
+                        <i class="fas fa-edit"></i> Update Status
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="bulkDelete()" disabled id="bulkDeleteBtn">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+                <div class="list-pagination">
+                    <span>Showing 1-20 of 150 orders</span>
+                    <div class="pagination-controls">
+                        <button class="btn-icon" onclick="previousPage()">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span>Page 1 of 8</span>
+                        <button class="btn-icon" onclick="nextPage()">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="headerCheckbox"></th>
+                            <th onclick="sortBy('orderId')">Order ID <i class="fas fa-sort"></i></th>
+                            <th onclick="sortBy('customer')">Customer <i class="fas fa-sort"></i></th>
+                            <th onclick="sortBy('date')">Date <i class="fas fa-sort"></i></th>
+                            <th onclick="sortBy('total')">Total <i class="fas fa-sort"></i></th>
+                            <th onclick="sortBy('status')">Status <i class="fas fa-sort"></i></th>
+                            <th onclick="sortBy('priority')">Priority <i class="fas fa-sort"></i></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody">
+                        <!-- Order rows will be loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Order Calendar View -->
+        <div class="order-calendar-view" id="orderCalendarView" style="display: none;">
+            <div class="calendar-header">
+                <button class="btn-icon" onclick="previousMonth()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <h3 id="currentMonth">January 2025</h3>
+                <button class="btn-icon" onclick="nextMonth()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be generated dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <!-- New Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="orderModalTitle"><i class="fas fa-plus"></i> New Order</h3>
+                <button class="close-btn" onclick="closeOrderModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm" novalidate>
+                    <input type="hidden" id="orderId" name="orderId">
+                    
+                    <!-- Customer Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-user"></i> Customer Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerName">Customer Name *</label>
+                                <input type="text" id="customerName" name="customerName" required>
+                                <span class="error-message" id="customerNameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerEmail">Email *</label>
+                                <input type="email" id="customerEmail" name="customerEmail" required>
+                                <span class="error-message" id="customerEmailError"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerPhone">Phone *</label>
+                                <input type="tel" id="customerPhone" name="customerPhone" required>
+                                <span class="error-message" id="customerPhoneError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderPriority">Priority</label>
+                                <select id="orderPriority" name="orderPriority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-truck"></i> Shipping Information</h4>
+                        <div class="form-group">
+                            <label for="shippingAddress">Shipping Address *</label>
+                            <textarea id="shippingAddress" name="shippingAddress" rows="3" required></textarea>
+                            <span class="error-message" id="shippingAddressError"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shippingCity">City *</label>
+                                <input type="text" id="shippingCity" name="shippingCity" required>
+                                <span class="error-message" id="shippingCityError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="shippingState">State/Province *</label>
+                                <input type="text" id="shippingState" name="shippingState" required>
+                                <span class="error-message" id="shippingStateError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="shippingZip">ZIP/Postal Code *</label>
+                                <input type="text" id="shippingZip" name="shippingZip" required>
+                                <span class="error-message" id="shippingZipError"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shippingMethod">Shipping Method *</label>
+                                <select id="shippingMethod" name="shippingMethod" required onchange="calculateShipping()">
+                                    <option value="">Select Method</option>
+                                    <option value="standard">Standard (5-7 days) - $9.99</option>
+                                    <option value="express">Express (2-3 days) - $19.99</option>
+                                    <option value="overnight">Overnight - $39.99</option>
+                                </select>
+                                <span class="error-message" id="shippingMethodError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="expectedDelivery">Expected Delivery</label>
+                                <input type="date" id="expectedDelivery" name="expectedDelivery" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-shopping-cart"></i> Order Items</h4>
+                        <div class="order-items" id="orderItems">
+                            <div class="order-item">
+                                <div class="item-select">
+                                    <label>Battery *</label>
+                                    <select class="battery-select" name="batteryId[]" required onchange="updateItemPrice(this)">
+                                        <option value="">Select Battery</option>
+                                        <!-- Options will be loaded dynamically -->
+                                    </select>
+                                </div>
+                                <div class="item-quantity">
+                                    <label>Quantity *</label>
+                                    <input type="number" class="quantity-input" name="quantity[]" min="1" value="1" required onchange="updateItemTotal(this)">
+                                </div>
+                                <div class="item-price">
+                                    <label>Unit Price</label>
+                                    <input type="number" class="price-input" name="unitPrice[]" readonly>
+                                </div>
+                                <div class="item-total">
+                                    <label>Total</label>
+                                    <input type="number" class="total-input" name="itemTotal[]" readonly>
+                                </div>
+                                <div class="item-actions">
+                                    <button type="button" class="btn-icon btn-danger" onclick="removeOrderItem(this)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addOrderItem()">
+                            <i class="fas fa-plus"></i> Add Item
+                        </button>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-calculator"></i> Order Summary</h4>
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="orderSubtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping:</span>
+                                <span id="orderShipping">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (8.5%):</span>
+                                <span id="orderTax">$0.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="orderTotal">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Notes -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-sticky-note"></i> Order Notes</h4>
+                        <div class="form-group">
+                            <label for="orderNotes">Special Instructions</label>
+                            <textarea id="orderNotes" name="orderNotes" rows="3" 
+                                      placeholder="Any special instructions or notes for this order..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeOrderModal()">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-outline" onclick="saveOrderDraft()">
+                    <i class="fas fa-save"></i> Save Draft
+                </button>
+                <button type="submit" form="orderForm" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Create Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3><i class="fas fa-receipt"></i> Order Details</h3>
+                <button class="close-btn" onclick="closeOrderDetailsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="orderDetailsContent">
+                <!-- Order details will be loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeOrderDetailsModal()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-outline" onclick="printOrder()">
+                    <i class="fas fa-print"></i> Print
+                </button>
+                <button type="button" class="btn btn-primary" onclick="editOrder()">
+                    <i class="fas fa-edit"></i> Edit Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="js/dragdrop.js"></script>
+</body>
+</html>

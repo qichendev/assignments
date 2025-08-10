@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Battery Mall Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="settings-page">
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <i class="fas fa-battery-full"></i>
+            <span>Battery Mall</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="inventory.html"><i class="fas fa-boxes"></i> Inventory</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <div class="user-info">
+                <span id="userName">Admin User</span>
+                <span id="userRole">Administrator</span>
+            </div>
+            <div class="user-actions">
+                <button class="btn-icon" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationCount">3</span>
+                </button>
+                <button class="btn-icon" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <i class="fas fa-home"></i>
+            <a href="dashboard.html">Dashboard</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Settings</span>
+        </div>
+
+        <!-- Settings Container -->
+        <div class="settings-container">
+            <!-- Settings Sidebar -->
+            <div class="settings-sidebar">
+                <nav class="settings-nav">
+                    <a href="#profile" class="settings-nav-item active" onclick="showSettingsSection('profile')">
+                        <i class="fas fa-user"></i> Profile
+                    </a>
+                    <a href="#account" class="settings-nav-item" onclick="showSettingsSection('account')">
+                        <i class="fas fa-user-cog"></i> Account
+                    </a>
+                    <a href="#preferences" class="settings-nav-item" onclick="showSettingsSection('preferences')">
+                        <i class="fas fa-sliders-h"></i> Preferences
+                    </a>
+                    <a href="#notifications" class="settings-nav-item" onclick="showSettingsSection('notifications')">
+                        <i class="fas fa-bell"></i> Notifications
+                    </a>
+                    <a href="#security" class="settings-nav-item" onclick="showSettingsSection('security')">
+                        <i class="fas fa-shield-alt"></i> Security
+                    </a>
+                    <a href="#system" class="settings-nav-item" onclick="showSettingsSection('system')">
+                        <i class="fas fa-server"></i> System
+                    </a>
+                    <a href="#integrations" class="settings-nav-item" onclick="showSettingsSection('integrations')">
+                        <i class="fas fa-plug"></i> Integrations
+                    </a>
+                    <a href="#backup" class="settings-nav-item" onclick="showSettingsSection('backup')">
+                        <i class="fas fa-database"></i> Backup
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="settings-content">
+                <!-- Profile Settings -->
+                <div id="profileSettings" class="settings-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user"></i> Profile Settings</h2>
+                        <p>Manage your personal information and profile details</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Personal Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <form id="profileForm">
+                                <div class="profile-photo">
+                                    <div class="photo-container">
+                                        <img id="profileImage" src="assets/images/default-avatar.png" alt="Profile Photo">
+                                        <div class="photo-overlay">
+                                            <i class="fas fa-camera"></i>
+                                        </div>
+                                    </div>
+                                    <div class="photo-actions">
+                                        <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('photoUpload').click()">
+                                            <i class="fas fa-upload"></i> Upload Photo
+                                        </button>
+                                        <button type="button" class="btn btn-outline" onclick="removePhoto()">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="firstName">First Name</label>
+                                        <input type="text" id="firstName" name="firstName" value="John">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName">Last Name</label>
+                                        <input type="text" id="lastName" name="lastName" value="Doe">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="email">Email Address</label>
+                                        <input type="email" id="email" name="email" value="john.doe@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number</label>
+                                        <input type="tel" id="phone" name="phone" value="+1 (555) 123-4567">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="jobTitle">Job Title</label>
+                                    <input type="text" id="jobTitle" name="jobTitle" value="System Administrator">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="bio">Bio</label>
+                                    <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself...">Experienced system administrator with 5+ years in battery retail management.</textarea>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Save Changes
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetProfileForm()">
+                                        <i class="fas fa-undo"></i> Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Settings -->
+                <div id="accountSettings" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user-cog"></i> Account Settings</h2>
+                        <p>Manage your account credentials and access permissions</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Change Password</h3>
+                        </div>
+                        <div class="card-content">
+                            <form id="passwordForm">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <div class="password-input">
+                                        <input type="password" id="currentPassword" name="currentPassword" required>
+                                        <button type="button" class="toggle-password" onclick="togglePassword('currentPassword')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <div class="password-input">
+                                        <input type="password" id="newPassword" name="newPassword" required>
+                                        <button type="button" class="toggle-password" onclick="togglePassword('newPassword')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="password-strength">
+                                        <div class="strength-meter">
+                                            <div class="strength-bar" id="newPasswordStrengthBar"></div>
+                                        </div>
+                                        <span class="strength-text" id="newPasswordStrengthText">Password strength</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirmNewPassword">Confirm New Password</label>
+                                    <div class="password-input">
+                                        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                                        <button type="button" class="toggle-password" onclick="togglePassword('confirmNewPassword')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-key"></i> Update Password
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Two-Factor Authentication</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="two-factor-status">
+                                <div class="status-indicator">
+                                    <i class="fas fa-shield-alt text-success"></i>
+                                    <span>Two-factor authentication is <strong>enabled</strong></span>
+                                </div>
+                                <button class="btn btn-danger" onclick="disable2FA()">
+                                    <i class="fas fa-times"></i> Disable 2FA
+                                </button>
+                            </div>
+                            <p>Two-factor authentication adds an extra layer of security to your account.</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Active Sessions</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="sessions-list">
+                                <div class="session-item current">
+                                    <div class="session-info">
+                                        <i class="fas fa-desktop"></i>
+                                        <div class="session-details">
+                                            <strong>Current Session</strong>
+                                            <span>Chrome on Windows • 192.168.1.100</span>
+                                            <small>Active now</small>
+                                        </div>
+                                    </div>
+                                    <span class="session-badge">Current</span>
+                                </div>
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <div class="session-details">
+                                            <strong>Mobile Device</strong>
+                                            <span>Safari on iPhone • 192.168.1.105</span>
+                                            <small>2 hours ago</small>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-danger" onclick="terminateSession('mobile')">
+                                        <i class="fas fa-times"></i> Terminate
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" onclick="terminateAllSessions()">
+                                <i class="fas fa-sign-out-alt"></i> Terminate All Other Sessions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences Settings -->
+                <div id="preferencesSettings" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-sliders-h"></i> Preferences</h2>
+                        <p>Customize your application experience and interface</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Appearance</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="preference-group">
+                                <label>Theme</label>
+                                <div class="theme-options">
+                                    <div class="theme-option active" data-theme="light" onclick="changeTheme('light')">
+                                        <div class="theme-preview light-theme">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-content"></div>
+                                        </div>
+                                        <span>Light</span>
+                                    </div>
+                                    <div class="theme-option" data-theme="dark" onclick="changeTheme('dark')">
+                                        <div class="theme-preview dark-theme">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-content"></div>
+                                        </div>
+                                        <span>Dark</span>
+                                    </div>
+                                    <div class="theme-option" data-theme="auto" onclick="changeTheme('auto')">
+                                        <div class="theme-preview auto-theme">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-content"></div>
+                                        </div>
+                                        <span>Auto</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="preference-group">
+                                <label for="language">Language</label>
+                                <select id="language" onchange="changeLanguage(this.value)">
+                                    <option value="en" selected>English</option>
+                                    <option value="es">Español</option>
+                                    <option value="fr">Français</option>
+                                    <option value="de">Deutsch</option>
+                                    <option value="zh">中文</option>
+                                </select>
+                            </div>
+
+                            <div class="preference-group">
+                                <label for="timezone">Timezone</label>
+                                <select id="timezone" onchange="changeTimezone(this.value)">
+                                    <option value="UTC-8">Pacific Time (UTC-8)</option>
+                                    <option value="UTC-7">Mountain Time (UTC-7)</option>
+                                    <option value="UTC-6">Central Time (UTC-6)</option>
+                                    <option value="UTC-5" selected>Eastern Time (UTC-5)</option>
+                                    <option value="UTC">UTC</option>
+                                </select>
+                            </div>
+
+                            <div class="preference-group">
+                                <label for="dateFormat">Date Format</label>
+                                <select id="dateFormat" onchange="changeDateFormat(this.value)">
+                                    <option value="MM/DD/YYYY" selected>MM/DD/YYYY</option>
+                                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Dashboard Layout</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="layout-options">
+                                <div class="layout-option active" data-layout="default" onclick="changeDashboardLayout('default')">
+                                    <div class="layout-preview">
+                                        <div class="layout-grid default-layout">
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                        </div>
+                                    </div>
+                                    <span>Default</span>
+                                </div>
+                                <div class="layout-option" data-layout="compact" onclick="changeDashboardLayout('compact')">
+                                    <div class="layout-preview">
+                                        <div class="layout-grid compact-layout">
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                        </div>
+                                    </div>
+                                    <span>Compact</span>
+                                </div>
+                                <div class="layout-option" data-layout="wide" onclick="changeDashboardLayout('wide')">
+                                    <div class="layout-preview">
+                                        <div class="layout-grid wide-layout">
+                                            <div class="layout-item"></div>
+                                            <div class="layout-item"></div>
+                                        </div>
+                                    </div>
+                                    <span>Wide</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Settings -->
+                <div id="notificationsSettings" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-bell"></i> Notification Settings</h2>
+                        <p>Configure how and when you receive notifications</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Email Notifications</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="notification-options">
+                                <div class="notification-item">
+                                    <div class="notification-info">
+                                        <strong>New Orders</strong>
+                                        <span>Get notified when new orders are placed</span>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-info">
+                                        <strong>Low Stock Alerts</strong>
+                                        <span>Receive alerts when inventory is running low</span>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-info">
+                                        <strong>Order Status Updates</strong>
+                                        <span>Get updates when order status changes</span>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-info">
+                                        <strong>Weekly Reports</strong>
+                                        <span>Receive weekly sales and inventory reports</span>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Browser Notifications</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="browser-notifications">
+                                <div class="notification-status">
+                                    <i class="fas fa-bell text-success"></i>
+                                    <span>Browser notifications are <strong>enabled</strong></span>
+                                    <button class="btn btn-secondary" onclick="testNotification()">
+                                        <i class="fas fa-test"></i> Test Notification
+                                    </button>
+                                </div>
+                                <div class="notification-options">
+                                    <div class="notification-item">
+                                        <div class="notification-info">
+                                            <strong>Real-time Alerts</strong>
+                                            <span>Show browser notifications for urgent alerts</span>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-info">
+                                            <strong>Sound Alerts</strong>
+                                            <span>Play sound with notifications</span>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div id="securitySettings" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-shield-alt"></i> Security Settings</h2>
+                        <p>Manage your account security and access controls</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Login Security</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="security-options">
+                                <div class="security-item">
+                                    <div class="security-info">
+                                        <strong>Session Timeout</strong>
+                                        <span>Automatically log out after inactivity</span>
+                                    </div>
+                                    <select id="sessionTimeout" onchange="updateSessionTimeout(this.value)">
+                                        <option value="15">15 minutes</option>
+                                        <option value="30" selected>30 minutes</option>
+                                        <option value="60">1 hour</option>
+                                        <option value="120">2 hours</option>
+                                        <option value="0">Never</option>
+                                    </select>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-info">
+                                        <strong>Login Notifications</strong>
+                                        <span>Get notified of new login attempts</span>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-info">
+                                        <strong>Failed Login Lockout</strong>
+                                        <span>Lock account after failed attempts</span>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>API Access</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="api-keys">
+                                <div class="api-key-item">
+                                    <div class="api-key-info">
+                                        <strong>API Key</strong>
+                                        <span>For third-party integrations</span>
+                                        <code id="apiKey">bm_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
+                                    </div>
+                                    <div class="api-key-actions">
+                                        <button class="btn btn-secondary" onclick="copyApiKey()">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                        <button class="btn btn-warning" onclick="regenerateApiKey()">
+                                            <i class="fas fa-sync"></i> Regenerate
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Settings -->
+                <div id="systemSettings" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-server"></i> System Settings</h2>
+                        <p>Configure system-wide settings and maintenance options</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Data Management</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="data-actions">
+                                <div class="action-item">
+                                    <div class="action-info">
+                                        <strong>Export Data</strong>
+                                        <span>Download all your data in JSON format</span>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="exportAllData()">
+                                        <i class="fas fa-download"></i> Export
+                                    </button>
+                                </div>
+                                <div class="action-item">
+                                    <div class="action-info">
+                                        <strong>Import Data</strong>
+                                        <span>Import data from backup or external source</span>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="showImportModal()">
+                                        <i class="fas fa-upload"></i> Import
+                                    </button>
+                                </div>
+                                <div class="action-item">
+                                    <div class="action-info">
+                                        <strong>Clear Cache</strong>
+                                        <span>Clear application cache and temporary data</span>
+                                    </div>
+                                    <button class="btn btn-warning" onclick="clearCache()">
+                                        <i class="fas fa-broom"></i> Clear Cache
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>System Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="system-info">
+                                <div class="info-item">
+                                    <span class="info-label">Application Version</span>
+                                    <span class="info-value">v2.1.0</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Last Updated</span>
+                                    <span class="info-value">January 15, 2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Database Size</span>
+                                    <span class="info-value">45.2 MB</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Storage Used</span>
+                                    <span class="info-value">128 MB / 1 GB</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integrations Settings -->
+                <div id="integrationsSettings" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-plug"></i> Integrations</h2>
+                        <p>Connect with third-party services and APIs</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Payment Gateways</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="integration-list">
+                                <div class="integration-item">
+                                    <div class="integration-info">
+                                        <i class="fab fa-stripe"></i>
+                                        <div class="integration-details">
+                                            <strong>Stripe</strong>
+                                            <span>Payment processing</span>
+                                        </div>
+                                    </div>
+                                    <div class="integration-status connected">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Connected</span>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="configureIntegration('stripe')">
+                                        <i class="fas fa-cog"></i> Configure
+                                    </button>
+                                </div>
+                                <div class="integration-item">
+                                    <div class="integration-info">
+                                        <i class="fab fa-paypal"></i>
+                                        <div class="integration-details">
+                                            <strong>PayPal</strong>
+                                            <span>Alternative payment method</span>
+                                        </div>
+                                    </div>
+                                    <div class="integration-status disconnected">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Disconnected</span>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="connectIntegration('paypal')">
+                                        <i class="fas fa-plug"></i> Connect
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Shipping Services</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="integration-list">
+                                <div class="integration-item">
+                                    <div class="integration-info">
+                                        <i class="fas fa-shipping-fast"></i>
+                                        <div class="integration-details">
+                                            <strong>FedEx</strong>
+                                            <span>Shipping and tracking</span>
+                                        </div>
+                                    </div>
+                                    <div class="integration-status connected">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Connected</span>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="configureIntegration('fedex')">
+                                        <i class="fas fa-cog"></i> Configure
+                                    </button>
+                                </div>
+                                <div class="integration-item">
+                                    <div class="integration-info">
+                                        <i class="fas fa-truck"></i>
+                                        <div class="integration-details">
+                                            <strong>UPS</strong>
+                                            <span>Shipping and logistics</span>
+                                        </div>
+                                    </div>
+                                    <div class="integration-status connected">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Connected</span>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="configureIntegration('ups')">
+                                        <i class="fas fa-cog"></i> Configure
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup Settings -->
+                <div id="backupSettings" class="settings-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-database"></i> Backup & Recovery</h2>
+                        <p>Manage data backups and recovery options</p>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Automatic Backups</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="backup-settings">
+                                <div class="backup-option">
+                                    <div class="backup-info">
+                                        <strong>Enable Automatic Backups</strong>
+                                        <span>Automatically backup your data at regular intervals</span>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="backup-frequency">
+                                    <label for="backupFrequency">Backup Frequency</label>
+                                    <select id="backupFrequency">
+                                        <option value="daily" selected>Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                <div class="backup-retention">
+                                    <label for="backupRetention">Keep Backups For</label>
+                                    <select id="backupRetention">
+                                        <option value="30" selected>30 days</option>
+                                        <option value="90">90 days</option>
+                                        <option value="365">1 year</option>
+                                        <option value="0">Forever</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Manual Backup</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="manual-backup">
+                                <p>Create a manual backup of all your data including inventory, orders, and settings.</p>
+                                <div class="backup-actions">
+                                    <button class="btn btn-primary" onclick="createManualBackup()">
+                                        <i class="fas fa-download"></i> Create Backup
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="showRestoreModal()">
+                                        <i class="fas fa-upload"></i> Restore from Backup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3>Backup History</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="backup-history">
+                                <div class="backup-item">
+                                    <div class="backup-info">
+                                        <strong>Automatic Backup</strong>
+                                        <span>January 15, 2025 at 2:00 AM</span>
+                                        <small>Size: 45.2 MB</small>
+                                    </div>
+                                    <div class="backup-actions">
+                                        <button class="btn btn-sm btn-secondary" onclick="downloadBackup('auto_20250115')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn btn-sm btn-primary" onclick="restoreBackup('auto_20250115')">
+                                            <i class="fas fa-undo"></i> Restore
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="backup-item">
+                                    <div class="backup-info">
+                                        <strong>Manual Backup</strong>
+                                        <span>January 14, 2025 at 3:30 PM</span>
+                                        <small>Size: 44.8 MB</small>
+                                    </div>
+                                    <div class="backup-actions">
+                                        <button class="btn btn-sm btn-secondary" onclick="downloadBackup('manual_20250114')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn btn-sm btn-primary" onclick="restoreBackup('manual_20250114')">
+                                            <i class="fas fa-undo"></i> Restore
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

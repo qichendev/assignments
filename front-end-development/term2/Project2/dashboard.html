@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Battery Mall Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-page">
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <i class="fas fa-battery-full"></i>
+            <span>Battery Mall</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="inventory.html"><i class="fas fa-boxes"></i> Inventory</a></li>
+            <li><a href="orders.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <div class="user-info">
+                <span id="userName">Admin User</span>
+                <span id="userRole">Administrator</span>
+            </div>
+            <div class="user-actions">
+                <button class="btn-icon" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationCount">3</span>
+                </button>
+                <button class="btn-icon" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </div>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-content">
+                <h1>Welcome back, <span id="welcomeUserName">Admin</span>!</h1>
+                <p>Here's what's happening with your battery business today.</p>
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span class="stat-value" id="todayRevenue">$0</span>
+                        <span class="stat-label">Today's Revenue</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="stat-value" id="todayOrders">0</span>
+                        <span class="stat-label">Today's Orders</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-battery-quarter"></i>
+                        <span class="stat-value" id="lowStockItems">0</span>
+                        <span class="stat-label">Low Stock Items</span>
+                    </div>
+                </div>
+            </div>
+            <div class="welcome-actions">
+                <button class="btn btn-primary" onclick="window.location.href='inventory.html'">
+                    <i class="fas fa-plus"></i> Add New Battery
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='orders.html'">
+                    <i class="fas fa-list"></i> View Orders
+                </button>
+            </div>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Sales Overview -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-line"></i> Sales Overview</h3>
+                    <div class="card-actions">
+                        <select id="salesPeriod" onchange="updateSalesChart()">
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 3 months</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-clock"></i> Recent Orders</h3>
+                    <a href="orders.html" class="view-all">View All</a>
+                </div>
+                <div class="card-content">
+                    <div class="orders-list" id="recentOrdersList">
+                        <!-- Orders will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Status -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-boxes"></i> Inventory Status</h3>
+                    <a href="inventory.html" class="view-all">Manage</a>
+                </div>
+                <div class="card-content">
+                    <div class="inventory-summary">
+                        <div class="inventory-item">
+                            <span class="item-label">Total Products</span>
+                            <span class="item-value" id="totalProducts">0</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-label">In Stock</span>
+                            <span class="item-value" id="inStockProducts">0</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-label">Low Stock</span>
+                            <span class="item-value warning" id="lowStockProducts">0</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-label">Out of Stock</span>
+                            <span class="item-value danger" id="outOfStockProducts">0</span>
+                        </div>
+                    </div>
+                    <div class="low-stock-alerts" id="lowStockAlerts">
+                        <!-- Low stock alerts will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Selling Products -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-star"></i> Top Selling Products</h3>
+                    <div class="card-actions">
+                        <select id="topProductsPeriod" onchange="updateTopProducts()">
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="top-products-list" id="topProductsList">
+                        <!-- Top products will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-server"></i> System Status</h3>
+                </div>
+                <div class="card-content">
+                    <div class="system-status">
+                        <div class="status-item">
+                            <span class="status-indicator online"></span>
+                            <span>Database Connection</span>
+                            <span class="status-value">Online</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator online"></span>
+                            <span>Payment Gateway</span>
+                            <span class="status-value">Active</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator online"></span>
+                            <span>Shipping API</span>
+                            <span class="status-value">Connected</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator warning"></span>
+                            <span>Backup Status</span>
+                            <span class="status-value">2 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="notification-panel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-btn" onclick="toggleNotifications()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-content">
+            <div class="notification-item unread">
+                <i class="fas fa-exclamation-triangle text-warning"></i>
+                <div class="notification-text">
+                    <strong>Low Stock Alert</strong>
+                    <p>Car Battery Model X12 is running low (5 units left)</p>
+                    <small>2 minutes ago</small>
+                </div>
+            </div>
+            <div class="notification-item unread">
+                <i class="fas fa-shopping-cart text-success"></i>
+                <div class="notification-text">
+                    <strong>New Order</strong>
+                    <p>Order #ORD-2025-001 has been placed</p>
+                    <small>15 minutes ago</small>
+                </div>
+            </div>
+            <div class="notification-item">
+                <i class="fas fa-user text-info"></i>
+                <div class="notification-text">
+                    <strong>User Registration</strong>
+                    <p>New staff member John Doe has registered</p>
+                    <small>1 hour ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

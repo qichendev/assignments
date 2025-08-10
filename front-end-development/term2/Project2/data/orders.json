@@ -1,0 +1,420 @@
+[
+  {
+    "id": "ORD-2025-001",
+    "customerId": "cust_001",
+    "customerName": "John Smith",
+    "customerEmail": "john.smith@email.com",
+    "customerPhone": "+1-555-0101",
+    "status": "pending",
+    "priority": "medium",
+    "orderDate": "2025-01-15T10:30:00Z",
+    "expectedDelivery": "2025-01-20T00:00:00Z",
+    "shippingAddress": {
+      "street": "123 Main Street",
+      "city": "Springfield",
+      "state": "IL",
+      "zipCode": "62701",
+      "country": "USA"
+    },
+    "shippingMethod": "standard",
+    "items": [
+      {
+        "batteryId": "bat_001",
+        "model": "PowerMax Pro 100",
+        "brand": "EverLast",
+        "quantity": 2,
+        "unitPrice": 299.99,
+        "totalPrice": 599.98
+      }
+    ],
+    "subtotal": 599.98,
+    "shipping": 9.99,
+    "tax": 51.85,
+    "total": 661.82,
+    "paymentStatus": "pending",
+    "paymentMethod": "credit_card",
+    "notes": "Customer requested morning delivery",
+    "createdBy": "user_1",
+    "lastUpdated": "2025-01-15T10:30:00Z",
+    "trackingNumber": null
+  },
+  {
+    "id": "ORD-2025-002",
+    "customerId": "cust_002",
+    "customerName": "Sarah Johnson",
+    "customerEmail": "sarah.johnson@email.com",
+    "customerPhone": "+1-555-0102",
+    "status": "processing",
+    "priority": "high",
+    "orderDate": "2025-01-14T14:15:00Z",
+    "expectedDelivery": "2025-01-17T00:00:00Z",
+    "shippingAddress": {
+      "street": "456 Oak Avenue",
+      "city": "Chicago",
+      "state": "IL",
+      "zipCode": "60601",
+      "country": "USA"
+    },
+    "shippingMethod": "express",
+    "items": [
+      {
+        "batteryId": "bat_003",
+        "model": "LithiumMax 200",
+        "brand": "TechCell",
+        "quantity": 1,
+        "unitPrice": 899.99,
+        "totalPrice": 899.99
+      },
+      {
+        "batteryId": "bat_007",
+        "model": "Solar Pro 100",
+        "brand": "SunPower",
+        "quantity": 2,
+        "unitPrice": 329.99,
+        "totalPrice": 659.98
+      }
+    ],
+    "subtotal": 1559.97,
+    "shipping": 19.99,
+    "tax": 134.35,
+    "total": 1714.31,
+    "paymentStatus": "paid",
+    "paymentMethod": "credit_card",
+    "notes": "Solar installation project - urgent delivery needed",
+    "createdBy": "user_2",
+    "lastUpdated": "2025-01-15T09:20:00Z",
+    "trackingNumber": "TRK123456789"
+  },
+  {
+    "id": "ORD-2025-003",
+    "customerId": "cust_003",
+    "customerName": "Mike Wilson",
+    "customerEmail": "mike.wilson@email.com",
+    "customerPhone": "+1-555-0103",
+    "status": "shipped",
+    "priority": "low",
+    "orderDate": "2025-01-12T16:45:00Z",
+    "expectedDelivery": "2025-01-18T00:00:00Z",
+    "shippingAddress": {
+      "street": "789 Pine Road",
+      "city": "Milwaukee",
+      "state": "WI",
+      "zipCode": "53201",
+      "country": "USA"
+    },
+    "shippingMethod": "standard",
+    "items": [
+      {
+        "batteryId": "bat_004",
+        "model": "Moto Power 14",
+        "brand": "SpeedCell",
+        "quantity": 1,
+        "unitPrice": 89.99,
+        "totalPrice": 89.99
+      }
+    ],
+    "subtotal": 89.99,
+    "shipping": 9.99,
+    "tax": 8.50,
+    "total": 108.48,
+    "paymentStatus": "paid",
+    "paymentMethod": "paypal",
+    "notes": "Replacement battery for motorcycle",
+    "createdBy": "user_3",
+    "lastUpdated": "2025-01-14T11:30:00Z",
+    "trackingNumber": "TRK987654321"
+  },
+  {
+    "id": "ORD-2025-004",
+    "customerId": "cust_004",
+    "customerName": "Lisa Brown",
+    "customerEmail": "lisa.brown@email.com",
+    "customerPhone": "+1-555-0104",
+    "status": "delivered",
+    "priority": "medium",
+    "orderDate": "2025-01-10T11:20:00Z",
+    "expectedDelivery": "2025-01-15T00:00:00Z",
+    "deliveredDate": "2025-01-14T14:30:00Z",
+    "shippingAddress": {
+      "street": "321 Elm Street",
+      "city": "Madison",
+      "state": "WI",
+      "zipCode": "53703",
+      "country": "USA"
+    },
+    "shippingMethod": "express",
+    "items": [
+      {
+        "batteryId": "bat_002",
+        "model": "Marine Master 80",
+        "brand": "AquaPower",
+        "quantity": 2,
+        "unitPrice": 189.99,
+        "totalPrice": 379.98
+      }
+    ],
+    "subtotal": 379.98,
+    "shipping": 19.99,
+    "tax": 34.00,
+    "total": 433.97,
+    "paymentStatus": "paid",
+    "paymentMethod": "credit_card",
+    "notes": "For boat restoration project",
+    "createdBy": "user_1",
+    "lastUpdated": "2025-01-14T14:30:00Z",
+    "trackingNumber": "TRK456789123",
+    "deliveryConfirmation": "Delivered to front door, signed by customer"
+  },
+  {
+    "id": "ORD-2025-005",
+    "customerId": "cust_005",
+    "customerName": "David Garcia",
+    "customerEmail": "david.garcia@email.com",
+    "customerPhone": "+1-555-0105",
+    "status": "processing",
+    "priority": "high",
+    "orderDate": "2025-01-15T08:00:00Z",
+    "expectedDelivery": "2025-01-17T00:00:00Z",
+    "shippingAddress": {
+      "street": "654 Maple Drive",
+      "city": "Detroit",
+      "state": "MI",
+      "zipCode": "48201",
+      "country": "USA"
+    },
+    "shippingMethod": "express",
+    "items": [
+      {
+        "batteryId": "bat_006",
+        "model": "Heavy Duty 150",
+        "brand": "TruckForce",
+        "quantity": 3,
+        "unitPrice": 399.99,
+        "totalPrice": 1199.97
+      }
+    ],
+    "subtotal": 1199.97,
+    "shipping": 19.99,
+    "tax": 103.70,
+    "total": 1323.66,
+    "paymentStatus": "paid",
+    "paymentMethod": "bank_transfer",
+    "notes": "Fleet replacement - commercial account",
+    "createdBy": "user_2",
+    "lastUpdated": "2025-01-15T09:15:00Z",
+    "trackingNumber": null
+  },
+  {
+    "id": "ORD-2025-006",
+    "customerId": "cust_006",
+    "customerName": "Jennifer Lee",
+    "customerEmail": "jennifer.lee@email.com",
+    "customerPhone": "+1-555-0106",
+    "status": "pending",
+    "priority": "low",
+    "orderDate": "2025-01-15T13:45:00Z",
+    "expectedDelivery": "2025-01-22T00:00:00Z",
+    "shippingAddress": {
+      "street": "987 Cedar Lane",
+      "city": "Indianapolis",
+      "state": "IN",
+      "zipCode": "46201",
+      "country": "USA"
+    },
+    "shippingMethod": "standard",
+    "items": [
+      {
+        "batteryId": "bat_005",
+        "model": "UPS Guardian 75",
+        "brand": "PowerShield",
+        "quantity": 1,
+        "unitPrice": 249.99,
+        "totalPrice": 249.99
+      },
+      {
+        "batteryId": "bat_011",
+        "model": "Backup Pro 50",
+        "brand": "ReliaPower",
+        "quantity": 2,
+        "unitPrice": 179.99,
+        "totalPrice": 359.98
+      }
+    ],
+    "subtotal": 609.97,
+    "shipping": 9.99,
+    "tax": 52.75,
+    "total": 672.71,
+    "paymentStatus": "pending",
+    "paymentMethod": "credit_card",
+    "notes": "Office UPS system upgrade",
+    "createdBy": "user_3",
+    "lastUpdated": "2025-01-15T13:45:00Z",
+    "trackingNumber": null
+  },
+  {
+    "id": "ORD-2025-007",
+    "customerId": "cust_007",
+    "customerName": "Robert Taylor",
+    "customerEmail": "robert.taylor@email.com",
+    "customerPhone": "+1-555-0107",
+    "status": "shipped",
+    "priority": "medium",
+    "orderDate": "2025-01-13T10:15:00Z",
+    "expectedDelivery": "2025-01-19T00:00:00Z",
+    "shippingAddress": {
+      "street": "147 Birch Street",
+      "city": "Columbus",
+      "state": "OH",
+      "zipCode": "43201",
+      "country": "USA"
+    },
+    "shippingMethod": "standard",
+    "items": [
+      {
+        "batteryId": "bat_010",
+        "model": "Sport Bike 12",
+        "brand": "RaceCell",
+        "quantity": 1,
+        "unitPrice": 199.99,
+        "totalPrice": 199.99
+      }
+    ],
+    "subtotal": 199.99,
+    "shipping": 9.99,
+    "tax": 18.00,
+    "total": 227.98,
+    "paymentStatus": "paid",
+    "paymentMethod": "credit_card",
+    "notes": "Racing season preparation",
+    "createdBy": "user_1",
+    "lastUpdated": "2025-01-14T16:20:00Z",
+    "trackingNumber": "TRK789123456"
+  },
+  {
+    "id": "ORD-2025-008",
+    "customerId": "cust_008",
+    "customerName": "Amanda White",
+    "customerEmail": "amanda.white@email.com",
+    "customerPhone": "+1-555-0108",
+    "status": "delivered",
+    "priority": "high",
+    "orderDate": "2025-01-09T15:30:00Z",
+    "expectedDelivery": "2025-01-12T00:00:00Z",
+    "deliveredDate": "2025-01-11T10:45:00Z",
+    "shippingAddress": {
+      "street": "258 Walnut Avenue",
+      "city": "Nashville",
+      "state": "TN",
+      "zipCode": "37201",
+      "country": "USA"
+    },
+    "shippingMethod": "overnight",
+    "items": [
+      {
+        "batteryId": "bat_009",
+        "model": "Deep Cycle 120",
+        "brand": "CycleMaster",
+        "quantity": 2,
+        "unitPrice": 449.99,
+        "totalPrice": 899.98
+      }
+    ],
+    "subtotal": 899.98,
+    "shipping": 39.99,
+    "tax": 79.95,
+    "total": 1019.92,
+    "paymentStatus": "paid",
+    "paymentMethod": "credit_card",
+    "notes": "Emergency RV repair - needed ASAP",
+    "createdBy": "user_2",
+    "lastUpdated": "2025-01-11T10:45:00Z",
+    "trackingNumber": "TRK321654987",
+    "deliveryConfirmation": "Delivered to customer at RV park"
+  },
+  {
+    "id": "ORD-2025-009",
+    "customerId": "cust_009",
+    "customerName": "Kevin Martinez",
+    "customerEmail": "kevin.martinez@email.com",
+    "customerPhone": "+1-555-0109",
+    "status": "processing",
+    "priority": "medium",
+    "orderDate": "2025-01-14T12:00:00Z",
+    "expectedDelivery": "2025-01-19T00:00:00Z",
+    "shippingAddress": {
+      "street": "369 Spruce Court",
+      "city": "Phoenix",
+      "state": "AZ",
+      "zipCode": "85001",
+      "country": "USA"
+    },
+    "shippingMethod": "standard",
+    "items": [
+      {
+        "batteryId": "bat_008",
+        "model": "Compact Start 60",
+        "brand": "CityCell",
+        "quantity": 1,
+        "unitPrice": 149.99,
+        "totalPrice": 149.99
+      }
+    ],
+    "subtotal": 149.99,
+    "shipping": 9.99,
+    "tax": 13.60,
+    "total": 173.58,
+    "paymentStatus": "paid",
+    "paymentMethod": "debit_card",
+    "notes": "Replacement for compact car",
+    "createdBy": "user_3",
+    "lastUpdated": "2025-01-15T08:30:00Z",
+    "trackingNumber": null
+  },
+  {
+    "id": "ORD-2025-010",
+    "customerId": "cust_010",
+    "customerName": "Michelle Davis",
+    "customerEmail": "michelle.davis@email.com",
+    "customerPhone": "+1-555-0110",
+    "status": "pending",
+    "priority": "low",
+    "orderDate": "2025-01-15T16:20:00Z",
+    "expectedDelivery": "2025-01-23T00:00:00Z",
+    "shippingAddress": {
+      "street": "741 Hickory Place",
+      "city": "Denver",
+      "state": "CO",
+      "zipCode": "80201",
+      "country": "USA"
+    },
+    "shippingMethod": "standard",
+    "items": [
+      {
+        "batteryId": "bat_001",
+        "model": "PowerMax Pro 100",
+        "brand": "EverLast",
+        "quantity": 1,
+        "unitPrice": 299.99,
+        "totalPrice": 299.99
+      },
+      {
+        "batteryId": "bat_004",
+        "model": "Moto Power 14",
+        "brand": "SpeedCell",
+        "quantity": 1,
+        "unitPrice": 89.99,
+        "totalPrice": 89.99
+      }
+    ],
+    "subtotal": 389.98,
+    "shipping": 9.99,
+    "tax": 34.00,
+    "total": 433.97,
+    "paymentStatus": "pending",
+    "paymentMethod": "credit_card",
+    "notes": "Car and motorcycle battery replacement",
+    "createdBy": "user_1",
+    "lastUpdated": "2025-01-15T16:20:00Z",
+    "trackingNumber": null
+  }
+]

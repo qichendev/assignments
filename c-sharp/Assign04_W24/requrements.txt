@@ -1,0 +1,81 @@
+Assignment 04: Car Dealership Console
+Application
+Objective
+The objective of this assignment is to reinforce the understanding of abstraction concepts
+in C# .NET, including abstract classes, interfaces, and typed lists, by implementing a
+console application for managing a car dealership.
+Task
+You are tasked with developing a console application for a car dealership. The application
+should allow users to perform various operations such as adding new cars to the inventory,
+listing available cars, searching for cars by criteria, and managing sales.
+Requirements:
+1. Abstract Classes and Interfaces:
+• Implement an abstract class named Vehicle with properties such as Make,
+Model, Year, Price, etc. - Provided
+• Create derived classes for different types of vehicles (e.g., Car, Truck, SUV)
+that inherit from the Vehicle class.
+2. Typed Lists:
+• Utilize the typed list (e.g., List<T>)provided to store and manage the
+inventory of vehicles in the dealership.
+• Use appropriate generic collections to organize and manipulate the data
+efficiently.
+3. Console Interface: Provided
+• Design a user-friendly console interface for interacting with the application.
+• Implement menu-driven functionality to allow users to navigate through
+different options seamlessly.
+• Include options for adding new vehicles, listing available vehicles, searching
+for vehicles based on criteria (make, model, price range, etc.), and simulating
+sales transactions.
+4. Functionality:
+• Adding Vehicles to Inventory:
+1. Users should be able to add new vehicles to the dealership's
+inventory through the console interface.
+2. Upon selecting the "Add Vehicle" option from the menu, users should
+be prompted to enter details such as the vehicle's make, model, year,
+and price.
+3. The application should validate the input to ensure that all required
+fields are provided and that the data types are correct (e.g., numeric
+values for year and price).
+4. Once validated, the new vehicle should be added to the inventory list
+maintained by the DealershipService.
+• Listing Available Vehicles:
+1. Users should be able to view a list of available vehicles in the
+dealership's inventory.
+2. Upon selecting the "List Available Vehicles" option from the menu, the
+application should display relevant details for each available vehicle,
+such as make, model, year, and price.
+• Searching for Vehicles: Provided
+1. Users should be able to search for vehicles based on specific criteria,
+such as make, model, or price range.
+2. Upon selecting the "Search Vehicles" option from the menu, users
+should be prompted to specify their search criteria.
+3. The application should then filter the inventory based on the provided
+criteria and display the matching vehicles to the user.
+4. If no matching vehicles are found, the application should provide
+appropriate feedback to the user.
+• Managing Sales: Provided
+1. 2. 3. 4. Users should be able to simulate sales transactions, including
+selecting a vehicle from the inventory, specifying buyer information,
+and completing the sale.
+Upon selecting the "Manage Sales" option from the menu, users
+should be guided through the sales process step by step.
+The application should update the inventory accordingly upon
+completion of a sale, removing the sold vehicle from the inventory list.
+Feedback should be provided to the user to confirm the successful
+completion of the sale and to provide relevant details such as the
+total sale amount.
+• Error Handling: Some Provided
+1. 2. 3. The application should include robust error handling mechanisms to
+detect and handle unexpected inputs or scenarios gracefully.
+Error messages should be informative and provide guidance to the
+user on correcting their inputs.
+Common error scenarios to handle include invalid input formats,
+missing required fields, and operations on an empty inventory.
+Bonus Tasks (Optional): No Points
+• Implement advanced features such as sorting vehicles by price, mileage, etc.
+• Incorporate error logging and exception handling to enhance robustness.
+Submission Guidelines:
+• Submit your C# zipped project folder containing the .sln and project files.
+Note:
+• Ensure that your code adheres to best practices, including proper naming
+conventions, code readability, and modularity.
