@@ -1,0 +1,14 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "pug ./src/ -o ./dist/"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "pug-cli": "1.0.0-alpha6"
+  }
+}

@@ -1,0 +1,178 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Qi Chen - Full-stack Developer
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+      }
+      h1, h2, h3 {
+        color: #333;
+        margin: 0;
+      }
+      h1 {
+        font-size: 16pt;
+      }
+      a {
+        color: #007BFF;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .header {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+      .contact-info p {
+        margin: 5px 0;
+      }
+      .section {
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+      .section h2 {
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      .skills-list {
+        list-style-type: none;
+        padding: 0;
+      }
+      .skills-list li {
+        display: inline-block;
+        background-color: #f2f2f2;
+        padding: 5px 10px;
+        margin: 5px;
+        border-radius: 5px;
+      }
+      .education-item, .job {
+        margin-bottom: 15px;
+      }
+      
+      /* 打印样式 - 去除页眉页脚 */
+      @media print {
+        @page {
+          margin: 0.5in;
+          size: A4;
+        }
+        
+        /* 去除页眉页脚的日期和文件路径 */
+        @page :first {
+          margin-top: 0.5in;
+        }
+        
+        @page :left {
+          margin-left: 0.5in;
+        }
+        
+        @page :right {
+          margin-right: 0.5in;
+        }
+        
+        /* 确保内容不会被页眉页脚遮挡 */
+        body {
+          margin: 0;
+          padding: 0;
+        }
+        
+        /* 隐藏链接的URL显示 */
+        a[href]:after {
+          content: none !important;
+        }
+      }
+
+  body
+    .header
+      h1 Qi Chen
+      h2 Full-stack Developer
+      .contact-info
+        p 4168325904
+        p 
+          a(href="mailto:FrankFromCN@gmail.com") FrankFromCN@gmail.com
+        p 10 Edgecliff Golfway ON, M3C 3A3
+        p
+          a(href="https://www.linkedin.com/in/qi-chen-7b265130b/") https://www.linkedin.com/in/qi-chen-7b265130b/
+
+    .section
+      h2 Objective
+      p Seeking a co-op position as a Software Developer where I can contribute my strong programming skills in C++, JavaScript, and React, along with my experience in Linux development, database management, and CI/CD pipelines. I am passionate about learning new technologies and eager to apply my technical skills in a professional environment while gaining valuable industry experience.
+
+    .section
+      h2 Education
+      .education-item
+        h3 Computer Programming and Analysis
+        p Lambton College, Sarnia ON
+        p 2025-Present
+        ul
+          li Built a missile selling website using HTML, CSS, and JavaScript.
+          li Set up automated deployment to GitHub Pages using GitHub Actions CI/CD pipeline.
+          li Live site: 
+            a(href="https://lcsw2503.github.io") https://lcsw2503.github.io
+          li Music searching website based on vercel Nextjs backend, Supabase hosted Postgresql, and AWS lambda micro service: 
+            a(href="https://lookylook.vercel.app") lookylook.vercel.app
+      .education-item
+        h3 Bachelor of Computer Science
+        p Northwest Minorities University
+        p 2017-2021
+        ul
+          li Developed soccer robot behaviors and strategies using C++ with the B-Human framework on the NAOqi OS.
+          li Competed in RoboCup, one of the most renowned international robotics competitions, achieving rankings of #9 in 2018 and #4 in 2019.
+
+    .section
+      h2 Skills and Qualifications
+      ul.skills-list
+        li C/C++
+        li JavaScript
+        li React
+        li PostgreSQL
+        li Linux
+        li GitHub Actions (CI/CD)
+        li AWS
+        li HTML/CSS
+        li Problem Solving
+        li Communication
+        li Team Collaboration
+
+    .section
+      h2 Certificates
+      ul
+        li WHMIS (Workplace Hazardous Materials Information System)
+        li AODA (Accessibility for Ontarians with Disabilities Act)
+
+    .section
+      h2 Experience
+      .job
+        h3 C++ Developer
+        p HIRAIN TECHNOLOGIES CO Inc.
+        p 2021-2024
+        ul
+          li Optimized performance of a multi-process simulator by replacing socket communication with POSIX Message Queues, achieving a 4x performance improvement.
+          li Developed HIL (Hardware-in-the-Loop) simulator I/O modules in C, leveraging DMA to interface with FPGA-based simulation devices, including real-time motor, resistor, and engine simulating modules.
+          li Decoupled the Linux engine from the graphical interface, enabling modular communication via Apache Thrift and efficient C++ data exchange using Google Protobuf.
+          li Automated testing, replacing 80% of manual tests with API-based scripts, boosting test coverage by 500%, reducing test time by 7x, and cutting failure feedback loop by 50%.
+          li Integrated gitlab CI/CD, streamlining development and reducing release cycles by 75%.
+
+    .section
+      h2 Activities and Interests
+      ul
+        li Participating in coding competitions and hackathons
+        li Contributing to open-source projects on GitHub
+        li Learning new programming languages and frameworks
+        li Playing chess and solving complex programming problems
+        li Following latest technology trends in software development
+
+    .section
+      h2 References
+      p References available upon request.

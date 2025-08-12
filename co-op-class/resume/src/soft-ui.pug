@@ -1,0 +1,356 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Qi Chen - Full-stack Developer
+    //- Google Fonts for a cleaner look
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap", rel="stylesheet")
+    //- Font Awesome for icons
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+    style.
+      :root {
+        --bg-color: #e0e5ec;
+        --primary-text-color: #3d4a6d;
+        --secondary-text-color: #5b6785;
+        --highlight-color: #3498db;
+        --shadow-light: #ffffff;
+        --shadow-dark: #a3b1c6;
+        --card-border-radius: 20px;
+        --card-padding: 2rem;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.8;
+        background-color: var(--bg-color);
+        color: var(--secondary-text-color);
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        display: grid;
+        gap: 30px;
+      }
+      
+      .card {
+        background: var(--bg-color);
+        border-radius: var(--card-border-radius);
+        padding: var(--card-padding);
+        box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 12px 12px 20px var(--shadow-dark), -12px -12px 20px var(--shadow-light);
+      }
+      
+      h1, h2, h3 {
+        color: var(--primary-text-color);
+        font-weight: 600;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.25rem;
+      }
+      
+      h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+        border-bottom: 1px solid var(--shadow-dark);
+        padding-bottom: 10px;
+      }
+      
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+      }
+      
+      a {
+        color: var(--highlight-color);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      
+      a:hover {
+        text-decoration: underline;
+      }
+      
+      .header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .contact-info {
+        display: grid;
+        gap: 8px;
+        text-align: right;
+        font-size: 0.9rem;
+      }
+
+      .contact-info p {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .contact-info i {
+        width: 20px;
+        text-align: center;
+        color: var(--primary-text-color);
+      }
+      
+      ul {
+        padding-left: 25px;
+        list-style: none;
+      }
+      
+      li {
+        position: relative;
+        margin-bottom: 15px;
+      }
+
+      li::before {
+        content: '›';
+        position: absolute;
+        left: -20px;
+        top: -2px;
+        font-size: 1.5rem;
+        color: var(--highlight-color);
+        font-weight: bold;
+      }
+      
+      .skills-list {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      
+      .skills-list li {
+        margin: 0;
+        padding: 10px 20px;
+        border-radius: 12px;
+        background: var(--bg-color);
+        box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+        color: var(--primary-text-color);
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .skills-list li:hover {
+        color: var(--highlight-color);
+      }
+
+      .skills-list li::before {
+        content: none; /* Remove default list style */
+      }
+      
+      .references {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+      }
+      
+      .reference-item {
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .job-title, .degree-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+      }
+
+      .job-title p, .degree-info p {
+        font-style: italic;
+        color: var(--secondary-text-color);
+        font-size: 0.9rem;
+      }
+
+      //- ⬇⬇⬇ 新增：打印样式和自定义页眉页脚 ⬇⬇⬇
+      @media print {
+        :root {
+          /* 在打印时覆盖颜色变量为黑白色系 */
+          --primary-text-color: #000000;
+          --secondary-text-color: #333333;
+        }
+
+        body {
+          background-color: #ffffff;
+          padding: 0; /* 移除body边距，交由@page控制 */
+        }
+
+        .container {
+          gap: 20px; /* 缩小打印时间距 */
+          max-width: 100%;
+        }
+
+        .card {
+          /* 移除Soft UI效果，改为清晰的边框 */
+          box-shadow: none;
+          border: 1px solid #cccccc;
+          border-radius: 8px;
+          padding: 1.5rem;
+          /* 防止卡片在页面中断开 */
+          break-inside: avoid;
+        }
+
+        .card:hover {
+          transform: none;
+        }
+        
+        h2 {
+          border-color: #cccccc;
+        }
+        
+        a {
+          color: #000000;
+          text-decoration: underline;
+        }
+
+        .skills-list li {
+          box-shadow: none;
+          border: 1px solid #cccccc;
+          background: #ffffff;
+        }
+
+        /* 隐藏不必要的视觉元素 */
+        .contact-info i {
+          display: none;
+        }
+        
+        @page {
+          /* 设置打印页边距 */
+          margin: 0.75in;
+
+          /* 定义页脚内容 */
+          @bottom-left {
+            content: "Qi Chen - Full-stack Developer";
+            font-family: 'Poppins', sans-serif;
+            font-size: 9pt;
+            color: #666666;
+          }
+          @bottom-center {
+            content: "https://www.linkedin.com/in/qi-chen-7b265130b/";
+            font-family: 'Poppins', sans-serif;
+            font-size: 9pt;
+            color: #666666;
+            text-decoration: underline;
+          }
+          @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+            font-family: 'Poppins', sans-serif;
+            font-size: 9pt;
+            color: #666666;
+          }
+
+          /* 清空默认页眉 */
+          @top-left { content: ""; }
+          @top-center { content: ""; }
+          @top-right { content: ""; }
+        }
+      }
+      //- ⬆⬆⬆ 新增样式结束 ⬆⬆⬆
+
+  body
+    .container
+      .card.header
+        .identity
+          h1 Qi Chen
+          h3 Full-stack Developer
+        .contact-info
+          p 416-832-5904
+            i.fa-solid.fa-phone
+          p 
+            a(href="mailto:FrankFromCN@gmail.com") FrankFromCN@gmail.com
+            i.fa-solid.fa-envelope
+          p 10 Edgecliff Golfway ON, M3C 3A3
+            i.fa-solid.fa-location-dot
+          p 
+            a(href="https://www.linkedin.com/in/qi-chen-7b265130b/", target="_blank") LinkedIn Profile
+            i.fa-brands.fa-linkedin
+      
+      .card
+        h2 About Me
+        p I am a software engineer with 3 years of experience developing high-performance simulators on Linux using C++. I have strong skills in software development, testing, and optimization. My goal is to contribute to a company's success with my technical skills and grow further in my career.
+
+      .card
+        h2 Experience
+        .job
+          .job-title
+            h3 C++ Developer - HIRAIN TECHNOLOGIES CO Inc.
+            p 2021 - 2024
+          ul
+            li Optimized performance of a multi-process simulator by replacing socket communication with POSIX Message Queues, achieving a 4x performance improvement.
+            li Developed HIL (Hardware-in-the-Loop) simulator I/O modules in C, leveraging DMA to interface with FPGA-based simulation devices.
+            li Decoupled the Linux engine from the graphical interface, enabling modular communication via Apache Thrift and efficient C++ data exchange using Google Protobuf.
+            li Automated testing, replacing 80% of manual tests with API-based scripts, boosting test coverage by 500%, reducing test time by 7x, and cutting failure feedback loop by 50%.
+            li Integrated GitLab CI/CD, streamlining development and reducing release cycles by 75%.
+            
+      .card
+        h2 Education
+        .education-item
+          .degree-info
+            h3 Bachelor of Computer Science - Northwest Minorities University
+            p 2017 - 2021
+          ul
+            li Developed soccer robot behaviors and strategies using C++ with the B-Human framework on the NAOqi OS.
+            li Competed in RoboCup, achieving rankings of #9 in 2018 and #4 in 2019.
+        .education-item(style="margin-top: 2rem;")
+          .degree-info
+            h3 Post-Graduate - Lambton College
+            p 2025 - Present
+          ul
+            li Built a missile selling website using HTML, CSS, and JavaScript. Live site: #[a(href="https://lcsw2503.github.io", target="_blank") lcsw2503.github.io]
+            li Set up automated deployment to GitHub Pages using GitHub Actions CI/CD pipeline.
+            li Music searching website using Next.js, Supabase, and AWS Lambda: #[a(href="https://lookylook.vercel.app", target="_blank") lookylook.vercel.app]
+
+      .card
+        h2 Skills
+        ul.skills-list
+          li Communication
+          li Problem Solving
+          li Linux
+          li C/C++
+          li Javascript
+          li React
+          li Postgresql
+          li Github Actions
+          li CI/CD
+          li AWS
+
+      .card
+        h2 References
+        .references
+          .reference-item
+            h3 Zheng Li
+            p Huawei Technologies CO, Ltd / Project Manager
+            p Phone: (+86) 150-1020-2368
+            p Email: #[a(href="mailto:lizheng146@huawei.com") lizheng146@huawei.com]
+          .reference-item
+            h3 Xuyang Liu
+            p HIRAIN TECHNOLOGIES CO Inc. / Leader Software Engineer
+            p Phone: (+86) 186-1081-1310
+            p Email: #[a(href="mailto:xuyang.liu@hirain.com") xuyang.liu@hirain.com]
