@@ -1,0 +1,7 @@
+{
+  "city": "Vancouver",
+  "state_code": "BC",
+  "country_code": "CA",
+  "update_interval_minutes": 15,
+  "api_key": "52931dfa0c8cd00b48d905c2950665c2"
+}
