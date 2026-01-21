@@ -7,6 +7,10 @@ DECLARE
    v_salary DECIMAL(10, 2) := 7500.00;
 BEGIN
    DBMS_OUTPUT.PUT_LINE('Salary: ' || TO_CHAR(v_salary, 'FM$999,999,999.99'));
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -15,6 +19,10 @@ DECLARE
    v_book_type VARCHAR(100) := 'fiction';
 BEGIN
    DBMS_OUTPUT.PUT_LINE('The book type is ' || v_book_type);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -24,6 +32,10 @@ DECLARE
 BEGIN
     v_text := 'PL/SQL is easy';
    DBMS_OUTPUT.PUT_LINE(v_text);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -38,5 +50,9 @@ BEGIN
    DBMS_OUTPUT.PUT_LINE(H1);
    DBMS_OUTPUT.PUT_LINE(H2);
    DBMS_OUTPUT.PUT_LINE(H3);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /

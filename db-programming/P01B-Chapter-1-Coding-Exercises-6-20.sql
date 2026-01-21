@@ -6,6 +6,10 @@ BEGIN
    DBMS_OUTPUT.PUT_LINE(TO_CHAR(SYSDATE, 'YYYY-MM-DD'));
    DBMS_OUTPUT.PUT_LINE(TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD'));
 -- end section
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -15,6 +19,10 @@ DECLARE
 BEGIN
     v_counter := v_counter + 1;
     DBMS_OUTPUT.PUT_LINE('Counter is ' || v_counter);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 -- Result: 'Counter is ' printed
@@ -25,6 +33,10 @@ DECLARE
 BEGIN
     v_counter := v_counter + 1;
     DBMS_OUTPUT.PUT_LINE('Counter is ' || v_counter);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 -- Result: 'Counter is 301' printed
@@ -35,6 +47,10 @@ DECLARE
 BEGIN
     v_counter := v_counter + 1;
     DBMS_OUTPUT.PUT_LINE('Counter is ' || v_counter);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 -- Result: ERROR at line 2:
@@ -54,6 +70,10 @@ DECLARE
 BEGIN
     v_counter := v_counter + 1;
     DBMS_OUTPUT.PUT_LINE('Counter is ' || v_counter);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 -- Result: Counter is 501
@@ -63,6 +83,10 @@ DECLARE
    v_default_date DATE DEFAULT SYSDATE;
 BEGIN
    DBMS_OUTPUT.PUT_LINE('The default date is ' || TO_CHAR(v_default_date, 'YYYY-MM-DD'));
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 -- Result: The default date is 2026-01-19
@@ -72,6 +96,10 @@ DECLARE
    TAX_RATE CONSTANT NUMBER := 0.13;
 BEGIN
    DBMS_OUTPUT.PUT_LINE('The tax rate is ' || (TAX_RATE * 100) || ' percent');
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 -- Result: The tax rate is 13 percent
@@ -81,6 +109,10 @@ DECLARE
    CONSTANT1 CONSTANT VARCHAR2(20) := 'Hello'; 
 BEGIN
    DBMS_OUTPUT.PUT_LINE('The value is ' || CONSTANT1);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 -- correct program by initializing the constant
@@ -91,6 +123,10 @@ DECLARE
 BEGIN
    v_myname := 'Smith';             
    DBMS_OUTPUT.PUT_LINE('My name is ' || v_myname);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -103,6 +139,10 @@ BEGIN
    v_tax := v_amount * c_tax_rate;
    DBMS_OUTPUT.PUT_LINE('Amount: ' || v_amount);
    DBMS_OUTPUT.PUT_LINE('Tax (7.5%): ' || ROUND(v_tax, 2)); 
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -116,6 +156,10 @@ EXCEPTION
       DBMS_OUTPUT.PUT_LINE('An error occurred.');
       DBMS_OUTPUT.PUT_LINE('Error Code: ' || SQLCODE);
       DBMS_OUTPUT.PUT_LINE('Error Message: ' || SQLERRM);
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -126,6 +170,10 @@ DECLARE
 BEGIN
    v_annual_sal := v_monthly_sal * 12;
    DBMS_OUTPUT.PUT_LINE('Annual Salary: ' || TO_CHAR(v_annual_sal, '$99,999.99'));
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
@@ -135,6 +183,10 @@ EXEC :age := 99;
 
 BEGIN
    DBMS_OUTPUT.PUT_LINE('My age is ' || :age || ' years.');
+EXCEPTION
+WHEN OTHERS THEN
+   DBMS_OUTPUT.PUT_LINE('Error code: ' || SQLCODE);
+   DBMS_OUTPUT.PUT_LINE('Error message: ' || SQLERRM);
 END;
 /
 
