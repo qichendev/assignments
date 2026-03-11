@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-app-22
+  labels:
+    app: devops-app-22
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: devops-app-22
+  template:
+    metadata:
+      labels:
+        app: devops-app-22
+    spec:
+      containers:
+      - name: devops-app-container
+        image: frankfromcn/devops-app-22:v1
+        ports:
+        - containerPort: 8085
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-app-22
+spec:
+  type: NodePort
+  selector:
+    app: devops-app-22
+  ports:
+    - port: 8085
+      targetPort: 8085
+      nodePort: 30085 # Value between 30000–32767

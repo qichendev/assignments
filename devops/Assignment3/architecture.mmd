@@ -1,0 +1,46 @@
+---
+config:
+  layout: elk
+  elk:
+    mergeEdges: true
+    nodePlacementStrategy: LINEAR_SEGMENTS
+---
+graph TD
+    subgraph Files["Source Files & Configs"]
+        DF[Dockerfile]
+        HTML[index.html]
+        CSS[style.css]
+        YAML[deployment-67.yml]
+        IMG[image.jpg]
+    end
+
+    subgraph Build["Build Phase"]
+        DF -->|COPY| HTML
+        DF -->|COPY| CSS
+        DF -->|COPY| IMG
+        DF -->|Builds| DockerImage[[Docker Image: nginx:alpine base]]
+    end
+
+    subgraph K8s["Kubernetes Cluster (Minikube)"]
+        YAML -->|Configures| Deployment["Deployment: devops-app-22"]
+        YAML -->|Configures| NodePort[Service: devops-app-22]
+        
+        Deployment -->|Manages| Pods
+        subgraph Pods["3 Pod Replicas"]
+            P1[Pod 1]
+            P2[Pod 2]
+            P3[Pod 3]
+        end
+        
+        DockerImage -.->|Runs in| Pods
+        NodePort -->|Port 8085| Pods
+    end
+
+    User([User]) -.->|External: 3XXXX| NodePort
+
+    style User fill:#f9f,stroke:#333,stroke-width:2px
+    style NodePort fill:#dfd,stroke:#333,stroke-width:2px
+    style Files fill:#fff,stroke:#333,stroke-dasharray: 5 5
+    style Build fill:#fff,stroke:#333,stroke-dasharray: 5 5
+    style K8s fill:#fff,stroke:#333,stroke-dasharray: 5 5
+    style DockerImage fill:#69c,stroke:#333,stroke-width:2px
