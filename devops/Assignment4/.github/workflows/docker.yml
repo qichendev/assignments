@@ -1,0 +1,74 @@
+name: Docker Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo "APP_MESSAGE=${{ secrets.APP_MESSAGE }}" > .env
+          echo "APP_HEALTH=${{ secrets.APP_HEALTH }}" >> .env
+        shell: bash
+
+      - name: Verify .env was created
+        run: |
+          if [ -f .env ]; then
+            echo ".env file created successfully"
+            cat .env
+          else
+            echo "ERROR: .env file was not created"
+            exit 1
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          load: true
+          tags: flask-app:test
+
+      - name: Run Docker container
+        run: |
+          docker run -d --name test-app -p 5000:5000 --env-file .env flask-app:test
+          sleep 5
+
+      - name: Test home route
+        run: |
+          RESPONSE=$(curl -s http://localhost:5000/)
+          echo "Home route response: $RESPONSE"
+          if [ -z "$RESPONSE" ]; then
+            echo "ERROR: Home route returned empty response"
+            docker stop test-app
+            docker rm test-app
+            exit 1
+          fi
+
+      - name: Test health route
+        run: |
+          RESPONSE=$(curl -s http://localhost:5000/health)
+          echo "Health route response: $RESPONSE"
+          if [ -z "$RESPONSE" ]; then
+            echo "ERROR: Health route returned empty response"
+            docker stop test-app
+            docker rm test-app
+            exit 1
+          fi
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker stop test-app
+          docker rm test-app
