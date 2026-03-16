@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>In Class Activity 1 - AWS Account and IAM</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border: #d1d5db;
+      --accent: #0f766e;
+      --bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 40px 64px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 32px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .meta {
+      margin: 18px 0 28px;
+    }
+
+    .meta p {
+      margin-bottom: 6px;
+    }
+
+    .step {
+      page-break-inside: avoid;
+      margin: 28px 0 34px;
+    }
+
+    .step-title {
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    figure {
+      margin: 16px 0 8px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    figcaption {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .note {
+      color: var(--muted);
+    }
+
+    @page {
+      size: Letter;
+      margin: 0.55in;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>In Class Activity 1</h1>
+    <h2>AWS Account and IAM</h2>
+
+    <section class="meta">
+      <p><strong>First name Last Name:</strong> Qi Chen</p>
+      <p><strong>Student number:</strong> c0944666</p>
+      <p><strong>Submission date:</strong> March 15, 2026</p>
+    </section>
+
+    <section>
+      <h2>Description</h2>
+      <p>This submission documents the AWS IAM setup process, including the account alias update, IAM user creation, administrative permissions assignment, MFA configuration, and budget setup.</p>
+    </section>
+
+    <section class="step">
+      <div class="step-title">1. Update the AWS account alias</div>
+      <p>I signed in to the AWS account and opened the IAM dashboard. The account alias was updated to match the student ID format required for the assignment.</p>
+      <figure>
+        <img src="01-account-alias-updated.png" alt="IAM dashboard showing the updated AWS account alias">
+        <figcaption>Figure 1. IAM dashboard showing the updated AWS account alias.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">2. Create a new IAM user</div>
+      <p>I opened the IAM user creation flow and entered the new IAM username <code>Qi-Chen</code>.</p>
+      <figure>
+        <img src="02-create-user-details.png" alt="Create user page with the new IAM username entered">
+        <figcaption>Figure 2. Create user page with the new IAM username entered.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">3. Assign administrative permissions</div>
+      <p>Next, I assigned the new user to an existing administrative group so the user would inherit full permissions through the attached administrator policy.</p>
+      <figure>
+        <img src="03-assign-group-permissions.png" alt="Set permissions page showing the user being added to an administrative group">
+        <figcaption>Figure 3. The new IAM user is added to the administrative group.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">4. Review and create the user</div>
+      <p>Before submitting, I reviewed the username and the permission assignment to confirm the configuration was correct.</p>
+      <figure>
+        <img src="04-review-and-create-user.png" alt="Review and create page for the new IAM user">
+        <figcaption>Figure 4. Review page before creating the IAM user.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">5. Confirm that the IAM user was created</div>
+      <p>After the user was created, AWS displayed a confirmation message and the new IAM user appeared in the Users list.</p>
+      <figure>
+        <img src="05-user-created-successfully.png" alt="Users page showing that the new IAM user was created successfully">
+        <figcaption>Figure 5. Confirmation that the IAM user was created successfully.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">6. Verify the group permissions</div>
+      <p>I opened the administrative group to verify that the correct permission policy was attached to the group used for the new user.</p>
+      <figure>
+        <img src="06-group-permissions-summary.png" alt="User group page showing the attached administrator policy">
+        <figcaption>Figure 6. Group permissions summary with the administrator policy attached.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">7. Verify full access in the administrator policy</div>
+      <p>The administrator policy details confirm that full access is granted across AWS services.</p>
+      <figure>
+        <img src="07-administrator-policy-details.png" alt="Policy details page showing full access across AWS services">
+        <figcaption>Figure 7. Administrator policy details showing full access across AWS services.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">8. Start MFA setup</div>
+      <p>I then opened the MFA assignment flow for the IAM user and selected the authenticator app option.</p>
+      <figure>
+        <img src="08-mfa-device-selection.png" alt="MFA setup page with authenticator app selected">
+        <figcaption>Figure 8. MFA device type selection using the authenticator app option.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">9. Configure the MFA device name</div>
+      <p>I provided a device name for the virtual MFA device and continued the setup process.</p>
+      <figure>
+        <img src="09-mfa-device-name.png" alt="MFA setup page showing the configured device name">
+        <figcaption>Figure 9. MFA device configuration with the device name entered.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">10. Confirm MFA is enabled</div>
+      <p>After completing the MFA registration, the user security credentials page showed the assigned virtual MFA device.</p>
+      <figure>
+        <img src="10-mfa-enabled.png" alt="Security credentials page showing the assigned MFA device">
+        <figcaption>Figure 10. Security credentials page confirming that MFA is enabled.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">11. Create the zero-spend budget</div>
+      <p>I created a zero-spend budget to help monitor unexpected charges on the AWS account.</p>
+      <figure>
+        <img src="11-zero-spend-budget.png" alt="Budgets overview showing the zero-spend budget">
+        <figcaption>Figure 11. Budgets overview showing the zero-spend budget.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step">
+      <div class="step-title">12. Create the monthly budget</div>
+      <p>Finally, I created a monthly cost budget. The budgets overview shows both the zero-spend budget and the monthly budget in the account.</p>
+      <figure>
+        <img src="12-monthly-budget.png" alt="Budgets overview showing both the monthly budget and zero-spend budget">
+        <figcaption>Figure 12. Budgets overview showing both configured budgets.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>Conclusion</h2>
+      <p>The AWS IAM activity was completed by updating the account alias, creating a new IAM user, assigning administrator-level permissions through a group, enabling MFA, and creating both a zero-spend budget and a monthly budget.</p>
+      <p class="note">Student information has been filled in for submission.</p>
+    </section>
+  </main>
+</body>
+</html>
