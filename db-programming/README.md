@@ -111,12 +111,21 @@ Recommended command:
 
 This creates the GL College tables and sample data in the `app` schema, including the `_copy` tables used by later assignments.
 
+If a later assignment calls `reset_copy_tables`, load the helper procedure too:
+
+```bash
+docker exec -i oracle-free-dev sqlplus -s app/apppwd@//localhost:1521/FREEPDB1 \
+< "GL College Database/Script_4_Reset _COPY_Tables.sql"
+```
+
+`Script_3_Built_GL_Database.sql` creates the `_copy` tables, but it does not create the `reset_copy_tables` procedure.
+
 ## Run A SQL File From This Repository
 
 Example:
 
 ```bash
-docker exec -i oracle-free-dev sqlplus app/apppwd@//localhost:1521/FREEPDB1 < "P06A Chapter 6: Procedures PE 1.sql"
+docker exec -i oracle-free-dev sqlplus app/apppwd@//localhost:1521/FREEPDB1 < "P06A Chapter 6 Procedures PE 1.sql"
 ```
 
 If your file only contains plain DDL or SQL statements, simple input redirection is usually enough.
@@ -136,6 +145,24 @@ Another example with multiple bind variables:
 ```
 
 If you do not define the bind variables first, SQL*Plus will error before your anonymous blocks run.
+
+If your script uses `ACCEPT`, do not use plain input redirection or a piped preload block. Run it interactively instead:
+
+```bash
+docker exec -it oracle-free-dev sqlplus app/apppwd@//localhost:1521/FREEPDB1
+```
+
+Then run the script from the SQL*Plus prompt:
+
+```sql
+@/workspaces/assignments/db-programming/P0801.sql
+```
+
+Why this matters:
+
+- `ACCEPT` reads from the SQL*Plus terminal prompt, not from bind variables
+- mixed prompt input and piped script input can become misaligned
+- interactive execution is the reliable way to test coursework files that prompt multiple times
 
 ## Quick Smoke Test
 
