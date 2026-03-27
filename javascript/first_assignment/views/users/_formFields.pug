@@ -1,0 +1,35 @@
+mixin userFormFields(formData)
+  .row.g-3
+    .col-md-6
+      label.form-label(for="firstName") First Name *
+      input#firstName.form-control(type="text", name="firstName", required, value=formData.firstName)
+    .col-md-6
+      label.form-label(for="lastName") Last Name *
+      input#lastName.form-control(type="text", name="lastName", required, value=formData.lastName)
+    .col-md-6
+      label.form-label(for="email") Email *
+      input#email.form-control(type="email", name="email", required, value=formData.email)
+    .col-md-6
+      label.form-label(for="phoneNumber") Phone Number
+      input#phoneNumber.form-control(type="text", name="phoneNumber", value=formData.phoneNumber)
+    .col-md-6
+      label.form-label(for="dateOfBirth") Date of Birth
+      input#dateOfBirth.form-control(type="date", name="dateOfBirth", value=formData.dateOfBirth)
+    .col-md-6
+      label.form-label(for="country") Country
+      input#country.form-control(type="text", name="country", value=formData.country)
+    .col-12
+      label.form-label(for="address1") Address 1
+      input#address1.form-control(type="text", name="address1", value=formData.address1)
+    .col-12
+      label.form-label(for="address2") Address 2
+      input#address2.form-control(type="text", name="address2", value=formData.address2)
+    .col-md-6
+      label.form-label(for="city") City
+      input#city.form-control(type="text", name="city", value=formData.city)
+    .col-md-6
+      label.form-label(for="postalCode") Postal Code
+      input#postalCode.form-control(type="text", name="postalCode", value=formData.postalCode)
+    .col-12
+      label.form-label(for="userNotes") User Notes
+      textarea#userNotes.form-control(name="userNotes", rows="4")= formData.userNotes

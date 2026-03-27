@@ -1,0 +1,32 @@
+{
+  "name": "first-assignment-user-crud",
+  "version": "1.0.0",
+  "description": "Full Stack JavaScript first assignment user management CRUD app.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test:e2e": "playwright test",
+    "test": "npm run test:e2e"
+  },
+  "keywords": [
+    "express",
+    "pug",
+    "mongoose",
+    "playwright",
+    "crud"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "nodemon": "^3.1.9"
+  }
+}

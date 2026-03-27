@@ -1,0 +1,26 @@
+:root {
+  --app-bg: #f4f7fb;
+  --card-border: rgba(15, 23, 42, 0.08);
+}
+
+body.app-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(13, 110, 253, 0.14), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, var(--app-bg) 100%);
+}
+
+.card {
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+}
+
+.notes-cell {
+  max-width: 240px;
+}
+
+.empty-state {
+  border: 1px dashed rgba(13, 110, 253, 0.3);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+}

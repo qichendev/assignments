@@ -1,0 +1,49 @@
+extends ../layout
+
+block content
+  .d-flex.justify-content-between.align-items-center.flex-wrap.gap-3.mb-4
+    div
+      h1.h2.mb-1 User List
+      p.text-secondary.mb-0 Review, edit, and manage all stored users.
+    a.btn.btn-primary(href="/users/new") Add User
+
+  if successMessage
+    .alert.alert-success(role="alert")= successMessage
+
+  .card.shadow-sm.border-0
+    .card-body
+      .d-flex.justify-content-between.align-items-center.flex-wrap.gap-2.mb-3
+        h2.h5.mb-0 Registered Users
+        span.badge.text-bg-light.border Total Users: #{users.length}
+
+      if users.length
+        .table-responsive
+          table.table.table-hover.align-middle.mb-0
+            thead
+              tr
+                th(scope="col") Full Name
+                th(scope="col") Date of Birth
+                th(scope="col") City
+                th(scope="col") Country
+                th(scope="col") Phone
+                th(scope="col") Email
+                th(scope="col") Notes Preview
+                th(scope="col") Actions
+            tbody
+              each user in users
+                tr
+                  td.fw-medium= user.fullName || "N/A"
+                  td= user.dateOfBirthFormatted || "N/A"
+                  td= user.city || "N/A"
+                  td= user.country || "N/A"
+                  td= user.phoneNumber || "N/A"
+                  td
+                    a(href=`mailto:${user.email}`)= user.email
+                  td.text-truncate.notes-cell(title=user.userNotes || "")= user.userNotesPreview || "N/A"
+                  td
+                    a.btn.btn-sm.btn-outline-primary(href=`/users/${user._id}/edit`) Edit
+      else
+        .empty-state.py-5.text-center
+          h3.h5 No users yet
+          p.text-secondary.mb-3 Add the first user to avoid an empty list page.
+          a.btn.btn-primary(href="/users/new") Create First User
