@@ -1,0 +1,9 @@
+node_modules
+.env
+.dev.vars
+playwright-report
+test-results
+.wrangler
+coverage
+*.log
+.DS_Store

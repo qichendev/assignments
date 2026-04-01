@@ -1,0 +1,27 @@
+extends ../layout
+
+include _formFields
+
+block content
+  .d-flex.justify-content-between.align-items-center.flex-wrap.gap-3.mb-4
+    div
+      h1.h2.mb-1 Add User
+      p.text-secondary.mb-0 Create a new user record with the required fields.
+    a.btn.btn-outline-primary(href="/users") Back to List
+
+  if successMessage
+    .alert.alert-success(role="alert")= successMessage
+
+  if errors.length
+    .alert.alert-danger(role="alert")
+      h2.h6.mb-2 Validation Errors
+      ul.mb-0
+        each error in errors
+          li= error
+
+  .card.shadow-sm.border-0
+    .card-body.p-4
+      form(action="/users/create", method="POST")
+        +userFormFields(formData)
+        .d-flex.justify-content-end.mt-4
+          button.btn.btn-primary(type="submit") Create User

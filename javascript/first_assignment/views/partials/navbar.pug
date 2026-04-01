@@ -1,0 +1,11 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.shadow-sm
+  .container
+    a.navbar-brand.fw-semibold(href="/users") User Management
+    button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#mainNav", aria-controls="mainNav", aria-expanded="false", aria-label="Toggle navigation")
+      span.navbar-toggler-icon
+    .collapse.navbar-collapse#mainNav
+      ul.navbar-nav.ms-auto
+        li.nav-item
+          a.nav-link(class=currentPath === "/users" ? "active" : "", href="/users") User List
+        li.nav-item
+          a.nav-link(class=currentPath === "/users/new" ? "active" : "", href="/users/new") Add User

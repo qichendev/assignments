@@ -1,0 +1,37 @@
+extends ../layout
+
+include _formFields
+
+block content
+  .d-flex.justify-content-between.align-items-center.flex-wrap.gap-3.mb-4
+    div
+      h1.h2.mb-1 Edit User
+      p.text-secondary.mb-0 Update or delete the selected user record.
+    a.btn.btn-outline-primary(href="/users") Back to List
+
+  if successMessage
+    .alert.alert-success(role="alert")= successMessage
+
+  if errors.length
+    .alert.alert-danger(role="alert")
+      h2.h6.mb-2 Validation Errors
+      ul.mb-0
+        each error in errors
+          li= error
+
+  .card.shadow-sm.border-0
+    .card-body.p-4
+      .row.g-3.mb-4
+        .col-md-6
+          .small.text-uppercase.text-secondary Created At
+          .fw-medium= user.createdAt ? new Date(user.createdAt).toLocaleString() : "Not available"
+        .col-md-6
+          .small.text-uppercase.text-secondary Updated At
+          .fw-medium= user.updatedAt ? new Date(user.updatedAt).toLocaleString() : "Not available"
+      form(action=`/users/${user._id}/update`, method="POST")
+        +userFormFields(formData)
+        .d-flex.flex-wrap.justify-content-between.align-items-center.gap-3.mt-4
+          button.btn.btn-primary(type="submit") Save Changes
+      hr.my-4
+      form(action=`/users/${user._id}/delete`, method="POST", onsubmit="return confirm('Delete this user?');")
+        button.btn.btn-outline-danger(type="submit") Delete User
