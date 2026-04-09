@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/playwright:v1.44.0-jammy
+
+WORKDIR /app
+
+# Install playwright npm package
+RUN npm init -y && npm install playwright@1.44.0
+
+COPY playwright-screenshots.js .
+
+CMD ["node", "playwright-screenshots.js"]

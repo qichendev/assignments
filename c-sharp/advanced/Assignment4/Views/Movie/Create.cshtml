@@ -1,0 +1,57 @@
+@model MoviesManager.Models.Movie
+@{
+    ViewData["Title"] = "Add New Movie";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Add New Movie</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-semibold">Title</label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter movie title" />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Director" class="form-label fw-semibold">Director</label>
+                            <input asp-for="Director" class="form-control" placeholder="Enter director name" />
+                            <span asp-validation-for="Director" class="text-danger small"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Genre" class="form-label fw-semibold">Genre</label>
+                            <input asp-for="Genre" class="form-control" placeholder="e.g. Action, Drama, Sci-Fi" />
+                            <span asp-validation-for="Genre" class="text-danger small"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Year" class="form-label fw-semibold">Year</label>
+                                <input asp-for="Year" class="form-control" placeholder="e.g. 2024" />
+                                <span asp-validation-for="Year" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Rating" class="form-label fw-semibold">Rating (0–10)</label>
+                                <input asp-for="Rating" class="form-control" placeholder="e.g. 8.5" />
+                                <span asp-validation-for="Rating" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="submit" class="btn btn-primary">Create Movie</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

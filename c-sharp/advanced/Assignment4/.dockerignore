@@ -1,0 +1,7 @@
+MoviesManager.Tests/
+**/bin/
+**/obj/
+*.db
+*.db-shm
+*.db-wal
+publish/
