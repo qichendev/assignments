@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | QiShop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header class="site-header">
+    <nav class="nav">
+        <a class="brand" th:href="@{/products}">QiShop</a>
+        <div class="nav-actions">
+            <span class="hit-counter">Hits: <strong id="hit-count">0</strong></span>
+            <a class="button button-secondary" th:href="@{/products}">View Products</a>
+        </div>
+    </nav>
+</header>
+
+<main class="page narrow">
+    <section class="hero compact">
+        <div>
+            <p class="eyebrow">New listing</p>
+            <h1>Add a product to the shop.</h1>
+        </div>
+    </section>
+
+    <form class="product-form" th:action="@{/products}" th:object="${product}" method="post">
+        <label>
+            Product name
+            <input type="text" th:field="*{name}" placeholder="Wireless Desk Charger">
+            <span class="error" th:errors="*{name}"></span>
+        </label>
+
+        <label>
+            Category
+            <select th:field="*{category}">
+                <option value="">Select category</option>
+                <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+            </select>
+            <span class="error" th:errors="*{category}"></span>
+        </label>
+
+        <label>
+            Price
+            <input type="number" th:field="*{price}" step="0.01" min="0.01" placeholder="39.99">
+            <span class="error" th:errors="*{price}"></span>
+        </label>
+
+        <label>
+            Stock quantity
+            <input type="number" th:field="*{stockQuantity}" min="0" placeholder="25">
+            <span class="error" th:errors="*{stockQuantity}"></span>
+        </label>
+
+        <label>
+            Description
+            <textarea th:field="*{description}" rows="5" placeholder="Describe what shoppers should know."></textarea>
+            <span class="error" th:errors="*{description}"></span>
+        </label>
+
+        <button class="button" type="submit">Save Product</button>
+    </form>
+</main>
+
+<script th:src="@{/js/hits.js}"></script>
+</body>
+</html>

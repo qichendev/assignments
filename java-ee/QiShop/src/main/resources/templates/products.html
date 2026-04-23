@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QiShop Inventory</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header class="site-header">
+    <nav class="nav">
+        <a class="brand" th:href="@{/products}">QiShop</a>
+        <div class="nav-actions">
+            <span class="hit-counter">Hits: <strong id="hit-count">0</strong></span>
+            <a class="button button-secondary" th:href="@{/products/new}">Add Product</a>
+        </div>
+    </nav>
+</header>
+
+<main class="page">
+    <section class="hero">
+        <div>
+            <p class="eyebrow">Shopping inventory</p>
+            <h1>Curate the products customers want to find.</h1>
+        </div>
+    </section>
+
+    <p class="flash" th:if="${message}" th:text="${message}"></p>
+
+    <form class="filters" th:action="@{/products}" method="get">
+        <label>
+            Search
+            <input type="search" name="search" th:value="${search}" placeholder="Name or description">
+        </label>
+        <label>
+            Category
+            <select name="category">
+                <option value="">All categories</option>
+                <option th:each="category : ${categories}"
+                        th:value="${category}"
+                        th:text="${category}"
+                        th:selected="${category == selectedCategory}"></option>
+            </select>
+        </label>
+        <label>
+            Max price
+            <input type="number" name="maxPrice" step="0.01" min="0" th:value="${maxPrice}" placeholder="100.00">
+        </label>
+        <button class="button" type="submit">Filter</button>
+    </form>
+
+    <section class="product-grid" aria-label="Products">
+        <article class="product-card" th:each="product : ${products}">
+            <div class="product-card-header">
+                <span class="category" th:text="${product.category}">Category</span>
+                <span class="stock" th:text="|${product.stockQuantity} in stock|">0 in stock</span>
+            </div>
+            <h2 th:text="${product.name}">Product name</h2>
+            <p th:text="${product.description}">Description</p>
+            <strong class="price" th:text="${#numbers.formatCurrency(product.price)}">$0.00</strong>
+        </article>
+        <p class="empty-state" th:if="${#lists.isEmpty(products)}">No products match these filters.</p>
+    </section>
+</main>
+
+<script th:src="@{/js/hits.js}"></script>
+</body>
+</html>
