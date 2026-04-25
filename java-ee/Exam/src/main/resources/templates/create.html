@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User</title>
+</head>
+<body>
+<h1>Create User</h1>
+
+<form th:action="@{/create}" th:object="${user}" method="post">
+    <div>
+        <label for="name">Name</label>
+        <input id="name" type="text" th:field="*{name}">
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+
+    <div>
+        <label for="age">Age</label>
+        <input id="age" type="number" th:field="*{age}">
+        <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+    </div>
+
+    <div>
+        <label for="occupationTitle">Occupation Title</label>
+        <input id="occupationTitle" type="text" th:field="*{occupation.title}">
+    </div>
+
+    <div>
+        <label for="occupationSalary">Occupation Salary</label>
+        <input id="occupationSalary" type="number" th:field="*{occupation.salary}">
+        <div th:if="${#fields.hasErrors('occupation.salary')}" th:errors="*{occupation.salary}"></div>
+    </div>
+
+    <div th:if="${#fields.hasErrors('occupation')}" th:errors="*{occupation}"></div>
+
+    <button type="submit">Save User</button>
+</form>
+
+<p><a th:href="@{/users}">View Users</a></p>
+</body>
+</html>
